@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HVAC / Mechanical Ventilation | Anasal MEPFS Corp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* SAME DESIGN AS YOUR ORIGINAL PAGE */
+
+:root {
+  --red: #c4161c;
+  --red-dark: #a01218;
+  --dark: #1a1a1a;
+  --darker: #0f0f0f;
+  --light: #f5f5f5;
+  --gray: #666;
+  --white: #ffffff;
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:Roboto,sans-serif;
+background:white;
+color:#222;
+line-height:1.7;
+padding-top:70px;
+user-select:none;
+}
+
+h1,h2,h3,h4{
+font-family:Bebas Neue;
+text-transform:uppercase;
+letter-spacing:2px;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:var(--darker);
+color:white;
+padding:0 50px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:1000;
+height:70px;
+border-bottom:3px solid var(--red);
+}
+
+.logo{
+font-size:28px;
+letter-spacing:3px;
+display:flex;
+align-items:center;
+gap:12px;
+text-decoration:none;
+color:white;
+}
+
+.logo-icon{
+width:40px;
+height:40px;
+background:var(--red);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+}
+
+.navbar ul{
+list-style:none;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.navbar a{
+color:#aaa;
+text-decoration:none;
+font-size:13px;
+padding:12px 18px;
+text-transform:uppercase;
+letter-spacing:1.5px;
+}
+
+.navbar a:hover{
+color:white;
+}
+
+.navbar button{
+font-family:Bebas Neue;
+background:transparent;
+color:white;
+border:2px solid var(--red);
+padding:10px 24px;
+cursor:pointer;
+}
+
+.navbar button:hover{
+background:var(--red);
+}
+
+/* HERO */
+
+.page-hero{
+height:400px;
+background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
+url('image/Exengo Installation AB on Brownbook_net.jpg');
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+}
+
+.hero-text{
+border:3px solid var(--red);
+padding:30px 50px;
+background:rgba(0,0,0,0.3);
+}
+
+.hero-text h1{
+font-size:60px;
+margin-bottom:10px;
+}
+
+.hero-text p{
+color:#ddd;
+}
+
+/* CONTENT */
+
+.content-section{
+padding:80px 60px;
+max-width:1400px;
+margin:auto;
+}
+
+.main-card{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+}
+
+.main-image{
+min-height:450px;
+background-size:cover;
+background-position:center;
+border-left:5px solid var(--red);
+box-shadow:var(--card-shadow);
+pointer-events:none;
+}
+
+.text-content h2{
+font-size:36px;
+margin-bottom:20px;
+border-bottom:2px solid #eee;
+padding-bottom:10px;
+}
+
+.text-content p{
+color:#666;
+margin-bottom:20px;
+font-size:15px;
+}
+
+.feature-list{
+list-style:none;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.feature-list li{
+padding-left:25px;
+position:relative;
+}
+
+.feature-list li::before{
+content:'✔';
+position:absolute;
+left:0;
+color:var(--red);
+}
+
+/* INFO STRIP */
+
+.info-strip{
+background:var(--light);
+padding:80px 60px;
+}
+
+.strip-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.strip-box{
+background:white;
+padding:35px;
+border-top:4px solid var(--red);
+text-align:center;
+box-shadow:var(--card-shadow);
+}
+
+.strip-icon{
+font-size:40px;
+color:var(--red);
+margin-bottom:15px;
+}
+
+/* CTA */
+
+.cta-strip{
+background:var(--dark);
+color:white;
+text-align:center;
+padding:60px;
+}
+
+.cta-strip h3{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.cta-strip a{
+display:inline-block;
+margin-top:20px;
+padding:14px 30px;
+background:var(--red);
+color:white;
+text-decoration:none;
+font-family:Bebas Neue;
+font-size:18px;
+}
+
+.cta-strip a:hover{
+background:var(--red-dark);
+}
+
+/* FOOTER */
+
+footer{
+background:var(--darker);
+color:#777;
+padding:40px;
+text-align:center;
+border-top:3px solid var(--red);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<a href="index.html" class="logo">
+<div class="logo-icon">AM</div>
+Anasal MEPFS Corp
+</a>
+
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="service.html">Services</a></li>
+<li><a href="index.html#projects">Projects</a></li>
+<li><a href="index.html#about">About</a></li>
+<li><a href="index.html#contact">Contact</a></li>
+<li><button>Admin Login</button></li>
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<div class="page-hero">
+
+<div class="hero-text">
+<h1>HVAC / Mechanical Ventilation</h1>
+<p>Ducting Installation Services</p>
+</div>
+
+</div>
+
+<!-- MAIN SERVICE -->
+
+<section class="content-section">
+
+<div class="main-card">
+
+<div class="main-image" style="background-image:url('image/Hard\ Ducting.jpg')"></div>
+
+<div class="text-content">
+
+<h2>HVAC / Mechanical Ventilation Services</h2>
+
+<p>
+Our HVAC and Mechanical Ventilation services provide professional installation of air distribution systems used in commercial, industrial, and residential buildings. These systems help maintain proper airflow, temperature control, and indoor air quality.
+</p>
+
+<p>
+Through properly designed ventilation systems, air can circulate efficiently inside buildings, ensuring comfort, safety, and energy efficiency.
+</p>
+
+<h2>Scope of Works</h2>
+
+<ul class="feature-list">
+<li>HVAC ducting installation</li>
+<li>Air distribution systems</li>
+<li>Ventilation duct layout</li>
+<li>Duct insulation installation</li>
+<li>Air balancing and testing</li>
+<li>System commissioning</li>
+</ul>
+
+<h2>Why It Is Important</h2>
+
+<p>
+A properly installed HVAC ducting system ensures efficient airflow, improved indoor air quality, and comfortable room temperatures. Mechanical ventilation systems also remove heat, smoke, dust, and contaminated air from enclosed spaces.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- DUCTING INSTALLATION -->
+
+<section class="content-section">
+
+<div class="main-card">
+
+<div class="main-image" style="background-image:url('image/Air\ condition\ and\ hvac\ system\ installation\ under\ bareskin\ ceiling\ before\ interior\ finishing_.jpg')"></div>
+
+<div class="text-content">
+
+<h2>Ducting Installation</h2>
+
+<p>
+Ducting installation is an essential part of HVAC systems that distributes conditioned air throughout a building. These ducts carry cooled or heated air from the HVAC equipment to different rooms and spaces.
+</p>
+
+<p>
+Our ducting systems are designed to provide balanced airflow, reduce energy loss, and ensure long-term durability.
+</p>
+
+<h2>Scope of Works</h2>
+
+<ul class="feature-list">
+<li>Fabrication of air ducts</li>
+<li>Installation of supply and return ducts</li>
+<li>Duct insulation installation</li>
+<li>Installation of diffusers and grilles</li>
+<li>Air leakage testing</li>
+<li>System commissioning</li>
+</ul>
+
+<h2>Why It Is Important</h2>
+
+<p>
+Proper ducting installation ensures efficient airflow distribution and improves the overall performance of HVAC systems. It helps maintain comfortable indoor temperatures while reducing energy consumption.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- INFO STRIP -->
+
+<section class="info-strip">
+
+<div class="strip-grid">
+
+<div class="strip-box">
+<div class="strip-icon">🌬️</div>
+<h4>Air Distribution</h4>
+<p>Efficient airflow delivery throughout the building.</p>
+</div>
+
+<div class="strip-box">
+<div class="strip-icon">❄️</div>
+<h4>Temperature Control</h4>
+<p>Balanced air circulation for indoor comfort.</p>
+</div>
+
+<div class="strip-box">
+<div class="strip-icon">🏢</div>
+<h4>Commercial Systems</h4>
+<p>Ventilation systems for offices and industrial facilities.</p>
+</div>
+
+<div class="strip-box">
+<div class="strip-icon">🔧</div>
+<h4>Maintenance Support</h4>
+<p>Inspection and maintenance of HVAC ducting systems.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+
+<div class="cta-strip">
+
+<h3>Need HVAC Ducting Installation?</h3>
+<p>Contact our engineering team for professional ventilation solutions.</p>
+
+<a href="index.html#contact">Request a Quotation</a>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div style="font-family:Bebas Neue;color:white;letter-spacing:2px;margin-bottom:10px;">
+Anasal MEPFS Corp
+</div>
+
+<p>© 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+</html>

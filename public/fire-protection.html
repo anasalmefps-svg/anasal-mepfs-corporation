@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fire Protection & Life Safety | Anasal MEPFS Corp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ========== VARIABLES & RESET ========== */
+:root {
+  --red: #c4161c;
+  --red-dark: #a01218;
+  --dark: #1a1a1a;
+  --darker: #0f0f0f;
+  --light: #f5f5f5;
+  --gray: #666;
+  --white: #ffffff;
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Roboto, sans-serif;
+  background: var(--white);
+  color: #222;
+  line-height: 1.7;
+  padding-top: 70px;
+  /* CSS Protection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: Bebas Neue, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  background: var(--darker);
+  color: var(--white);
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: 70px;
+  border-bottom: 3px solid var(--red);
+}
+
+.logo {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.navbar a.nav-link {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 18px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-weight: 500;
+}
+
+.navbar a.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.navbar a.nav-link:hover { color: var(--white); }
+.navbar a.nav-link:hover::after { transform: scaleX(1); }
+
+.navbar button {
+  font-family: Bebas Neue, sans-serif;
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--red);
+  padding: 10px 24px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+
+.navbar button:hover { background: var(--red); }
+
+/* ========== HAMBURGER MENU ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.navbar.active .hamburger span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.navbar.active .hamburger span:nth-child(2) { opacity: 0; }
+.navbar.active .hamburger span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* ========== HERO ========== */
+.page-hero {
+  height: 400px;
+  background: linear-gradient(rgba(0, 0, 0, 0.396), rgba(0, 0, 0, 0.396)), url('image/🔥\ 𝐒𝐡𝐢𝐞𝐥𝐝\ 𝐘𝐨𝐮𝐫\ 𝐒𝐩𝐚𝐜𝐞\ 𝐰𝐢𝐭𝐡\ 𝐄𝐱𝐩𝐞𝐫𝐭\ 𝐅𝐢𝐫𝐞\ 𝐒𝐚𝐟𝐞𝐭𝐲!\ 🚒🔥1.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  position: relative;
+}
+
+.page-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--red);
+}
+
+/* Hero Text Styling with Border (from example) */
+.hero-text {
+  display: inline-block;
+  border: 3px solid var(--red);
+  padding: 30px 50px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.hero-text h1 {
+  font-size: 60px;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.hero-text p {
+  font-size: 18px;
+  color: #ddd;
+  letter-spacing: 1px;
+}
+
+.breadcrumb {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.breadcrumb a { color: var(--white); text-decoration: none; }
+
+/* ========== CONTENT ========== */
+.content-section {
+  padding: 80px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.main-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* Alternating Layout Logic */
+.content-section:nth-child(even) .main-card {
+  direction: rtl; /* Visual swap */
+}
+
+.content-section:nth-child(even) .text-content {
+  direction: ltr; /* Reset text direction */
+}
+
+.main-image {
+  min-height: 450px;
+  background-size: cover;
+  background-position: center;
+  border-left: 5px solid var(--red);
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+  pointer-events: none; /* Protection */
+}
+
+/* Fix border for alternating layout */
+.content-section:nth-child(even) .main-image {
+  border-left: none;
+  border-right: 5px solid var(--red);
+}
+
+.text-content h2 {
+  font-size: 36px;
+  color: var(--dark);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+.text-content p {
+  color: var(--gray);
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.feature-list {
+  list-style: none;
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #444;
+}
+
+.feature-list li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-weight: bold;
+}
+
+/* ========== INFO STRIP ========== */
+.info-strip {
+  background: var(--light);
+  padding: 80px 60px;
+  margin-top: 40px;
+}
+
+.strip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.strip-box {
+  background: var(--white);
+  padding: 35px;
+  border-top: 4px solid var(--red);
+  text-align: center;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease;
+}
+
+.strip-box:hover { transform: translateY(-5px); }
+
+.strip-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+  color: var(--red);
+}
+
+.strip-box h4 {
+  font-size: 22px;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.strip-box p { font-size: 14px; color: var(--gray); }
+
+/* ========== CTA ========== */
+.cta-strip {
+  background: var(--dark);
+  color: var(--white);
+  text-align: center;
+  padding: 60px;
+}
+
+.cta-strip h3 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.cta-strip p { opacity: 0.8; }
+
+.cta-strip a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 30px;
+  background: var(--red);
+  color: var(--white);
+  text-decoration: none;
+  font-family: Bebas Neue;
+  font-size: 18px;
+  letter-spacing: 2px;
+  transition: background 0.3s ease;
+}
+
+.cta-strip a:hover { background: var(--red-dark); }
+
+/* ========== LOGIN MODAL ========== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  backdrop-filter: blur(5px);
+}
+
+.login-box {
+  width: 400px;
+  max-width: 90%;
+  background: var(--white);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.login-header {
+  background: var(--dark);
+  color: var(--white);
+  padding: 25px;
+  text-align: center;
+}
+
+.login-body { padding: 40px; }
+
+.login-body input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 2px solid #e0e0e0;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+}
+
+.login-body input:focus {
+  outline: none;
+  border-color: var(--dark);
+}
+
+.login-body button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: var(--red);
+  color: var(--white);
+  font-family: Bebas Neue;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
+
+.login-body button:hover { background: var(--red-dark); }
+.close-btn { background: var(--dark) !important; }
+.close-btn:hover { background: #333 !important; }
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--darker);
+  color: #666;
+  padding: 40px 60px;
+  text-align: center;
+  border-top: 3px solid var(--red);
+}
+
+/* ========== ANIMATIONS ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .navbar { padding: 0 25px; height: 60px; }
+  
+  .hamburger { display: flex; }
+  
+  .navbar ul {
+    position: absolute;
+    top: 60px;
+    left: 0; right: 0;
+    background: var(--darker);
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 20px;
+  }
+
+  .navbar.active ul {
+    max-height: 400px;
+    padding: 20px 20px;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .navbar ul li { width: 100%; margin: 5px 0; }
+  .navbar a.nav-link { display: block; padding: 12px; width: 100%; }
+  .navbar a.nav-link::after { display: none; }
+  .navbar button { width: 100%; margin-top: 10px; }
+
+  .content-section { padding: 50px 25px; }
+  .main-card { grid-template-columns: 1fr; gap: 30px; }
+  
+  /* Reset alternating layout on mobile */
+  .content-section:nth-child(even) .main-card { direction: ltr; }
+  
+  .main-image {
+    min-height: 300px;
+    border-left: none;
+    border-top: 5px solid var(--red);
+  }
+  
+  .content-section:nth-child(even) .main-image {
+    border-right: none;
+    border-top: 5px solid var(--red);
+  }
+
+  .feature-list { grid-template-columns: 1fr; }
+  
+  .hero-text { padding: 20px; }
+  .hero-text h1 { font-size: 36px; }
+  
+  .breadcrumb { left: 25px; top: 80px; }
+  
+  .info-strip, .cta-strip { padding: 50px 25px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">AM</div>
+    Anasal MEPFS Corp
+  </a>
+
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul>
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="service.html" class="nav-link">Services</a></li>
+    <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+    <li><a href="index.html#about" class="nav-link">About</a></li>
+    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+    <li><button onclick="openLogin()">Admin Login</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="breadcrumb"><a href="service.html">Services</a> / Fire Protection</div>
+  <div class="hero-text fade-in">
+    <h1>🔥 Fire Protection & Life Safety</h1>
+    <p>Professional fire protection systems for critical facilities</p>
+  </div>
+</div>
+
+<!-- ================= DEFINITION SECTION ================= -->
+<section class="content-section">
+  <div class="main-card">
+    <div class="main-image fade-in" style="background-image:url('image/Fixed Fire Fighting System - Swastik Synergy Fire Protection.jpg');"></div>
+    <div class="text-content fade-in">
+      <h2>What is Fire Protection & Life Safety?</h2>
+      <p>
+        <strong>Fire Protection & Life Safety</strong> is a critical engineering discipline focused on the safeguarding of human life and property from the destructive effects of fire and smoke.
+      </p>
+      <p>
+        It involves the strategic integration of <strong>active systems</strong>—such as sprinklers, alarms, and suppression units—and <strong>passive features</strong>—like fire-resistant walls and escape routes. The primary goal is to detect fires early, control or extinguish them rapidly, and ensure the safe evacuation of occupants, minimizing risk and ensuring business continuity.
+      </p>
+
+      <h2>Core Objectives</h2>
+      <ul class="feature-list">
+        <li>Life Safety & Evacuation</li>
+        <li>Property Protection</li>
+        <li>Business Continuity</li>
+        <li>Environmental Protection</li>
+        <li>Early Fire Detection</li>
+        <li>Suppression & Control</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KITCHEN FIRE SUPPRESSION ================= -->
+<section class="content-section">
+  <div class="main-card">
+    <div class="main-image fade-in" style="background-image:url('uploads/kitchen fire.jpg');"></div>
+    <div class="text-content fade-in">
+      <h2>Kitchen Fire Suppression System</h2>
+      <p>
+        Our Kitchen Fire Suppression System service provides complete design,
+        supply, installation, testing, and maintenance of automatic fire
+        suppression systems for commercial and industrial kitchens.
+      </p>
+      <p>
+        The system is engineered to rapidly detect and suppress grease and flame
+        fires originating from cooking equipment, exhaust hoods, and ductwork,
+        helping prevent fire spread and severe property damage.
+      </p>
+
+      <h2>Scope of Works</h2>
+      <ul class="feature-list">
+        <li>Site survey and risk assessment</li>
+        <li>System design and layout</li>
+        <li>Installation of nozzles and piping</li>
+        <li>Gas and electrical shut-off integration</li>
+        <li>Functional testing and commissioning</li>
+        <li>Preventive maintenance programs</li>
+      </ul>
+
+      <h2>Why It Is Important</h2>
+      <p>
+        Commercial kitchens are exposed to high fire risk due to grease build-up
+        and open flames. A properly designed suppression system automatically
+        discharges wet chemical agents that cool hot surfaces, suppress flames,
+        and prevent re-ignition.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIRE SPRINKLER SYSTEM ================= -->
+<section class="content-section">
+  <div class="main-card">
+    <div class="main-image fade-in" style="background-image:url('uploads/FIRE SPRINKLER (Services\).jpg');"></div>
+    <div class="text-content fade-in">
+      <h2>Fire Sprinkler System</h2>
+      <p>
+        Our Fire Sprinkler System service covers the engineering, supply,
+        installation, testing, and maintenance of automatic water-based fire
+        protection systems for commercial, residential, and industrial
+        buildings.
+      </p>
+      <p>
+        The system is designed to control or suppress fire at its early stage by
+        discharging water directly at the seat of the fire, significantly
+        reducing fire spread and structural damage.
+      </p>
+
+      <h2>Scope of Works</h2>
+      <ul class="feature-list">
+        <li>Hazard classification and system design</li>
+        <li>Hydraulic calculations and layout preparation</li>
+        <li>Installation of piping, valves, and sprinkler heads</li>
+        <li>Fire pump, tank, and controller integration</li>
+        <li>Pressure testing and system commissioning</li>
+        <li>Routine inspection and maintenance services</li>
+      </ul>
+
+      <h2>Why It Is Important</h2>
+      <p>
+        Fire sprinkler systems are one of the most reliable life-safety systems
+        available. They help control fire development, protect occupants during
+        evacuation, and minimize damage to property and critical equipment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIRE ALARM SYSTEM ================= -->
+<section class="content-section">
+  <div class="main-card">
+    <div class="main-image fade-in" style="background-image:url('uploads/Fire Alarm Installation.jpg');"></div>
+    <div class="text-content fade-in">
+      <h2>Fire Alarm System</h2>
+      <p>
+        Our Fire Alarm System service provides complete design, installation,
+        testing, and maintenance of conventional and addressable fire detection
+        and alarm systems for commercial and industrial facilities.
+      </p>
+      <p>
+        The system provides early detection of smoke, heat, or fire and delivers
+        audible and visual warnings to occupants, enabling fast evacuation and
+        emergency response.
+      </p>
+
+      <h2>Scope of Works</h2>
+      <ul class="feature-list">
+        <li>System planning and device layout</li>
+        <li>Installation of fire alarm control panels</li>
+        <li>Smoke and heat detector installation</li>
+        <li>Manual call points, sounders, and strobes</li>
+        <li>System programming and commissioning</li>
+        <li>Periodic testing and preventive maintenance</li>
+      </ul>
+
+      <h2>Why It Is Important</h2>
+      <p>
+        A properly installed fire alarm system provides early warning during
+        emergencies, allowing occupants to evacuate safely and helping fire
+        responders act quickly, greatly reducing the risk of injury, loss of
+        life, and extensive property damage.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<section class="info-strip">
+  <div class="strip-grid">
+    <div class="strip-box fade-in">
+      <div class="strip-icon">⚡</div>
+      <h4>Fast Detection</h4>
+      <p>Rapid response through reliable detection and suppression systems.</p>
+    </div>
+    <div class="strip-box fade-in">
+      <div class="strip-icon">🛡️</div>
+      <h4>Life Safety</h4>
+      <p>Protects occupants, equipment, and critical infrastructure.</p>
+    </div>
+    <div class="strip-box fade-in">
+      <div class="strip-icon">📋</div>
+      <h4>Code Compliant</h4>
+      <p>Designed and installed based on fire safety standards.</p>
+    </div>
+    <div class="strip-box fade-in">
+      <div class="strip-icon">🔧</div>
+      <h4>Maintenance Ready</h4>
+      <p>Long-term inspection and servicing support.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h3>Protect Your Facility Today</h3>
+  <p>Contact our engineering team for professional fire protection solutions.</p>
+  <a href="index.html#contact">Request a Quotation</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo" style="font-family: Bebas Neue; color: white; letter-spacing: 2px; margin-bottom: 10px;">Anasal MEPFS Corp</div>
+  <p>&copy; 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-header">
+      <h2>Admin Login</h2>
+    </div>
+    <div class="login-body">
+      <form id="adminForm">
+        <input type="text" placeholder="Username" id="username" required>
+        <input type="password" placeholder="Password" id="password" required>
+        <button type="submit">Login</button>
+        <button type="button" class="close-btn" onclick="closeLogin()">Close</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== CONTENT PROTECTION SCRIPTS ========== 
+// 1. Disable Right-Click
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
+// 2. Disable Keyboard Shortcuts
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'S' || e.key === 'U')) e.preventDefault();
+  if (e.key === 'F12') e.preventDefault();
+}, false);
+// 3. Disable Dragging
+document.addEventListener('dragstart', function(e) { e.preventDefault(); }, false);
+
+// ========== SCROLL REVEAL ==========
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+document.querySelectorAll('.fade-in').forEach(el => { observer.observe(el); });
+
+// ========== MOBILE MENU TOGGLE ==========
+const hamburger = document.getElementById("hamburger");
+const navbar = document.getElementById("navbar");
+
+hamburger.addEventListener("click", () => {
+  navbar.classList.toggle("active");
+});
+
+const navLinks = document.querySelectorAll('.navbar ul a, .navbar ul button');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    if(navbar.classList.contains('active')) {
+      navbar.classList.remove('active');
+    }
+  });
+});
+
+// ========== LOGIN MODAL ==========
+const overlay = document.getElementById("loginOverlay");
+
+function openLogin(){
+  overlay.style.display = "flex";
+  document.body.style.overflow = "hidden";
+} 
+
+function closeLogin(){
+  overlay.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) {
+    closeLogin();
+  }
+});
+</script>
+</body>
+</html>

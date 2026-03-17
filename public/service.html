@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Services | Anasal MEPFS Corp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ========== VARIABLES & RESET ========== */
+:root {
+  --red: #c4161c;
+  --red-dark: #a01218;
+  --dark: #1a1a1a;
+  --darker: #0f0f0f;
+  --light: #f5f5f5;
+  --gray: #666;
+  --white: #ffffff;
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Roboto, sans-serif;
+  background: var(--white);
+  color: #222;
+  line-height: 1.7;
+  padding-top: 70px;
+  /* CSS Protection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: Bebas Neue, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  background: var(--darker);
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  border-bottom: 3px solid var(--red);
+  z-index: 1000;
+}
+
+.logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  text-decoration: none;
+  z-index: 1001;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.navbar a.nav-link {
+  color: #aaa;
+  text-decoration: none;
+  padding: 12px 18px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  position: relative;
+  display: block;
+}
+
+.navbar a.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: 0.3s;
+}
+
+.navbar a.nav-link:hover { color: var(--white); }
+.navbar a.nav-link:hover::after { transform: scaleX(1); }
+
+.navbar button {
+  border: 2px solid var(--red);
+  background: transparent;
+  color: var(--white);
+  padding: 10px 20px;
+  font-family: "Bebas Neue";
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.navbar button:hover { background: var(--red); }
+
+/* ========== HAMBURGER MENU ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Hamburger Animation */
+.navbar.active .hamburger span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.navbar.active .hamburger span:nth-child(2) { opacity: 0; }
+.navbar.active .hamburger span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* ========== SECTION ========== */
+section {
+  padding: 100px 60px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: 48px;
+  color: var(--dark);
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--red);
+}
+
+.section-header p {
+  color: var(--gray);
+  max-width: 600px;
+  margin: 20px auto 0;
+}
+
+/* ========== SERVICES ========== */
+#services {
+  background: var(--light);
+  min-height: calc(100vh - 70px - 100px); /* Full height minus navbar/footer */
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Fixing the Card Design (since it's an <a> tag) */
+.service-card {
+  background: var(--white);
+  padding: 40px 30px;
+  position: relative;
+  transition: all 0.4s ease;
+  border-left: 4px solid transparent;
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color */
+  display: block;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: 0.4s;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--card-shadow);
+  border-left-color: var(--red);
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: var(--white);
+  transition: 0.3s;
+}
+
+.service-card:hover .service-icon {
+  background: var(--red);
+}
+
+.service-card h3 {
+  font-family: "Bebas Neue";
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: var(--dark);
+}
+
+.service-card p {
+  color: var(--gray);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ========== LOGIN MODAL ========== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  backdrop-filter: blur(5px);
+}
+
+.login-box {
+  width: 400px;
+  max-width: 90%;
+  background: var(--white);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.login-header {
+  background: var(--dark);
+  color: var(--white);
+  padding: 25px;
+  text-align: center;
+}
+
+.login-header h2 { font-size: 24px; letter-spacing: 3px; }
+
+.login-body { padding: 40px; }
+
+.login-body input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 2px solid #e0e0e0;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.login-body input:focus {
+  outline: none;
+  border-color: var(--dark);
+}
+
+.login-body button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: var(--red);
+  color: var(--white);
+  font-family: "Bebas Neue";
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
+
+.login-body button:hover { background: var(--red-dark); }
+.close-btn { background: var(--dark) !important; }
+.close-btn:hover { background: #333 !important; }
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--darker);
+  color: #666;
+  padding: 40px 60px;
+  text-align: center;
+  border-top: 3px solid var(--red);
+}
+
+.footer-logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 24px;
+  color: var(--white);
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+/* ========== ANIMATIONS ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 0 25px;
+    height: 60px;
+  }
+
+  /* Show Hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Mobile Menu Styling */
+  .navbar ul {
+    position: absolute;
+    top: 60px;
+    left: 0; right: 0;
+    background: var(--darker);
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 20px;
+  }
+
+  /* Active state for menu */
+  .navbar.active ul {
+    max-height: 400px;
+    padding: 20px 20px;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .navbar ul li {
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .navbar a.nav-link {
+    display: block;
+    padding: 12px;
+    width: 100%;
+  }
+  
+  .navbar a.nav-link::after {
+    display: none;
+  }
+
+  .navbar button {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 0;
+  }
+
+  section {
+    padding: 70px 25px;
+  }
+  
+  .section-header h2 {
+    font-size: 36px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  footer {
+    padding: 30px 25px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">AM</div>
+    Anasal MEPFS Corp
+  </a>
+
+  <!-- Hamburger Menu Icon -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul>
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="service.html" class="nav-link">Services</a></li>
+    <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+    <li><a href="index.html#about" class="nav-link">About</a></li>
+    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+    <li><button onclick="openLogin()">Admin Login</button></li>
+  </ul>
+</nav>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header fade-in">
+    <h2>Our Services</h2>
+    <p>Comprehensive industrial engineering solutions tailored to your facility's needs</p>
+  </div>
+
+  <div class="services-grid">
+    <a href="fire-protection.html" class="service-card fade-in">
+      <div class="service-icon">🔥</div>
+      <h3>Fire Protection & Life Safety</h3>
+      <p>Kitchen Fire Suppression, Fire Sprinkler System, Fire Alarm System installation and maintenance.</p>
+    </a>
+
+    <a href="mechanical-piping.html" class="service-card fade-in">
+      <div class="service-icon">⚙️</div>
+      <h3>Mechanical & Utility Piping</h3>
+      <p>Expert LPG Piping Installation and Medical Oxygen Piping systems for healthcare and industrial use.</p>
+    </a>
+
+    <a href="hvac-services.html" class="service-card fade-in">
+      <div class="service-icon">🛠️</div>
+      <h3>HVAC / Mechanical Ventilation</h3>
+      <p>Ducting Installation.</p>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Anasal MEPFS Corp</div>
+  <p>&copy; 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-header">
+      <h2>Admin Login</h2>
+    </div>
+    <div class="login-body">
+      <form id="adminForm">
+        <input type="text" placeholder="Username" id="username" required>
+        <input type="password" placeholder="Password" id="password" required>
+        <button type="submit">Login</button>
+        <button type="button" class="close-btn" onclick="closeLogin()">Close</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== CONTENT PROTECTION SCRIPTS ========== 
+// 1. Disable Right-Click
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
+// 2. Disable Keyboard Shortcuts
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'S' || e.key === 'U')) e.preventDefault();
+  if (e.key === 'F12') e.preventDefault();
+}, false);
+// 3. Disable Dragging
+document.addEventListener('dragstart', function(e) { e.preventDefault(); }, false);
+
+// ========== SCROLL REVEAL ==========
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+document.querySelectorAll('.fade-in').forEach(el => { observer.observe(el); });
+
+// ========== MOBILE MENU TOGGLE ==========
+const hamburger = document.getElementById("hamburger");
+const navbar = document.getElementById("navbar");
+
+hamburger.addEventListener("click", () => {
+  navbar.classList.toggle("active");
+});
+
+// Close menu when a link is clicked
+const navLinks = document.querySelectorAll('.navbar ul a, .navbar ul button');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    if(navbar.classList.contains('active')) {
+      navbar.classList.remove('active');
+    }
+  });
+});
+
+// ========== LOGIN MODAL ==========
+const overlay = document.getElementById("loginOverlay");
+
+function openLogin(){
+  overlay.style.display = "flex";
+  document.body.style.overflow = "hidden"; // Prevent background scroll
+} 
+
+function closeLogin(){
+  overlay.style.display = "none";
+  document.body.style.overflow = ""; // Allow scroll
+}
+
+// Close modal when clicking outside the box
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) {
+    closeLogin();
+  }
+});
+</script>
+
+</body>
+</html>

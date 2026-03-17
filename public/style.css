@@ -1,0 +1,278 @@
+:root{
+    --red:#c4161c;
+    --dark:#1a1a1a;
+    --light:#f5f5f5;
+    --gray:#666;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Roboto, sans-serif;
+    background:#fff;
+    color:#222;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:0 20px;
+}
+
+/* NAVBAR */
+
+.navbar{
+    background:var(--dark);
+    position:fixed;
+    width:100%;
+    z-index:1000;
+}
+
+.nav-wrapper{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    height:70px;
+}
+
+.logo{
+    color:#fff;
+    font-family:Oswald,sans-serif;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:25px;
+    font-weight:500;
+    text-transform:uppercase;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:var(--red);
+}
+
+/* HERO */
+
+.hero{
+    height:90vh;
+    background:url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80") center/cover no-repeat;
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+}
+
+.hero-content{
+    position:relative;
+    color:#fff;
+    max-width:700px;
+}
+
+.hero h1{
+    font-family:Oswald,sans-serif;
+    font-size:48px;
+    margin-bottom:15px;
+}
+
+.btn-primary{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 28px;
+    background:var(--red);
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    text-transform:uppercase;
+}
+
+/* SECTIONS */
+
+.section{
+    padding:90px 0;
+}
+
+.light-bg{
+    background:var(--light);
+}
+
+.section-title{
+    font-family:Oswald,sans-serif;
+    font-size:32px;
+    text-align:center;
+    margin-bottom:50px;
+    color:#fff;
+}
+
+.section-title.dark{
+    color:#111;
+}
+
+/* SERVICES */
+
+.services-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:25px;
+}
+
+.service-card{
+    background:#fff;
+    border-top:5px solid var(--red);
+    padding:30px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.service-card h3{
+    margin:10px 0;
+    font-family:Oswald,sans-serif;
+}
+
+.icon{
+    font-size:32px;
+    color:var(--red);
+}
+
+/* GALLERY */
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:15px;
+}
+
+.gallery-grid img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+/* STATS */
+
+.stats-section{
+    background:var(--dark);
+    padding:70px 0;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+    text-align:center;
+    color:#fff;
+}
+
+.stat-box span{
+    font-size:48px;
+    color:var(--red);
+    font-family:Oswald,sans-serif;
+}
+
+/* CERTS */
+
+.cert-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+
+.cert-card{
+    background:#fff;
+    padding:30px;
+    text-align:center;
+    font-weight:600;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* CLIENTS */
+
+.clients-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+}
+
+.client-box{
+    background:#222;
+    color:#fff;
+    height:80px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:14px;
+}
+
+/* CTA */
+
+.cta-section{
+    background:var(--dark);
+    padding:70px 0;
+    text-align:center;
+    color:#fff;
+}
+
+.cta-content h2{
+    font-family:Oswald,sans-serif;
+    margin-bottom:20px;
+}
+
+/* CONTACT */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+}
+
+.contact-form textarea{
+    min-height:120px;
+}
+
+.map-box iframe{
+    width:100%;
+    height:100%;
+    min-height:300px;
+    border:0;
+}
+
+/* FOOTER */
+
+.footer{
+    background:#111;
+    color:#aaa;
+    padding:25px 0;
+    text-align:center;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+}
