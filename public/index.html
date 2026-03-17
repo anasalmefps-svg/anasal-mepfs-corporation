@@ -1499,7 +1499,7 @@ async function loadStats() {
 
 // ========== LOAD PROJECTS ==========
 async function loadProjects() {
-  const res = await fetch("/api/admin/table/projects");
+  const res = await fetch("https://anasal-mepfs-corporation.vercel.app/api/admin/table/projects");
   const rows = await res.json();
   const gal = document.getElementById("projectsGallery");
   gal.innerHTML = "";
@@ -1525,7 +1525,7 @@ async function loadProjects() {
 
 // ========== LOAD CONTACT ==========
 async function loadContact() {
-  const res = await fetch("/api/admin/table/contact_info");
+  const res = await fetch("https://anasal-mepfs-corporation.vercel.app/vapi/admin/table/contact_info");
   const rows = await res.json();
   const box = document.getElementById("contactInfo");
 
@@ -1609,7 +1609,7 @@ document.getElementById("contactForm").addEventListener("submit", async e => {
   e.preventDefault();
   const form = e.target;
   const data = Object.fromEntries(new FormData(form).entries());
-  const res = await fetch("/api/contact", {
+  const res = await fetch("https://anasal-mepfs-corporation.vercel.app/api/contact", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
@@ -1647,7 +1647,7 @@ formAdmin.addEventListener("submit", async function(e) {
   msg.style.color = "#666";
   
   try {
-    const res = await fetch("/api/admin/login", {
+    const res = await fetch("https://anasal-mepfs-corSporation.vercel.app//api/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password })
