@@ -249,3 +249,17 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Server running on http://localhost:" + PORT);
 });
+
+
+
+/* --------- example --------*/
+app.get("/api/admin/projects", (req, res) => {
+  const query = "SELECT * FROM projects"; // your table name
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Database query failed" });
+    }
+    res.json(results);
+  });
+});

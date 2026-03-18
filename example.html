@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard - Projects</title>
+</head>
+<body>
+<h1>Projects Table</h1>
+<table border="1" id="projectsTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Project Name</th>
+      <th>Description</th>
+      <th>Start Date</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function loadProjects() {
+  try {
+    const res = await fetch("https://anasal-mepfs-corporation.vercel.app/api/admin/projects");
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const projects = await res.json();
+
+    const tbody = document.querySelector("#projectsTable tbody");
+    tbody.innerHTML = "";
+
+    projects.forEach(p => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${p.id}</td>
+        <td>${p.name}</td>
+        <td>${p.description}</td>
+        <td>${p.start_date}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+  } catch (err) {
+    console.error("Failed to load projects:", err);
+  }
+}
+
+// Load projects on page load
+loadProjects();
+</script>
+</body>
+</html>
