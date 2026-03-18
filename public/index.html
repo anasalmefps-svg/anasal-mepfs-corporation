@@ -1428,33 +1428,19 @@ footer {
 
 <script>
 // ========== CONTENT PROTECTION SCRIPTS ========== 
+// Note: Right-click disable script removed to allow context menu usage.
 
-// 1. Disable Right-Click Context Menu
-document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-}, false);
-
-// 2. Disable Keyboard Shortcuts (Ctrl+S, Ctrl+U, F12, etc.)
+// 1. Disable Keyboard Shortcuts (Optional: Comment this out if you want full access)
+/*
 document.addEventListener('keydown', function(e) {
-  // Prevent Ctrl+S (Save)
-  if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
-    e.preventDefault();
-  }
-  // Prevent Ctrl+U (View Source)
-  if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-    e.preventDefault();
-  }
-  // Prevent F12 (Developer Tools)
-  if (e.key === 'F12') {
-    e.preventDefault();
-  }
-  // Prevent Ctrl+Shift+I (Developer Tools)
-  if (e.ctrlKey && e.shiftKey && (e.key === 'i' || e.key === 'I')) {
-    e.preventDefault();
-  }
+  if (e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
+  if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) e.preventDefault();
+  if (e.key === 'F12') e.preventDefault();
+  if (e.ctrlKey && e.shiftKey && (e.key === 'i' || e.key === 'I')) e.preventDefault();
 }, false);
+*/
 
-// 3. Disable Dragging
+// 2. Disable Dragging
 document.addEventListener('dragstart', function(e) {
   e.preventDefault();
 }, false);
