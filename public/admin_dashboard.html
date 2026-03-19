@@ -333,7 +333,7 @@ let currentRows = [];
 
 async function loadTables(){
 
-    const res = await fetch("https://anasal-mepfs-corporation.vercel.app/api/admin/tables");
+    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/tables");
     const tables = await res.json();
 
     tablesDiv.innerHTML = "";
@@ -360,7 +360,7 @@ async function loadTableData(table){
     currentTable = table;
     content.innerHTML = "Loading data...";
 
-    const res = await fetch("https://anasal-mepfs-corporation.vercel.app/api/admin/table/" + table);
+    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + table);
     const rows = await res.json();
 
     if(!Array.isArray(rows) || rows.length === 0){
@@ -452,7 +452,7 @@ async function uploadImage(file){
     const formData = new FormData();
     formData.append("image", file);
 
-    const res = await fetch("https://anasal-mepfs-corporation.vercel.app/api/admin/upload",{
+    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/upload",{
         method:"POST",
         body: formData
     });
@@ -493,7 +493,7 @@ async function addRow(){
         }
     }
 
-    const res = await fetch("https://anasal-mepfs-corporation.vercel.app/api/admin/table/" + currentTable,{
+    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + currentTable,{
         method:"POST",
         headers:{ "Content-Type":"application/json" },
         body:JSON.stringify(data)
@@ -534,7 +534,7 @@ async function updateRow(rowIndex){
                 const formData = new FormData();
                 formData.append("image", file);
 
-                const uploadRes = await fetch("https://anasal-mepfs-corporation.vercel.app/api/admin/upload", {
+                const uploadRes = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/upload", {
                     method: "POST",
                     body: formData
                 });
@@ -563,7 +563,7 @@ async function updateRow(rowIndex){
 
     }
 
-    const res = await fetch(`https://anasal-mepfs-corporation.vercel.app/api/admin/table/${currentTable}/${idField}/${id}`,{
+    const res = await fetch(`https://anasal-mepfs-corporation.onrender.com/api/admin/table/${currentTable}/${idField}/${id}`,{
         method:"PUT",
         headers:{ "Content-Type": "application/json" },
         body:JSON.stringify(data)
@@ -583,7 +583,7 @@ async function deleteRow(id){
 
     if(!confirm("Are you sure you want to delete this record?")) return;
 
-    const res = await fetch(`https://anasal-mepfs-corporation.vercel.app/api/admin/table/${currentTable}/${idField}/${id}`,{
+    const res = await fetch(`https://anasal-mepfs-corporation.onrender.com/api/admin/table/${currentTable}/${idField}/${id}`,{
         method:"DELETE"
     });
 
