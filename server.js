@@ -96,7 +96,7 @@ app.post("/api/admin/login", (req, res) => {
     });
 });
 
-/* ---------------- TABLES ---------------- */
+/* ---------------- LIST TABLES ---------------- */
 
 app.get("/api/admin/tables", (req, res) => {
     db.query("SHOW TABLES", (err, results) => {
@@ -107,7 +107,7 @@ app.get("/api/admin/tables", (req, res) => {
     });
 });
 
-/* ---------------- GET TABLE ---------------- */
+/* ---------------- GET TABLE ROWS ---------------- */
 
 app.get("/api/admin/table/:name", (req, res) => {
     const table = req.params.name;
