@@ -264,3 +264,15 @@ app.get("/api/admin/projects", (req, res) => {
   });
 });
 
+/* ------ hakdog testing -------*/
+app.get("/api/admin/projects", (req, res) => {
+  const query = "SELECT * FROM projects"; // your table name
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Database query failed" });
+    }
+    res.json(results);
+  });
+});
+/*------*/
