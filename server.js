@@ -3,6 +3,7 @@ const cors = require("cors");
 const mysql = require("mysql2");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 require("dotenv").config();
 
 const app = express();
@@ -20,7 +21,10 @@ const db = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: Number(process.env.DB_PORT),
-    ssl: { rejectUnauthorized: true }  
+
+    ssl: {
+        ca: fs.readFileSync(path.join(__dirname, "ca.pem"))
+    }
 });
 
 /* ---------------- MULTER CONFIG ---------------- */
@@ -30,17 +34,15 @@ const storage = multer.diskStorage({
         cb(null, path.join(__dirname, "public/uploads"));
     },
     filename: (req, file, cb) => {
-
         const ext = path.extname(file.originalname);
         const name = Date.now() + "-" + Math.round(Math.random() * 1e9) + ext;
-
         cb(null, name);
     }
 });
 
 const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+    limits: { fileSize: 5 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
         if (!file.mimetype.startsWith("image/")) {
             cb(new Error("Only image files are allowed"));
@@ -50,12 +52,9 @@ const upload = multer({
     }
 });
 
-/* -------------------------------------------------
-   IMAGE UPLOAD ENDPOINT
-------------------------------------------------- */
+/* ---------------- IMAGE UPLOAD ---------------- */
 
 app.post("/api/admin/upload", upload.single("image"), (req, res) => {
-
     if (!req.file) {
         return res.status(400).json({ success: false, message: "No file uploaded" });
     }
@@ -66,14 +65,13 @@ app.post("/api/admin/upload", upload.single("image"), (req, res) => {
     });
 });
 
-/* ---------------- login ---------------- */
+/* ---------------- LOGIN ---------------- */
 
 app.post("/api/admin/login", (req, res) => {
-
     const { username, password } = req.body;
 
     if (!username || !password) {
-        return res.status(400).json({ success:false });
+        return res.status(400).json({ success: false });
     }
 
     const sql = `
@@ -84,27 +82,24 @@ app.post("/api/admin/login", (req, res) => {
     `;
 
     db.query(sql, [username], (err, results) => {
-
-        if (err) return res.status(500).json({ success:false });
+        if (err) return res.status(500).json({ success: false });
 
         if (!results.length) {
-            return res.status(401).json({ success:false });
+            return res.status(401).json({ success: false });
         }
 
         if (results[0].password !== password) {
-            return res.status(401).json({ success:false });
+            return res.status(401).json({ success: false });
         }
 
-        res.json({ success:true });
+        res.json({ success: true });
     });
 });
 
-/* ---------------- list tables ---------------- */
+/* ---------------- TABLES ---------------- */
 
 app.get("/api/admin/tables", (req, res) => {
-
     db.query("SHOW TABLES", (err, results) => {
-
         if (err) return res.status(500).json([]);
 
         const tables = results.map(r => Object.values(r)[0]);
@@ -112,10 +107,9 @@ app.get("/api/admin/tables", (req, res) => {
     });
 });
 
-/* ---------------- get table rows ---------------- */
+/* ---------------- GET TABLE ---------------- */
 
 app.get("/api/admin/table/:name", (req, res) => {
-
     const table = req.params.name;
 
     if (!/^[a-zA-Z0-9_]+$/.test(table)) {
@@ -125,7 +119,6 @@ app.get("/api/admin/table/:name", (req, res) => {
     const sql = `SELECT * FROM \`${table}\` LIMIT 200`;
 
     db.query(sql, (err, rows) => {
-
         if (err) {
             console.error("GET TABLE ERROR:", table, err);
             return res.status(500).json({ error: err.message });
@@ -138,18 +131,17 @@ app.get("/api/admin/table/:name", (req, res) => {
 /* ---------------- CREATE ---------------- */
 
 app.post("/api/admin/table/:name", (req, res) => {
-
     const table = req.params.name;
-    const data  = req.body;
+    const data = req.body;
 
     if (!/^[a-zA-Z0-9_]+$/.test(table)) {
-        return res.status(400).json({ message:"Invalid table" });
+        return res.status(400).json({ message: "Invalid table" });
     }
 
     const fields = Object.keys(data);
 
     if (!fields.length) {
-        return res.status(400).json({ message:"No data" });
+        return res.status(400).json({ message: "No data" });
     }
 
     const cols = fields.map(f => `\`${f}\``).join(",");
@@ -162,34 +154,32 @@ app.post("/api/admin/table/:name", (req, res) => {
     `;
 
     db.query(sql, values, (err, result) => {
-
         if (err) {
             console.error(err);
-            return res.status(500).json({ message:"Insert failed" });
+            return res.status(500).json({ message: "Insert failed" });
         }
 
-        res.json({ success:true, insertId: result.insertId });
+        res.json({ success: true, insertId: result.insertId });
     });
 });
 
 /* ---------------- UPDATE ---------------- */
 
 app.put("/api/admin/table/:name/:idField/:id", (req, res) => {
-
     const { name, idField, id } = req.params;
     const data = req.body;
 
     if (
         !/^[a-zA-Z0-9_]+$/.test(name) ||
         !/^[a-zA-Z0-9_]+$/.test(idField)
-    ){
-        return res.status(400).json({ message:"Invalid parameters" });
+    ) {
+        return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const fields = Object.keys(data);
 
     if (!fields.length) {
-        return res.status(400).json({ message:"No data" });
+        return res.status(400).json({ message: "No data" });
     }
 
     const set = fields.map(f => `\`${f}\` = ?`).join(", ");
@@ -203,27 +193,25 @@ app.put("/api/admin/table/:name/:idField/:id", (req, res) => {
     `;
 
     db.query(sql, values, (err) => {
-
         if (err) {
             console.error(err);
-            return res.status(500).json({ message:"Update failed" });
+            return res.status(500).json({ message: "Update failed" });
         }
 
-        res.json({ success:true });
+        res.json({ success: true });
     });
 });
 
 /* ---------------- DELETE ---------------- */
 
 app.delete("/api/admin/table/:name/:idField/:id", (req, res) => {
-
     const { name, idField, id } = req.params;
 
     if (
         !/^[a-zA-Z0-9_]+$/.test(name) ||
         !/^[a-zA-Z0-9_]+$/.test(idField)
-    ){
-        return res.status(400).json({ message:"Invalid parameters" });
+    ) {
+        return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const sql = `
@@ -232,13 +220,27 @@ app.delete("/api/admin/table/:name/:idField/:id", (req, res) => {
     `;
 
     db.query(sql, [id], (err) => {
-
         if (err) {
             console.error(err);
-            return res.status(500).json({ message:"Delete failed" });
+            return res.status(500).json({ message: "Delete failed" });
         }
 
-        res.json({ success:true });
+        res.json({ success: true });
+    });
+});
+
+/* ---------------- CUSTOM API ---------------- */
+
+app.get("/api/admin/projects", (req, res) => {
+    const query = "SELECT * FROM projects";
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Database query failed" });
+        }
+
+        res.json(results);
     });
 });
 
@@ -248,18 +250,4 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log("Server running on http://localhost:" + PORT);
-});
-
-
-
-/* --------- example --------*/
-app.get("/api/admin/projects", (req, res) => {
-  const query = "SELECT * FROM projects"; // your table name
-  db.query(query, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Database query failed" });
-    }
-    res.json(results);
-  });
 });
