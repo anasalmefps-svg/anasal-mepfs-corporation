@@ -507,7 +507,7 @@ async function addRow(){
     loadTableData(currentTable);
 }
 
-/* ---------------- update ---------------- */
+/* ---------------- update (FIXED) ---------------- */
 
 async function updateRow(rowIndex){
 
@@ -542,7 +542,7 @@ async function updateRow(rowIndex){
                 const uploadData = await uploadRes.json();
 
                 if(uploadData.success){
-                    data[col] = uploadData.path;
+                    data[col] = uploadData.url; // FIX: Changed from .path to .url
                 }else{
                     alert("Image upload failed");
                     return;

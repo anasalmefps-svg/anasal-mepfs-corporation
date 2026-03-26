@@ -34,10 +34,6 @@ body {
   color: #222;
   line-height: 1.7;
   overflow-x: hidden;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 h1, h2, h3, h4 {
@@ -807,14 +803,14 @@ section {
   filter: grayscale(0%);
 }
 
-/* ========== FOOTER (PROFESSIONAL REDESIGN) ========== */
+/* ========== FOOTER ========== */
 footer {
   background: var(--darker);
   font-size: 14px;
 }
 
 .footer-main {
-  background: var(--dark); /* Slight contrast */
+  background: var(--dark);
   padding: 80px 60px 60px;
   border-top: 3px solid var(--red);
 }
@@ -827,7 +823,6 @@ footer {
   gap: 60px;
 }
 
-/* Column 1: Brand */
 .footer-col .logo {
   margin-bottom: 25px;
   font-size: 24px;
@@ -862,7 +857,6 @@ footer {
   color: var(--white);
 }
 
-/* Column Titles */
 .footer-title {
   font-size: 18px;
   color: var(--white);
@@ -883,7 +877,6 @@ footer {
   background: var(--red);
 }
 
-/* Links Lists */
 .footer-links-list {
   list-style: none;
 }
@@ -904,7 +897,6 @@ footer {
   transform: translateX(5px);
 }
 
-/* Contact Info in Footer */
 .footer-contact-item {
   display: flex;
   gap: 15px;
@@ -923,7 +915,6 @@ footer {
   line-height: 1.6;
 }
 
-/* Footer Bottom */
 .footer-bottom {
   background: var(--darker);
   padding: 25px 60px;
@@ -1146,7 +1137,6 @@ footer {
     font-size: 48px;
   }
 
-  /* Footer Responsive */
   .footer-main {
     padding: 60px 30px;
   }
@@ -1157,28 +1147,26 @@ footer {
   }
 
   .footer-col:first-child {
-    grid-column: 1 / -1; /* Full width for brand */
+    grid-column: 1 / -1;
   }
   
-  /* ===== ABOUT US RESPONSIVE (UPDATED) ===== */
   .about-wrapper {
-    grid-template-columns: 1fr; /* Stack columns */
+    grid-template-columns: 1fr;
     gap: 50px;
   }
   
   .about-image {
-    height: 300px; /* Adjust height for mobile */
+    height: 300px;
     min-height: 250px;
     margin-bottom: 20px;
   }
   
   .about-image-bg {
     border-left: none; 
-    border-top: 6px solid var(--red); /* Move accent to top */
+    border-top: 6px solid var(--red);
   }
   
   .experience-badge {
-    /* Center the badge on mobile */
     left: 50%;
     transform: translateX(-50%);
     bottom: -20px;
@@ -1194,25 +1182,24 @@ footer {
     text-align: center;
   }
 
-  /* ORGANIZED GRID FOR FEATURES ON MOBILE */
   .about-features {
-    grid-template-columns: 1fr 1fr; /* Keeps 2-column grid on mobile */
-    gap: 15px 10px; /* Adjust gap for tighter fit */
-    justify-items: center; /* Center items within the grid */
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 10px;
+    justify-items: center;
     margin-top: 30px;
   }
   
   .about-features li {
-    flex-direction: column; /* Stack icon over text for neatness */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 13px; /* Slightly smaller font for mobile fit */
+    font-size: 13px;
     padding: 10px;
   }
   
   .about-features li .icon-check {
-    margin-bottom: 5px; /* Space between icon and text */
+    margin-bottom: 5px;
     width: 28px;
     height: 28px;
   }
@@ -1255,7 +1242,6 @@ footer {
   }
 }
 
-/* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1397,11 +1383,9 @@ footer {
   </div>
 </section>
 
-<!-- PROFESSIONAL FOOTER -->
 <footer>
   <div class="footer-main">
     <div class="footer-grid">
-      <!-- Column 1: Brand -->
       <div class="footer-col">
         <div class="logo">
           <div class="logo-icon">AM</div>
@@ -1417,7 +1401,6 @@ footer {
         </div>
       </div>
 
-      <!-- Column 2: Quick Links -->
       <div class="footer-col">
         <h3 class="footer-title">Quick Links</h3>
         <ul class="footer-links-list">
@@ -1429,7 +1412,6 @@ footer {
         </ul>
       </div>
 
-      <!-- Column 3: Services -->
       <div class="footer-col">
         <h3 class="footer-title">Services</h3>
         <ul class="footer-links-list">
@@ -1440,7 +1422,6 @@ footer {
         </ul>
       </div>
 
-      <!-- Column 4: Contact Info -->
       <div class="footer-col">
         <h3 class="footer-title">Contact Info</h3>
         
@@ -1462,7 +1443,6 @@ footer {
     </div>
   </div>
 
-  <!-- Footer Bottom -->
   <div class="footer-bottom">
     <div class="footer-bottom-content">
       <p class="copyright">© 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
@@ -1492,25 +1472,6 @@ footer {
 </div>
 
 <script>
-// ========== CONTENT PROTECTION SCRIPTS ========== 
-// Note: Right-click disable script removed to allow context menu usage.
-
-// 1. Disable Keyboard Shortcuts (Optional: Comment this out if you want full access)
-/*
-document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
-  if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) e.preventDefault();
-  if (e.key === 'F12') e.preventDefault();
-  if (e.ctrlKey && e.shiftKey && (e.key === 'i' || e.key === 'I')) e.preventDefault();
-}, false);
-*/
-
-// 2. Disable Dragging
-document.addEventListener('dragstart', function(e) {
-  e.preventDefault();
-}, false);
-
-
 // ========== SCROLL REVEAL ==========
 const observerOptions = {
   threshold: 0.1,
@@ -1548,24 +1509,33 @@ async function loadStats() {
   startCounters();
 }
 
-// ========== LOAD PROJECTS (WITH IMAGEKIT FIX) ==========
+// ========== LOAD PROJECTS (FIXED) ==========
 async function loadProjects() {
   const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/projects");
   const rows = await res.json();
   const gal = document.getElementById("projectsGallery");
   gal.innerHTML = "";
 
-  const imageKitBase = "https://ik.imagekit.io/anasaluploadimage"; // Base URL for ImageKit
+  const imageKitBase = "https://ik.imagekit.io/anasaluploadimage";
 
   rows.forEach((r, index) => {
     const card = document.createElement('div');
     card.className = 'project-card fade-in';
     card.style.transitionDelay = `${index * 0.1}s`;
     
-    // Use ImageKit base + r.image_url if provided, otherwise fallback
-    const imgUrl = r.image_url
-      ? `${imageKitBase}/${r.image_url}`
-      : "https://via.placeholder.com/400x300?text=No+Image"; // fallback placeholder
+    // --- FIX START ---
+    let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; // Default fallback
+
+    if (r.image_url) {
+        // Check kung kumpleto na ang URL (nagsisimula sa http o https)
+        if (r.image_url.startsWith('http')) {
+            imgUrl = r.image_url;
+        } else {
+            // Kung relative path lang ang nasa DB, idagdag ang base URL
+            imgUrl = `${imageKitBase}/${r.image_url}`;
+        }
+    }
+    // --- FIX END ---
 
     card.innerHTML = `
       <div class="project-image-bg" style="background-image: url('${imgUrl}');" title="${r.title || ''}"></div>
