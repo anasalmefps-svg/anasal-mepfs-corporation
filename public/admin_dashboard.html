@@ -19,8 +19,105 @@
 body{
     margin:0;
     font-family: 'Roboto', sans-serif;
-    background: var(--light);
+    background: var(--dark); /* Default background for login screen */
     color: var(--dark);
+}
+
+/* --- LOGIN SCREEN STYLES --- */
+.login-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.login-box {
+    width: 420px;
+    max-width: 90%;
+    background: var(--white);
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--primary);
+}
+
+.login-header {
+    background: var(--dark-lighter);
+    padding: 30px;
+    text-align: center;
+}
+
+.login-header h2 {
+    color: var(--white);
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.login-body { padding: 40px; }
+
+.login-body input {
+    width: 100%;
+    padding: 18px;
+    margin-bottom: 20px;
+    border: 2px solid #e0e0e0;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.login-body input:focus {
+    outline: none;
+    border-color: var(--dark);
+}
+
+.login-body button {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary);
+    border: none;
+    color: var(--white);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.login-body button:hover {
+    background: var(--primary-dark);
+}
+
+#errorMsg {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    padding: 12px;
+    background: var(--light);
+    color: var(--steel);
+    display: none;
+}
+
+/* --- DASHBOARD STYLES (Hidden by default) --- */
+#appContainer {
+    display: none; /* Hidden until logged in */
+    height: 100vh;
 }
 
 /* Header */
@@ -69,7 +166,7 @@ body{
 
 .container{
     display:flex;
-    height:calc(100vh - 64px);
+    height:calc(100vh - 60px);
 }
 
 /* Sidebar */
@@ -295,39 +392,110 @@ tr:hover {
 
 <body>
 
-<div class="header">
-    <div class="header-logo">
-        <div class="logo-icon">AMC</div>
-        <div class="header-title">
-            Anasal MEPFS
-            <span>Admin Dashboard</span>
+<!-- LOGIN CONTAINER -->
+<div class="login-container" id="loginContainer">
+    <div class="login-box">
+        <div class="login-header">
+            <h2>Admin Login</h2>
+        </div>
+        <div class="login-body">
+            <form id="adminForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div id="errorMsg"></div>
         </div>
     </div>
 </div>
 
-<div class="container">
-
-    <div class="sidebar">
-        <h3>Database Tables</h3>
-        <div id="tables"></div>
-    </div>
-
-    <div class="main">
-        <div id="content" class="empty">
-            Select a table from the sidebar to manage data.
+<!-- APP CONTAINER (DASHBOARD) -->
+<div id="appContainer">
+    <div class="header">
+        <div class="header-logo">
+            <div class="logo-icon">AMC</div>
+            <div class="header-title">
+                Anasal MEPFS
+                <span>Admin Dashboard</span>
+            </div>
         </div>
+        <div style="color: #aaa; font-size: 12px; cursor: pointer;" onclick="logout()">Log Out</div>
     </div>
 
+    <div class="container">
+
+        <div class="sidebar">
+            <h3>Database Tables</h3>
+            <div id="tables"></div>
+        </div>
+
+        <div class="main">
+            <div id="content" class="empty">
+                Select a table from the sidebar to manage data.
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <script>
 const tablesDiv = document.getElementById("tables");
 const content   = document.getElementById("content");
+const loginContainer = document.getElementById("loginContainer");
+const appContainer = document.getElementById("appContainer");
 
 let currentTable = "";
 let idField = "";
 let currentCols = [];
 let currentRows = [];
+
+// Check if user is already logged in (using sessionStorage)
+if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+    showDashboard();
+}
+
+// --- LOGIN LOGIC ---
+document.getElementById("adminForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+    
+    errorMsg.style.display = "block";
+    errorMsg.style.color = "#666";
+    errorMsg.textContent = "Authenticating...";
+
+    try {
+        const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        
+        if (res.ok && data.success) {
+            sessionStorage.setItem('adminLoggedIn', 'true'); // Set session flag
+            showDashboard();
+        } else {
+            errorMsg.style.color = "red";
+            errorMsg.textContent = data.message || "Login failed";
+        }
+    } catch {
+        errorMsg.style.color = "red";
+        errorMsg.textContent = "Server error. Please try again.";
+    }
+});
+
+function showDashboard() {
+    loginContainer.style.display = "none";
+    appContainer.style.display = "block";
+    loadTables();
+}
+
+function logout() {
+    sessionStorage.removeItem('adminLoggedIn');
+    location.reload();
+}
 
 /* ---------------- tables list ---------------- */
 
@@ -594,8 +762,6 @@ async function deleteRow(id){
 
     loadTableData(currentTable);
 }
-
-loadTables();
 </script>
 </body>
 </html>

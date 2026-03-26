@@ -66,6 +66,8 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
+  color: var(--white);
 }
 
 .logo-icon {
@@ -117,23 +119,6 @@ h1, h2, h3, h4 {
 
 .navbar a:hover::after {
   transform: scaleX(1);
-}
-
-.navbar button {
-  font-family: Bebas Neue, sans-serif;
-  background: transparent;
-  color: var(--white);
-  border: 2px solid var(--red);
-  padding: 10px 24px;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-}
-
-.navbar button:hover {
-  background: var(--red);
 }
 
 /* ========== HAMBURGER MENU ========== */
@@ -950,103 +935,6 @@ footer {
   color: var(--red);
 }
 
-
-/* ========== LOGIN OVERLAY ========== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-  backdrop-filter: blur(10px);
-}
-
-.login-box {
-  width: 420px;
-  max-width: 90%;
-  background: var(--white);
-  position: relative;
-}
-
-.login-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: var(--red);
-}
-
-.login-header {
-  background: var(--dark);
-  padding: 30px;
-  text-align: center;
-}
-
-.login-header h2 {
-  color: var(--white);
-  font-size: 24px;
-  letter-spacing: 3px;
-}
-
-.login-body {
-  padding: 40px;
-}
-
-.login-body input {
-  width: 100%;
-  padding: 18px;
-  margin-bottom: 20px;
-  border: 2px solid #e0e0e0;
-  font-size: 14px;
-  font-family: Roboto, sans-serif;
-  transition: border-color 0.3s ease;
-}
-
-.login-body input:focus {
-  outline: none;
-  border-color: var(--dark);
-}
-
-.login-body button {
-  width: 100%;
-  padding: 18px;
-  background: var(--red);
-  border: none;
-  color: var(--white);
-  font-family: Bebas Neue, sans-serif;
-  text-transform: uppercase;
-  font-size: 16px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-bottom: 10px;
-}
-
-.login-body button:hover {
-  background: var(--red-dark);
-}
-
-.btn-close {
-  background: var(--dark) !important;
-}
-
-.btn-close:hover {
-  background: #333 !important;
-}
-
-#msg {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 13px;
-  padding: 12px;
-  background: var(--light);
-  color: var(--gray);
-}
-
 /* ========== ANIMATIONS ========== */
 .fade-in {
   opacity: 0;
@@ -1106,11 +994,6 @@ footer {
 
   .navbar a::after {
     display: none; 
-  }
-
-  .navbar button {
-    width: 100%;
-    margin-top: 10px;
   }
 
   .hero {
@@ -1256,10 +1139,10 @@ footer {
 <body>
 
 <nav class="navbar" id="navbar">
-  <div class="logo">
+  <a href="#" class="logo">
     <div class="logo-icon">AMC</div>
     Anasal MEPFS Corp
-  </div>
+  </a>
   
   <div class="hamburger" id="hamburger">
     <span></span>
@@ -1273,7 +1156,6 @@ footer {
     <li><a href="#projects">Projects</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><button onclick="openLogin()">Admin Login</button></li>
   </ul>
 </nav>
 
@@ -1453,23 +1335,6 @@ footer {
   </div>
 </footer>
 
-<div class="overlay" id="loginOverlay">
-  <div class="login-box">
-    <div class="login-header">
-      <h2>Admin Login</h2>
-    </div>
-    <div class="login-body">
-      <form id="adminForm">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-        <button type="button" class="btn-close" onclick="closeLogin()">Close</button>
-        <p id="msg"></p>
-      </form>
-    </div>
-  </div>
-</div>
-
 <script>
 // ========== SCROLL REVEAL ==========
 const observerOptions = {
@@ -1648,63 +1513,6 @@ document.getElementById("contactForm").addEventListener("submit", async e => {
   }
 });
 
-// ========== LOGIN ==========
-const overlay = document.getElementById("loginOverlay");
-const formAdmin = document.getElementById("adminForm");
-const msg = document.getElementById("msg");
-
-function openLogin() {
-  overlay.style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-
-function closeLogin() {
-  overlay.style.display = "none";
-  document.body.style.overflow = "";
-  msg.textContent = "";
-}
-
-formAdmin.addEventListener("submit", async function(e) {
-  e.preventDefault();
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  msg.textContent = "Authenticating...";
-  msg.style.color = "#666";
-  
-  try {
-    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
-    const data = await res.json();
-    
-    if (res.ok && data.success) {
-      window.location.href = "admin_dashboard.html";
-    } else {
-      msg.style.color = "red";
-      msg.textContent = data.message || "Login failed";
-    }
-  } catch {
-    msg.style.color = "red";
-    msg.textContent = "Server error. Please try again.";
-  }
-});
-
-// Close login on overlay click
-overlay.addEventListener('click', (e) => {
-  if (e.target === overlay) {
-    closeLogin();
-  }
-});
-
-// Close login on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && overlay.style.display === 'flex') {
-    closeLogin();
-  }
-});
-
 // ========== MOBILE MENU TOGGLE ==========
 const hamburger = document.getElementById("hamburger");
 const navbar = document.getElementById("navbar");
@@ -1714,7 +1522,7 @@ hamburger.addEventListener("click", () => {
 });
 
 // Close menu when a link is clicked
-const navLinks = document.querySelectorAll('.navbar ul a, .navbar ul button');
+const navLinks = document.querySelectorAll('.navbar ul a');
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
     if(navbar.classList.contains('active')) {

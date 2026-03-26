@@ -116,21 +116,6 @@ h1, h2, h3, h4 {
 .navbar a.nav-link:hover { color: var(--white); }
 .navbar a.nav-link:hover::after { transform: scaleX(1); }
 
-.navbar button {
-  font-family: Bebas Neue, sans-serif;
-  background: transparent;
-  color: var(--white);
-  border: 2px solid var(--red);
-  padding: 10px 24px;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-}
-
-.navbar button:hover { background: var(--red); }
-
 /* ========== HAMBURGER MENU ========== */
 .hamburger {
   display: none;
@@ -355,66 +340,6 @@ h1, h2, h3, h4 {
 
 .cta-strip a:hover { background: var(--red-dark); }
 
-/* ========== LOGIN MODAL ========== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-  backdrop-filter: blur(5px);
-}
-
-.login-box {
-  width: 400px;
-  max-width: 90%;
-  background: var(--white);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-}
-
-.login-header {
-  background: var(--dark);
-  color: var(--white);
-  padding: 25px;
-  text-align: center;
-}
-
-.login-body { padding: 40px; }
-
-.login-body input {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 2px solid #e0e0e0;
-  font-family: Roboto, sans-serif;
-  font-size: 14px;
-}
-
-.login-body input:focus {
-  outline: none;
-  border-color: var(--dark);
-}
-
-.login-body button {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  background: var(--red);
-  color: var(--white);
-  font-family: Bebas Neue;
-  font-size: 16px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: background 0.3s;
-  margin-bottom: 10px;
-}
-
-.login-body button:hover { background: var(--red-dark); }
-.close-btn { background: var(--dark) !important; }
-.close-btn:hover { background: #333 !important; }
-
 /* ========== FOOTER ========== */
 footer {
   background: var(--darker);
@@ -603,7 +528,6 @@ footer {
   .navbar ul li { width: 100%; margin: 5px 0; }
   .navbar a.nav-link { display: block; padding: 12px; width: 100%; }
   .navbar a.nav-link::after { display: none; }
-  .navbar button { width: 100%; margin-top: 10px; }
 
   .content-section { padding: 50px 25px; }
   .main-card { grid-template-columns: 1fr; gap: 30px; }
@@ -686,7 +610,6 @@ footer {
     <li><a href="index.html#projects" class="nav-link">Projects</a></li>
     <li><a href="index.html#about" class="nav-link">About</a></li>
     <li><a href="index.html#contact" class="nav-link">Contact</a></li>
-    <li><button onclick="openLogin()">Admin Login</button></li>
   </ul>
 </nav>
 
@@ -941,23 +864,6 @@ footer {
   </div>
 </footer>
 
-<!-- LOGIN MODAL -->
-<div class="overlay" id="loginOverlay">
-  <div class="login-box">
-    <div class="login-header">
-      <h2>Admin Login</h2>
-    </div>
-    <div class="login-body">
-      <form id="adminForm">
-        <input type="text" placeholder="Username" id="username" required>
-        <input type="password" placeholder="Password" id="password" required>
-        <button type="submit">Login</button>
-        <button type="button" class="close-btn" onclick="closeLogin()">Close</button>
-      </form>
-    </div>
-  </div>
-</div>
-
 <script>
 // ========== CONTENT PROTECTION SCRIPTS ========== 
 // 1. Disable Right-Click
@@ -990,32 +896,13 @@ hamburger.addEventListener("click", () => {
   navbar.classList.toggle("active");
 });
 
-const navLinks = document.querySelectorAll('.navbar ul a, .navbar ul button');
+const navLinks = document.querySelectorAll('.navbar ul a');
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
     if(navbar.classList.contains('active')) {
       navbar.classList.remove('active');
     }
   });
-});
-
-// ========== LOGIN MODAL ==========
-const overlay = document.getElementById("loginOverlay");
-
-function openLogin(){
-  overlay.style.display = "flex";
-  document.body.style.overflow = "hidden";
-} 
-
-function closeLogin(){
-  overlay.style.display = "none";
-  document.body.style.overflow = "";
-}
-
-overlay.addEventListener('click', (e) => {
-  if (e.target === overlay) {
-    closeLogin();
-  }
 });
 </script>
 </body>
