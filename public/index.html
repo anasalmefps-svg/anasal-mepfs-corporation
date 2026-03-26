@@ -1548,27 +1548,34 @@ async function loadStats() {
   startCounters();
 }
 
-// ========== LOAD PROJECTS ==========
+// ========== LOAD PROJECTS (WITH IMAGEKIT FIX) ==========
 async function loadProjects() {
   const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/projects");
   const rows = await res.json();
   const gal = document.getElementById("projectsGallery");
   gal.innerHTML = "";
 
+  const imageKitBase = "https://ik.imagekit.io/anasaluploadimage"; // Base URL for ImageKit
+
   rows.forEach((r, index) => {
     const card = document.createElement('div');
     card.className = 'project-card fade-in';
     card.style.transitionDelay = `${index * 0.1}s`;
     
-    // SECURITY UPDATE: Using background-image div instead of <img> tag
+    // Use ImageKit base + r.image_url if provided, otherwise fallback
+    const imgUrl = r.image_url
+      ? `${imageKitBase}/${r.image_url}`
+      : "https://via.placeholder.com/400x300?text=No+Image"; // fallback placeholder
+
     card.innerHTML = `
-      <div class="project-image-bg" style="background-image: url('${r.image_url}');" title="${r.title || ''}"></div>
+      <div class="project-image-bg" style="background-image: url('${imgUrl}');" title="${r.title || ''}"></div>
       <span class="project-tag">MEPFS</span>
       <div class="project-overlay">
         <h4>${r.title || ""}</h4>
         <p>${r.description || ""}</p>
       </div>
     `;
+    
     gal.appendChild(card);
     revealObserver.observe(card);
   });
