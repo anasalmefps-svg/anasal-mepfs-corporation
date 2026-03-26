@@ -1159,6 +1159,71 @@ footer {
   .footer-col:first-child {
     grid-column: 1 / -1; /* Full width for brand */
   }
+  
+  /* ===== ABOUT US RESPONSIVE (UPDATED) ===== */
+  .about-wrapper {
+    grid-template-columns: 1fr; /* Stack columns */
+    gap: 50px;
+  }
+  
+  .about-image {
+    height: 300px; /* Adjust height for mobile */
+    min-height: 250px;
+    margin-bottom: 20px;
+  }
+  
+  .about-image-bg {
+    border-left: none; 
+    border-top: 6px solid var(--red); /* Move accent to top */
+  }
+  
+  .experience-badge {
+    /* Center the badge on mobile */
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -20px;
+    right: auto;
+    padding: 15px 25px;
+  }
+  
+  .exp-year {
+    font-size: 32px;
+  }
+  
+  .about-content {
+    text-align: center;
+  }
+
+  /* ORGANIZED GRID FOR FEATURES ON MOBILE */
+  .about-features {
+    grid-template-columns: 1fr 1fr; /* Keeps 2-column grid on mobile */
+    gap: 15px 10px; /* Adjust gap for tighter fit */
+    justify-items: center; /* Center items within the grid */
+    margin-top: 30px;
+  }
+  
+  .about-features li {
+    flex-direction: column; /* Stack icon over text for neatness */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 13px; /* Slightly smaller font for mobile fit */
+    padding: 10px;
+  }
+  
+  .about-features li .icon-check {
+    margin-bottom: 5px; /* Space between icon and text */
+    width: 28px;
+    height: 28px;
+  }
+  
+  .section-header {
+    text-align: center;
+  }
+  
+  .section-header p {
+    margin: 15px auto 0;
+  }
 }
 
 @media (max-width: 600px) {
