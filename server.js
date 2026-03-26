@@ -8,10 +8,13 @@ require("dotenv").config();
 const ImageKit = require("imagekit");
 
 const app = express();
+
+// ---------------- MIDDLEWARE ----------------
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public"))); // Serve HTML, CSS, JS, images
 
-/* ---------------- DB CONNECTION ---------------- */
+// ---------------- DATABASE ----------------
 const db = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -23,64 +26,56 @@ const db = mysql.createPool({
     }
 });
 
-/* ---------------- MULTER CONFIG (memory storage for ImageKit) ---------------- */
+// ---------------- MULTER (Memory Storage for ImageKit) ----------------
 const upload = multer({
-    storage: multer.memoryStorage(), // keep file in memory
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB max
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
     fileFilter: (req, file, cb) => {
-        if (!file.mimetype.startsWith("image/")) {
-            cb(new Error("Only image files are allowed"));
-        } else {
-            cb(null, true);
-        }
+        if (!file.mimetype.startsWith("image/")) cb(new Error("Only images allowed"));
+        else cb(null, true);
     }
 });
 
-/* ---------------- IMAGEKIT CONFIG ---------------- */
+// ---------------- IMAGEKIT ----------------
 const imagekit = new ImageKit({
     publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT // e.g. https://ik.imagekit.io/anasaluploadimage
 });
 
-/* ---------------- IMAGE UPLOAD ROUTE ---------------- */
+// ---------------- IMAGE UPLOAD ----------------
 app.post("/api/admin/upload", upload.single("image"), async (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(400).json({ success: false, message: "No file uploaded" });
-        }
+        if (!req.file) return res.status(400).json({ success: false, message: "No file uploaded" });
 
         const result = await imagekit.upload({
             file: req.file.buffer,
             fileName: Date.now() + "-" + req.file.originalname,
-            folder: "uploads"
+            folder: "/uploads"
         });
 
-        res.json({
-            success: true,
-            path: result.url // save this URL to your database
-        });
+        // Save the result.url in your database if needed
+        res.json({ success: true, url: result.url });
     } catch (err) {
         console.error("ImageKit upload error:", err);
         res.status(500).json({ success: false, message: "Upload failed" });
     }
 });
 
-/* ---------------- LOGIN ---------------- */
+// ---------------- ADMIN LOGIN ----------------
 app.post("/api/admin/login", (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) return res.status(400).json({ success: false });
 
-    const sql = `SELECT id, username, password FROM admins WHERE username = ? LIMIT 1`;
+    const sql = "SELECT id, username, password FROM admins WHERE username = ? LIMIT 1";
     db.query(sql, [username], (err, results) => {
         if (err) return res.status(500).json({ success: false });
         if (!results.length || results[0].password !== password) return res.status(401).json({ success: false });
-
         res.json({ success: true });
     });
 });
 
-/* ---------------- LIST TABLES ---------------- */
+// ---------------- LIST TABLES ----------------
 app.get("/api/admin/tables", (req, res) => {
     db.query("SHOW TABLES", (err, results) => {
         if (err) return res.status(500).json([]);
@@ -89,7 +84,7 @@ app.get("/api/admin/tables", (req, res) => {
     });
 });
 
-/* ---------------- GET TABLE ROWS ---------------- */
+// ---------------- GET TABLE ROWS ----------------
 app.get("/api/admin/table/:name", (req, res) => {
     const table = req.params.name;
     if (!/^[a-zA-Z0-9_]+$/.test(table)) return res.status(400).json({ error: "Invalid table name" });
@@ -101,7 +96,7 @@ app.get("/api/admin/table/:name", (req, res) => {
     });
 });
 
-/* ---------------- CREATE ROW ---------------- */
+// ---------------- CREATE ROW ----------------
 app.post("/api/admin/table/:name", (req, res) => {
     const table = req.params.name;
     const data = req.body;
@@ -118,7 +113,7 @@ app.post("/api/admin/table/:name", (req, res) => {
     });
 });
 
-/* ---------------- UPDATE ROW ---------------- */
+// ---------------- UPDATE ROW ----------------
 app.put("/api/admin/table/:name/:idField/:id", (req, res) => {
     const { name, idField, id } = req.params;
     const data = req.body;
@@ -136,7 +131,7 @@ app.put("/api/admin/table/:name/:idField/:id", (req, res) => {
     });
 });
 
-/* ---------------- DELETE ROW ---------------- */
+// ---------------- DELETE ROW ----------------
 app.delete("/api/admin/table/:name/:idField/:id", (req, res) => {
     const { name, idField, id } = req.params;
     if (!/^[a-zA-Z0-9_]+$/.test(name) || !/^[a-zA-Z0-9_]+$/.test(idField)) {
@@ -150,7 +145,7 @@ app.delete("/api/admin/table/:name/:idField/:id", (req, res) => {
     });
 });
 
-/* ---------------- CUSTOM API ---------------- */
+// ---------------- CUSTOM APIS ----------------
 app.get("/api/admin/projects", (req, res) => {
     db.query("SELECT * FROM projects", (err, results) => {
         if (err) return res.status(500).json({ error: "Database query failed" });
@@ -158,8 +153,27 @@ app.get("/api/admin/projects", (req, res) => {
     });
 });
 
-/* ---------------- START SERVER ---------------- */
+app.get("/api/admin/table/stats", (req, res) => {
+    db.query("SELECT label, value FROM stats", (err, results) => {
+        if (err) return res.status(500).json([]);
+        res.json(results);
+    });
+});
+
+app.get("/api/admin/table/contact_info", (req, res) => {
+    db.query("SELECT * FROM contact_info LIMIT 1", (err, results) => {
+        if (err) return res.status(500).json([]);
+        res.json(results);
+    });
+});
+
+// ---------------- STATIC HTML ROUTES (optional friendly URLs) ----------------
+app.get("/admin_dashboard", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/admin_dashboard.html"));
+});
+
+// ---------------- START SERVER ----------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log("Server running on http://localhost:" + PORT);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
