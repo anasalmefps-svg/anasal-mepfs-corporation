@@ -1331,22 +1331,24 @@ footer {
       </div>
 
       <p class="about-lead">
-        ANASAL MEPFS CORP. was formed in response to the growing demand for mechanical services and equipment.
+        The company was established and started operating in 2010 at 5 Katipunan Ave., Goodwill Homes 1, Brgy. San Bartolome, Quezon City. ANASAL MEPFS CORP. came about in response to the growing demand for Mechanical services and equipment.
       </p>
 
       <p class="about-text">
-        The company was established and started operating in 2010 at 5 Katipunan Ave., Goodwill Homes 1, Brgy. San Bartolome, Quezon City. We are confident in providing its clients with reliable service systems that enable businesses to operate safely and efficiently.
+        We are confident in providing our clients with good service systems, enabling businesses to run safely and efficiently. We aim to implement long-term relationships based on safety, quality, and timely service. Our customers are guaranteed to receive only high-quality products and professional services.
       </p>
-
+      
       <p class="about-text">
-        With years of experience, our customers are guaranteed to receive high-quality products and professional engineering services tailored to industrial standards.
+        We are committed to maintaining professionalism, integrity, honesty, and fairness in our relationships with our suppliers, subcontractors, professional associates, and clients.
       </p>
 
       <ul class="about-features">
-        <li><i class="icon-check">✓</i> Professional Engineering Services</li>
-        <li><i class="icon-check">✓</i> Reliable Service Systems</li>
-        <li><i class="icon-check">✓</i> High-Quality Equipment</li>
-        <li><i class="icon-check">✓</i> Safety & Efficiency Focused</li>
+        <li><i class="icon-check">✓</i> Medical Gas line Installation</li>
+        <li><i class="icon-check">✓</i> LPG Installation System</li>
+        <li><i class="icon-check">✓</i> Kitchen Hood Fire Suppression</li>
+        <li><i class="icon-check">✓</i> Testing & Maintenance</li>
+        <li><i class="icon-check">✓</i> Free Inspection</li>
+        <li><i class="icon-check">✓</i> High-Quality Products</li>
       </ul>
     </div>
   </div>
@@ -1523,19 +1525,17 @@ async function loadProjects() {
     card.className = 'project-card fade-in';
     card.style.transitionDelay = `${index * 0.1}s`;
     
-    // --- FIX START ---
     let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; // Default fallback
 
     if (r.image_url) {
-        // Check kung kumpleto na ang URL (nagsisimula sa http o https)
+        // Check if URL is complete
         if (r.image_url.startsWith('http')) {
             imgUrl = r.image_url;
         } else {
-            // Kung relative path lang ang nasa DB, idagdag ang base URL
+            // If relative path, add base URL
             imgUrl = `${imageKitBase}/${r.image_url}`;
         }
     }
-    // --- FIX END ---
 
     card.innerHTML = `
       <div class="project-image-bg" style="background-image: url('${imgUrl}');" title="${r.title || ''}"></div>
