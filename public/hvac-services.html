@@ -7,9 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
-
-/* SAME DESIGN AS YOUR ORIGINAL PAGE */
-
+/* ========== VARIABLES & RESET ========== */
 :root {
   --red: #c4161c;
   --red-dark: #a01218;
@@ -21,424 +19,846 @@
   --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-font-family:Roboto,sans-serif;
-background:white;
-color:#222;
-line-height:1.7;
-padding-top:70px;
-user-select:none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1,h2,h3,h4{
-font-family:Bebas Neue;
-text-transform:uppercase;
-letter-spacing:2px;
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Roboto, sans-serif;
+  background: var(--white);
+  color: #222;
+  line-height: 1.7;
+  padding-top: 70px;
+  /* CSS Protection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-/* NAVBAR */
-
-.navbar{
-background:var(--darker);
-color:white;
-padding:0 50px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-position:fixed;
-top:0;
-left:0;
-right:0;
-z-index:1000;
-height:70px;
-border-bottom:3px solid var(--red);
+h1, h2, h3, h4 {
+  font-family: Bebas Neue, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.logo{
-font-size:28px;
-letter-spacing:3px;
-display:flex;
-align-items:center;
-gap:12px;
-text-decoration:none;
-color:white;
+/* ========== NAVBAR ========== */
+.navbar {
+  background: var(--darker);
+  color: var(--white);
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: 70px;
+  border-bottom: 3px solid var(--red);
 }
 
-.logo-icon{
-width:40px;
-height:40px;
-background:var(--red);
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
+.logo {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--white);
 }
 
-.navbar ul{
-list-style:none;
-display:flex;
-gap:10px;
-align-items:center;
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-.navbar a{
-color:#aaa;
-text-decoration:none;
-font-size:13px;
-padding:12px 18px;
-text-transform:uppercase;
-letter-spacing:1.5px;
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.navbar a:hover{
-color:white;
+.navbar a.nav-link {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 18px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-weight: 500;
 }
 
-.navbar button{
-font-family:Bebas Neue;
-background:transparent;
-color:white;
-border:2px solid var(--red);
-padding:10px 24px;
-cursor:pointer;
+.navbar a.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-.navbar button:hover{
-background:var(--red);
+.navbar a.nav-link:hover { color: var(--white); }
+.navbar a.nav-link:hover::after { transform: scaleX(1); }
+
+.navbar button {
+  font-family: Bebas Neue, sans-serif;
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--red);
+  padding: 10px 24px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
 }
 
-/* HERO */
+.navbar button:hover { background: var(--red); }
 
-.page-hero{
-height:400px;
-background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
-url('image/Exengo Installation AB on Brownbook_net.jpg');
-background-size:cover;
-background-position:center;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:white;
+/* ========== HAMBURGER MENU ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 1001;
 }
 
-.hero-text{
-border:3px solid var(--red);
-padding:30px 50px;
-background:rgba(0,0,0,0.3);
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 3px;
+  transition: all 0.3s ease;
 }
 
-.hero-text h1{
-font-size:60px;
-margin-bottom:10px;
+.navbar.active .hamburger span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.navbar.active .hamburger span:nth-child(2) { opacity: 0; }
+.navbar.active .hamburger span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* ========== HERO ========== */
+.page-hero {
+  height: 400px;
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('image/Exengo Installation AB on Brownbook_net.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  position: relative;
 }
 
-.hero-text p{
-color:#ddd;
+.page-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--red);
 }
 
-/* CONTENT */
-
-.content-section{
-padding:80px 60px;
-max-width:1400px;
-margin:auto;
+.hero-text {
+  border: 3px solid var(--red);
+  padding: 30px 50px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
 }
 
-.main-card{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center;
+.hero-text h1 {
+  font-size: 60px;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
 }
 
-.main-image{
-min-height:450px;
-background-size:cover;
-background-position:center;
-border-left:5px solid var(--red);
-box-shadow:var(--card-shadow);
-pointer-events:none;
+.hero-text p {
+  font-size: 18px;
+  color: #ddd;
+  letter-spacing: 1px;
 }
 
-.text-content h2{
-font-size:36px;
-margin-bottom:20px;
-border-bottom:2px solid #eee;
-padding-bottom:10px;
+.breadcrumb {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  color: #aaa;
+  font-size: 13px;
 }
 
-.text-content p{
-color:#666;
-margin-bottom:20px;
-font-size:15px;
+.breadcrumb a { color: var(--white); text-decoration: none; }
+
+/* ========== CONTENT ========== */
+.content-section {
+  padding: 80px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.feature-list{
-list-style:none;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+.main-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
 }
 
-.feature-list li{
-padding-left:25px;
-position:relative;
+/* Alternating Layout Logic */
+.content-section:nth-child(even) .main-card {
+  direction: rtl;
 }
 
-.feature-list li::before{
-content:'✔';
-position:absolute;
-left:0;
-color:var(--red);
+.content-section:nth-child(even) .text-content {
+  direction: ltr;
 }
 
-/* INFO STRIP */
-
-.info-strip{
-background:var(--light);
-padding:80px 60px;
+.main-image {
+  min-height: 450px;
+  background-size: cover;
+  background-position: center;
+  border-left: 5px solid var(--red);
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.strip-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
+.content-section:nth-child(even) .main-image {
+  border-left: none;
+  border-right: 5px solid var(--red);
 }
 
-.strip-box{
-background:white;
-padding:35px;
-border-top:4px solid var(--red);
-text-align:center;
-box-shadow:var(--card-shadow);
+.text-content h2 {
+  font-size: 36px;
+  color: var(--dark);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
 }
 
-.strip-icon{
-font-size:40px;
-color:var(--red);
-margin-bottom:15px;
+.text-content p {
+  color: var(--gray);
+  margin-bottom: 20px;
+  font-size: 15px;
 }
 
-/* CTA */
-
-.cta-strip{
-background:var(--dark);
-color:white;
-text-align:center;
-padding:60px;
+.feature-list {
+  list-style: none;
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.cta-strip h3{
-font-size:34px;
-margin-bottom:10px;
+.feature-list li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #444;
 }
 
-.cta-strip a{
-display:inline-block;
-margin-top:20px;
-padding:14px 30px;
-background:var(--red);
-color:white;
-text-decoration:none;
-font-family:Bebas Neue;
-font-size:18px;
+.feature-list li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-weight: bold;
 }
 
-.cta-strip a:hover{
-background:var(--red-dark);
+/* ========== INFO STRIP ========== */
+.info-strip {
+  background: var(--light);
+  padding: 80px 60px;
+  margin-top: 40px;
 }
 
-/* FOOTER */
-
-footer{
-background:var(--darker);
-color:#777;
-padding:40px;
-text-align:center;
-border-top:3px solid var(--red);
+.strip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+.strip-box {
+  background: var(--white);
+  padding: 35px;
+  border-top: 4px solid var(--red);
+  text-align: center;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease;
+}
+
+.strip-box:hover { transform: translateY(-5px); }
+
+.strip-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+  color: var(--red);
+}
+
+.strip-box h4 {
+  font-size: 22px;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.strip-box p { font-size: 14px; color: var(--gray); }
+
+/* ========== CTA ========== */
+.cta-strip {
+  background: var(--dark);
+  color: var(--white);
+  text-align: center;
+  padding: 60px;
+}
+
+.cta-strip h3 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.cta-strip p { opacity: 0.8; }
+
+.cta-strip a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 30px;
+  background: var(--red);
+  color: var(--white);
+  text-decoration: none;
+  font-family: Bebas Neue;
+  font-size: 18px;
+  letter-spacing: 2px;
+  transition: background 0.3s ease;
+}
+
+.cta-strip a:hover { background: var(--red-dark); }
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--darker);
+  font-size: 14px;
+}
+
+.footer-main {
+  background: var(--dark);
+  padding: 80px 60px 60px;
+  border-top: 3px solid var(--red);
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 60px;
+}
+
+.footer-col .logo {
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+.footer-desc {
+  color: #888;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--darker);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.social-icon:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+.footer-title {
+  font-size: 18px;
+  color: var(--white);
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--red);
+}
+
+.footer-links-list {
+  list-style: none;
+}
+
+.footer-links-list li {
+  margin-bottom: 12px;
+}
+
+.footer-links-list a {
+  color: #888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer-links-list a:hover {
+  color: var(--white);
+  transform: translateX(5px);
+}
+
+.footer-contact-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.footer-contact-item span {
+  color: var(--red);
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.footer-contact-item p {
+  color: #888;
+  line-height: 1.6;
+}
+
+.footer-bottom {
+  background: var(--darker);
+  padding: 25px 60px;
+  border-top: 1px solid #222;
+}
+
+.footer-bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.copyright {
+  color: #555;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-bottom-links a {
+  color: #555;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: var(--red);
+}
+
+/* ========== ANIMATIONS ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .navbar { padding: 0 25px; height: 60px; }
+  
+  .hamburger { display: flex; }
+  
+  .navbar ul {
+    position: absolute;
+    top: 60px;
+    left: 0; right: 0;
+    background: var(--darker);
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 20px;
+  }
+
+  .navbar.active ul {
+    max-height: 400px;
+    padding: 20px 20px;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .navbar ul li { width: 100%; margin: 5px 0; }
+  .navbar a.nav-link { display: block; padding: 12px; width: 100%; }
+  .navbar a.nav-link::after { display: none; }
+  .navbar button { width: 100%; margin-top: 10px; }
+
+  .content-section { padding: 50px 25px; }
+  .main-card { grid-template-columns: 1fr; gap: 30px; }
+  
+  /* Reset alternating layout on mobile */
+  .content-section:nth-child(even) .main-card { direction: ltr; }
+  
+  .main-image {
+    min-height: 300px;
+    border-left: none;
+    border-top: 5px solid var(--red);
+  }
+  
+  .content-section:nth-child(even) .main-image {
+    border-right: none;
+    border-top: 5px solid var(--red);
+  }
+
+  .feature-list { grid-template-columns: 1fr; }
+  
+  .hero-text { padding: 20px; }
+  .hero-text h1 { font-size: 36px; }
+  
+  .breadcrumb { left: 25px; top: 80px; }
+  
+  .info-strip, .cta-strip { padding: 50px 25px; }
+
+  /* Footer Responsive */
+  .footer-main {
+    padding: 60px 30px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-col:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
 </style>
 </head>
-
 <body>
 
 <!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">AMC</div>
+    Anasal MEPFS Corp
+  </a>
 
-<nav class="navbar">
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-<a href="index.html" class="logo">
-<div class="logo-icon">AMC</div>
-Anasal MEPFS Corp
-</a>
-
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="service.html">Services</a></li>
-<li><a href="index.html#projects">Projects</a></li>
-<li><a href="index.html#about">About</a></li>
-<li><a href="index.html#contact">Contact</a></li>
-<li><button>Admin Login</button></li>
-</ul>
-
+  <ul>
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="service.html" class="nav-link">Services</a></li>
+    <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+    <li><a href="index.html#about" class="nav-link">About</a></li>
+    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+    <li><button onclick="openLogin()">Admin Login</button></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
-
 <div class="page-hero">
-
-<div class="hero-text">
-<h1>HVAC / Mechanical Ventilation</h1>
-<p>Ducting Installation Services</p>
-</div>
-
+  <div class="breadcrumb"><a href="service.html">Services</a> / HVAC Ventilation</div>
+  <div class="hero-text fade-in">
+    <h1>HVAC / Mechanical Ventilation</h1>
+    <p>Ducting Installation Services</p>
+  </div>
 </div>
 
 <!-- MAIN SERVICE -->
-
 <section class="content-section">
+  <div class="main-card">
+    <div class="main-image fade-in" style="background-image:url('image/Hard\ Ducting.jpg')"></div>
+    <div class="text-content fade-in">
+      <h2>HVAC / Mechanical Ventilation Services</h2>
+      <p>Our HVAC and Mechanical Ventilation services provide professional installation of air distribution systems used in commercial, industrial, and residential buildings. These systems help maintain proper airflow, temperature control, and indoor air quality.</p>
+      <p>Through properly designed ventilation systems, air can circulate efficiently inside buildings, ensuring comfort, safety, and energy efficiency.</p>
+      
+      <h2>Scope of Works</h2>
+      <ul class="feature-list">
+        <li>HVAC ducting installation</li>
+        <li>Air distribution systems</li>
+        <li>Ventilation duct layout</li>
+        <li>Duct insulation installation</li>
+        <li>Air balancing and testing</li>
+        <li>System commissioning</li>
+      </ul>
 
-<div class="main-card">
-
-<div class="main-image" style="background-image:url('image/Hard\ Ducting.jpg')"></div>
-
-<div class="text-content">
-
-<h2>HVAC / Mechanical Ventilation Services</h2>
-
-<p>
-Our HVAC and Mechanical Ventilation services provide professional installation of air distribution systems used in commercial, industrial, and residential buildings. These systems help maintain proper airflow, temperature control, and indoor air quality.
-</p>
-
-<p>
-Through properly designed ventilation systems, air can circulate efficiently inside buildings, ensuring comfort, safety, and energy efficiency.
-</p>
-
-<h2>Scope of Works</h2>
-
-<ul class="feature-list">
-<li>HVAC ducting installation</li>
-<li>Air distribution systems</li>
-<li>Ventilation duct layout</li>
-<li>Duct insulation installation</li>
-<li>Air balancing and testing</li>
-<li>System commissioning</li>
-</ul>
-
-<h2>Why It Is Important</h2>
-
-<p>
-A properly installed HVAC ducting system ensures efficient airflow, improved indoor air quality, and comfortable room temperatures. Mechanical ventilation systems also remove heat, smoke, dust, and contaminated air from enclosed spaces.
-</p>
-
-</div>
-
-</div>
-
+      <h2>Why It Is Important</h2>
+      <p>A properly installed HVAC ducting system ensures efficient airflow, improved indoor air quality, and comfortable room temperatures. Mechanical ventilation systems also remove heat, smoke, dust, and contaminated air from enclosed spaces.</p>
+    </div>
+  </div>
 </section>
 
 <!-- DUCTING INSTALLATION -->
-
 <section class="content-section">
+  <div class="main-card">
+    <div class="main-image fade-in" style="background-image:url('image/Air\ condition\ and\ hvac\ system\ installation\ under\ bareskin\ ceiling\ before\ interior\ finishing_.jpg')"></div>
+    <div class="text-content fade-in">
+      <h2>Ducting Installation</h2>
+      <p>Ducting installation is an essential part of HVAC systems that distributes conditioned air throughout a building. These ducts carry cooled or heated air from the HVAC equipment to different rooms and spaces.</p>
+      <p>Our ducting systems are designed to provide balanced airflow, reduce energy loss, and ensure long-term durability.</p>
+      
+      <h2>Scope of Works</h2>
+      <ul class="feature-list">
+        <li>Fabrication of air ducts</li>
+        <li>Installation of supply and return ducts</li>
+        <li>Duct insulation installation</li>
+        <li>Installation of diffusers and grilles</li>
+        <li>Air leakage testing</li>
+        <li>System commissioning</li>
+      </ul>
 
-<div class="main-card">
-
-<div class="main-image" style="background-image:url('image/Air\ condition\ and\ hvac\ system\ installation\ under\ bareskin\ ceiling\ before\ interior\ finishing_.jpg')"></div>
-
-<div class="text-content">
-
-<h2>Ducting Installation</h2>
-
-<p>
-Ducting installation is an essential part of HVAC systems that distributes conditioned air throughout a building. These ducts carry cooled or heated air from the HVAC equipment to different rooms and spaces.
-</p>
-
-<p>
-Our ducting systems are designed to provide balanced airflow, reduce energy loss, and ensure long-term durability.
-</p>
-
-<h2>Scope of Works</h2>
-
-<ul class="feature-list">
-<li>Fabrication of air ducts</li>
-<li>Installation of supply and return ducts</li>
-<li>Duct insulation installation</li>
-<li>Installation of diffusers and grilles</li>
-<li>Air leakage testing</li>
-<li>System commissioning</li>
-</ul>
-
-<h2>Why It Is Important</h2>
-
-<p>
-Proper ducting installation ensures efficient airflow distribution and improves the overall performance of HVAC systems. It helps maintain comfortable indoor temperatures while reducing energy consumption.
-</p>
-
-</div>
-
-</div>
-
+      <h2>Why It Is Important</h2>
+      <p>Proper ducting installation ensures efficient airflow distribution and improves the overall performance of HVAC systems. It helps maintain comfortable indoor temperatures while reducing energy consumption.</p>
+    </div>
+  </div>
 </section>
 
 <!-- INFO STRIP -->
-
 <section class="info-strip">
-
-<div class="strip-grid">
-
-<div class="strip-box">
-<div class="strip-icon">🌬️</div>
-<h4>Air Distribution</h4>
-<p>Efficient airflow delivery throughout the building.</p>
-</div>
-
-<div class="strip-box">
-<div class="strip-icon">❄️</div>
-<h4>Temperature Control</h4>
-<p>Balanced air circulation for indoor comfort.</p>
-</div>
-
-<div class="strip-box">
-<div class="strip-icon">🏢</div>
-<h4>Commercial Systems</h4>
-<p>Ventilation systems for offices and industrial facilities.</p>
-</div>
-
-<div class="strip-box">
-<div class="strip-icon">🔧</div>
-<h4>Maintenance Support</h4>
-<p>Inspection and maintenance of HVAC ducting systems.</p>
-</div>
-
-</div>
-
+  <div class="strip-grid">
+    <div class="strip-box fade-in">
+      <div class="strip-icon">🌬️</div>
+      <h4>Air Distribution</h4>
+      <p>Efficient airflow delivery throughout the building.</p>
+    </div>
+    <div class="strip-box fade-in">
+      <div class="strip-icon">❄️</div>
+      <h4>Temperature Control</h4>
+      <p>Balanced air circulation for indoor comfort.</p>
+    </div>
+    <div class="strip-box fade-in">
+      <div class="strip-icon">🏢</div>
+      <h4>Commercial Systems</h4>
+      <p>Ventilation systems for offices and industrial facilities.</p>
+    </div>
+    <div class="strip-box fade-in">
+      <div class="strip-icon">🔧</div>
+      <h4>Maintenance Support</h4>
+      <p>Inspection and maintenance of HVAC ducting systems.</p>
+    </div>
+  </div>
 </section>
 
 <!-- CTA -->
-
 <div class="cta-strip">
-
-<h3>Need HVAC Ducting Installation?</h3>
-<p>Contact our engineering team for professional ventilation solutions.</p>
-
-<a href="index.html#contact">Request a Quotation</a>
-
+  <h3>Need HVAC Ducting Installation?</h3>
+  <p>Contact our engineering team for professional ventilation solutions.</p>
+  <a href="index.html#contact">Request a Quotation</a>
 </div>
 
 <!-- FOOTER -->
-
 <footer>
+  <div class="footer-main">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo">
+          <div class="logo-icon">AM</div>
+          Anasal MEPFS Corp
+        </div>
+        <p class="footer-desc">
+          Delivering reliable mechanical, electrical, plumbing, and fire protection systems with precision and engineering excellence for industrial facilities.
+        </p>
+        <div class="footer-social">
+          <a href="https://web.facebook.com/profile.php?id=100057306585484" class="social-icon" title="Facebook">f</a>
+        </div>
+      </div>
 
-<div style="font-family:Bebas Neue;color:white;letter-spacing:2px;margin-bottom:10px;">
-Anasal MEPFS Corp
-</div>
+      <div class="footer-col">
+        <h3 class="footer-title">Quick Links</h3>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="service.html">Services</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
 
-<p>© 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+      <div class="footer-col">
+        <h3 class="footer-title">Services</h3>
+        <ul class="footer-links-list">
+          <li><a href="mechanical-piping.html">Mechanical & Utility Piping</a></li>
+          <li><a href="fire-protection.html">Fire Protection & Life Safety</a></li>
+          <li><a href="hvac-services.html">HVAC/Mechanical Ventilation</a></li>
+        </ul>
+      </div>
 
+      <div class="footer-col">
+        <h3 class="footer-title">Contact Info</h3>
+        
+        <div class="footer-contact-item">
+          <span>📍</span>
+          <p>07 Pine tree St. Pineville Subd. Brgy. Lawa Meycauayan Bulacan</p>
+        </div>
+
+        <div class="footer-contact-item">
+          <span>📞</span>
+          <p>0908-709-9098</p>
+        </div>
+
+        <div class="footer-contact-item">
+          <span>✉️</span>
+          <p>anasalmepfs.2017@yahoo.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <p class="copyright">© 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
+<!-- LOGIN MODAL -->
+<div class="overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-header">
+      <h2>Admin Login</h2>
+    </div>
+    <div class="login-body">
+      <form id="adminForm">
+        <input type="text" placeholder="Username" id="username" required>
+        <input type="password" placeholder="Password" id="password" required>
+        <button type="submit">Login</button>
+        <button type="button" class="close-btn" onclick="closeLogin()">Close</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== CONTENT PROTECTION SCRIPTS ========== 
+// 1. Disable Right-Click
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
+// 2. Disable Keyboard Shortcuts
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'S' || e.key === 'U')) e.preventDefault();
+  if (e.key === 'F12') e.preventDefault();
+}, false);
+// 3. Disable Dragging
+document.addEventListener('dragstart', function(e) { e.preventDefault(); }, false);
+
+// ========== SCROLL REVEAL ==========
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+document.querySelectorAll('.fade-in').forEach(el => { observer.observe(el); });
+
+// ========== MOBILE MENU TOGGLE ==========
+const hamburger = document.getElementById("hamburger");
+const navbar = document.getElementById("navbar");
+
+hamburger.addEventListener("click", () => {
+  navbar.classList.toggle("active");
+});
+
+const navLinks = document.querySelectorAll('.navbar ul a, .navbar ul button');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    if(navbar.classList.contains('active')) {
+      navbar.classList.remove('active');
+    }
+  });
+});
+
+// ========== LOGIN MODAL ==========
+const overlay = document.getElementById("loginOverlay");
+
+function openLogin(){
+  overlay.style.display = "flex";
+  document.body.style.overflow = "hidden";
+} 
+
+function closeLogin(){
+  overlay.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) {
+    closeLogin();
+  }
+});
+</script>
 </body>
 </html>

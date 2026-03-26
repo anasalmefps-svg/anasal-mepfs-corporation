@@ -418,10 +418,148 @@ h1, h2, h3, h4 {
 /* ========== FOOTER ========== */
 footer {
   background: var(--darker);
-  color: #666;
-  padding: 40px 60px;
-  text-align: center;
+  font-size: 14px;
+}
+
+.footer-main {
+  background: var(--dark);
+  padding: 80px 60px 60px;
   border-top: 3px solid var(--red);
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 60px;
+}
+
+.footer-col .logo {
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+.footer-desc {
+  color: #888;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--darker);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.social-icon:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+.footer-title {
+  font-size: 18px;
+  color: var(--white);
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--red);
+}
+
+.footer-links-list {
+  list-style: none;
+}
+
+.footer-links-list li {
+  margin-bottom: 12px;
+}
+
+.footer-links-list a {
+  color: #888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer-links-list a:hover {
+  color: var(--white);
+  transform: translateX(5px);
+}
+
+.footer-contact-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.footer-contact-item span {
+  color: var(--red);
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.footer-contact-item p {
+  color: #888;
+  line-height: 1.6;
+}
+
+.footer-bottom {
+  background: var(--darker);
+  padding: 25px 60px;
+  border-top: 1px solid #222;
+}
+
+.footer-bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.copyright {
+  color: #555;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-bottom-links a {
+  color: #555;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: var(--red);
 }
 
 /* ========== ANIMATIONS ========== */
@@ -492,6 +630,31 @@ footer {
   .breadcrumb { left: 25px; top: 80px; }
   
   .info-strip, .cta-strip { padding: 50px 25px; }
+
+  /* Footer Responsive */
+  .footer-main {
+    padding: 60px 30px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-col:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -646,8 +809,71 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo" style="font-family: Bebas Neue; color: white; letter-spacing: 2px; margin-bottom: 10px;">Anasal MEPFS Corp</div>
-  <p>&copy; 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+  <div class="footer-main">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo">
+          <div class="logo-icon">AM</div>
+          Anasal MEPFS Corp
+        </div>
+        <p class="footer-desc">
+          Delivering reliable mechanical, electrical, plumbing, and fire protection systems with precision and engineering excellence for industrial facilities.
+        </p>
+        <div class="footer-social">
+          <a href="https://web.facebook.com/profile.php?id=100057306585484" class="social-icon" title="Facebook">f</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Quick Links</h3>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="service.html">Services</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Services</h3>
+        <ul class="footer-links-list">
+          <li><a href="mechanical-piping.html">Mechanical & Utility Piping</a></li>
+          <li><a href="fire-protection.html">Fire Protection & Life Safety</a></li>
+          <li><a href="hvac-services.html">HVAC/Mechanical Ventilation</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Contact Info</h3>
+        
+        <div class="footer-contact-item">
+          <span>📍</span>
+          <p>07 Pine tree St. Pineville Subd. Brgy. Lawa Meycauayan Bulacan</p>
+        </div>
+
+        <div class="footer-contact-item">
+          <span>📞</span>
+          <p>0908-709-9098</p>
+        </div>
+
+        <div class="footer-contact-item">
+          <span>✉️</span>
+          <p>anasalmepfs.2017@yahoo.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <p class="copyright">© 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <!-- LOGIN MODAL -->
