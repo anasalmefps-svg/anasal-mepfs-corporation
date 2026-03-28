@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Our Projects | Anasal MEPFS Corp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red: #c4161c;
+  --red-dark: #a01218;
+  --dark: #1a1a1a;
+  --darker: #0f0f0f;
+  --light: #f5f5f5;
+  --gray: #666;
+  --steel: #8892a0;
+  --white: #ffffff;
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  background: var(--white);
+  color: #222;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: Bebas Neue, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  background: var(--darker);
+  color: var(--white);
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 70px;
+  border-bottom: 3px solid var(--red);
+}
+
+.logo {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.navbar a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 18px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-weight: 500;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.navbar a:hover, .navbar a.active {
+  color: var(--white);
+}
+
+.navbar a:hover::after, .navbar a.active::after {
+  transform: scaleX(1);
+}
+
+/* ========== HAMBURGER MENU ========== */
+.hamburger {
+  display: none; 
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.navbar.active .hamburger span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.navbar.active .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar.active .hamburger span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ========== INNER PAGE HERO ========== */
+.page-hero {
+  min-height: 40vh;
+  background: 
+    linear-gradient(135deg, rgba(26,26,26,0.98) 0%, rgba(15,15,15,0.9) 100%),
+    url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 120px 60px 80px;
+}
+
+.page-hero h1 {
+  font-size: clamp(40px, 6vw, 60px);
+  color: var(--white);
+  margin-bottom: 15px;
+}
+
+.page-hero p {
+  color: #aaa;
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.page-hero .hero-badge {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  padding: 6px 18px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+/* ========== SECTIONS ========== */
+section {
+  padding: 80px 60px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: 48px;
+  color: var(--dark);
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--red);
+}
+
+.section-header p {
+  color: var(--gray);
+  font-size: 16px;
+  max-width: 600px;
+  margin: 25px auto 0;
+}
+
+/* ========== PROJECTS GALLERY ========== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--dark);
+  cursor: pointer;
+  height: 350px;
+}
+
+.project-image-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s ease;
+  filter: grayscale(30%);
+}
+
+.project-card:hover .project-image-bg {
+  transform: scale(1.08);
+  filter: grayscale(0%);
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-overlay h4 {
+  font-size: 22px;
+  color: var(--white);
+  margin-bottom: 8px;
+  transform: translateY(20px);
+  transition: transform 0.4s ease 0.1s;
+}
+
+.project-overlay p {
+  font-size: 14px;
+  color: #aaa;
+  line-height: 1.6;
+  transform: translateY(20px);
+  transition: transform 0.4s ease 0.2s;
+}
+
+.project-card:hover .project-overlay h4,
+.project-card:hover .project-overlay p {
+  transform: translateY(0);
+}
+
+.project-tag {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--red);
+  color: var(--white);
+  padding: 6px 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+/* ========== CERTIFICATES SECTION ========== */
+#certificates {
+  background: var(--light);
+}
+
+.cert-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cert-card {
+  background: var(--white);
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow);
+}
+
+.cert-image-container {
+  width: 100%;
+  height: 250px;
+  background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+}
+
+.cert-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures full certificate is visible */
+  transition: transform 0.3s ease;
+}
+
+.cert-card:hover .cert-image {
+  transform: scale(1.05);
+}
+
+.cert-title {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 18px;
+  color: var(--dark);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.cert-desc {
+  font-size: 13px;
+  color: var(--gray);
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--darker);
+  font-size: 14px;
+}
+
+.footer-main {
+  background: var(--dark);
+  padding: 80px 60px 60px;
+  border-top: 3px solid var(--red);
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 60px;
+}
+
+.footer-col .logo {
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+.footer-desc {
+  color: #888;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--darker);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.social-icon:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+.footer-title {
+  font-size: 18px;
+  color: var(--white);
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--red);
+}
+
+.footer-links-list {
+  list-style: none;
+}
+
+.footer-links-list li {
+  margin-bottom: 12px;
+}
+
+.footer-links-list a {
+  color: #888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer-links-list a:hover {
+  color: var(--white);
+  transform: translateX(5px);
+}
+
+.footer-contact-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.footer-contact-item span {
+  color: var(--red);
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.footer-contact-item p {
+  color: #888;
+  line-height: 1.6;
+}
+
+.footer-bottom {
+  background: var(--darker);
+  padding: 25px 60px;
+  border-top: 1px solid #222;
+}
+
+.footer-bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.copyright {
+  color: #555;
+}
+
+/* ========== ANIMATIONS ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 0 25px;
+    height: 60px;
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar ul {
+    position: absolute;
+    top: 60px; 
+    left: 0;
+    right: 0;
+    background: var(--darker);
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    border-bottom: 0px solid var(--red);
+    padding: 0 20px;
+  }
+
+  .navbar.active ul {
+    max-height: 400px;
+    padding: 20px 20px;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .navbar ul li {
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .navbar a {
+    display: block;
+    padding: 12px;
+    width: 100%;
+  }
+
+  .navbar a::after {
+    display: none; 
+  }
+
+  section {
+    padding: 60px 30px;
+  }
+
+  .page-hero {
+    padding: 100px 30px 60px;
+  }
+
+  .footer-main {
+    padding: 60px 30px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-col:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery, .cert-gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">AMC</div>
+    Anasal MEPFS Corp
+  </a>
+  
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="service.html">Services</a></li>
+    <li><a href="project.html" class="active">Projects</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Page Hero -->
+<header class="page-hero">
+  <div class="fade-in">
+    <span class="hero-badge">Portfolio</span>
+    <h1>Our Projects</h1>
+    <p>Browse our comprehensive portfolio of industrial engineering solutions and completed works.</p>
+  </div>
+</header>
+
+<!-- All Projects Section -->
+<section id="all-projects">
+  <div class="section-header fade-in">
+    <h2>Completed Works</h2>
+    <p>Showing all projects executed with precision and engineering excellence.</p>
+  </div>
+  <div class="gallery" id="projectsGallery">
+    <!-- Projects will be injected here via JavaScript -->
+  </div>
+</section>
+
+<!-- Certificates Section -->
+<section id="certificates">
+  <div class="section-header fade-in">
+    <h2>Certifications</h2>
+    <p>Recognitions and accreditations that validate our commitment to quality and safety.</p>
+  </div>
+  <div class="cert-gallery" id="certGallery">
+    <!-- Certificates will be injected here via JavaScript -->
+  </div>
+</section>
+
+<footer>
+  <div class="footer-main">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo">
+          <div class="logo-icon">AM</div>
+          Anasal MEPFS Corp
+        </div>
+        <p class="footer-desc">
+          Delivering reliable mechanical, electrical, plumbing, and fire protection systems with precision and engineering excellence for industrial facilities.
+        </p>
+        <div class="footer-social">
+          <a href="https://web.facebook.com/profile.php?id=100057306585484" class="social-icon" title="Facebook">f</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Quick Links</h3>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="project.html">Projects</a></li>
+          <li><a href="service.html">Services</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Services</h3>
+        <ul class="footer-links-list">
+          <li><a href="mechanical-piping.html">Mechanical & Utility Piping</a></li>
+          <li><a href="fire-protection.html">Fire Protection & Life Safety</a></li>
+          <li><a href="hvac-services.html">HVAC/Mechanical Ventilation</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Contact Info</h3>
+        
+        <div class="footer-contact-item">
+          <span>📍</span>
+          <p>07 Pine tree St. Pineville Subd. Brgy. Lawa Meycauayan Bulacan</p>
+        </div>
+
+        <div class="footer-contact-item">
+          <span>📞</span>
+          <p>0908-709-9098</p>
+        </div>
+
+        <div class="footer-contact-item">
+          <span>✉️</span>
+          <p>anasalmepfs.2017@yahoo.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <p class="copyright">© 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ========== SCROLL REVEAL ==========
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ========== LOAD ALL PROJECTS ==========
+async function loadAllProjects() {
+  const gal = document.getElementById("projectsGallery");
+  gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">Loading projects...</p>';
+
+  try {
+    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/projects");
+    const rows = await res.json();
+    
+    gal.innerHTML = ""; 
+
+    const imageKitBase = "https://ik.imagekit.io/anasaluploadimage";
+
+    if (rows.length === 0) {
+        gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">No projects found.</p>';
+        return;
+    }
+
+    rows.forEach((r, index) => {
+      const card = document.createElement('div');
+      card.className = 'project-card fade-in';
+      card.style.transitionDelay = `${index * 0.05}s`;
+      
+      let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; 
+
+      if (r.image_url) {
+          if (r.image_url.startsWith('http')) {
+              imgUrl = r.image_url;
+          } else {
+              imgUrl = `${imageKitBase}/${r.image_url}`;
+          }
+      }
+
+      card.innerHTML = `
+        <div class="project-image-bg" style="background-image: url('${imgUrl}');" title="${r.title || ''}"></div>
+        <span class="project-tag">MEPFS</span>
+        <div class="project-overlay">
+          <h4>${r.title || "Untitled Project"}</h4>
+          <p>${r.description || "No description available."}</p>
+        </div>
+      `;
+      
+      gal.appendChild(card);
+      revealObserver.observe(card);
+    });
+
+  } catch (error) {
+    console.error("Error loading projects:", error);
+    gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: red;">Failed to load projects.</p>';
+  }
+}
+
+// ========== LOAD CERTIFICATES ==========
+async function loadCertificates() {
+  const gal = document.getElementById("certGallery");
+  gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">Loading certificates...</p>';
+
+  try {
+    // Assuming the endpoint is /api/admin/table/certificates
+    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/certificates");
+    const rows = await res.json();
+    
+    gal.innerHTML = ""; 
+
+    const imageKitBase = "https://ik.imagekit.io/anasaluploadimage";
+
+    if (rows.length === 0) {
+        gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">No certificates found.</p>';
+        return;
+    }
+
+    rows.forEach((r, index) => {
+      const card = document.createElement('div');
+      card.className = 'cert-card fade-in';
+      card.style.transitionDelay = `${index * 0.05}s`;
+      
+      let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; 
+
+      if (r.image_url) {
+          if (r.image_url.startsWith('http')) {
+              imgUrl = r.image_url;
+          } else {
+              imgUrl = `${imageKitBase}/${r.image_url}`;
+          }
+      }
+
+      card.innerHTML = `
+        <div class="cert-image-container">
+          <img src="${imgUrl}" alt="${r.title || 'Certificate'}" class="cert-image">
+        </div>
+        <h4 class="cert-title">${r.title || "Certificate"}</h4>
+        ${r.description ? `<p class="cert-desc">${r.description}</p>` : ''}
+      `;
+      
+      gal.appendChild(card);
+      revealObserver.observe(card);
+    });
+
+  } catch (error) {
+    console.error("Error loading certificates:", error);
+    gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: red;">Failed to load certificates.</p>';
+  }
+}
+
+// ========== MOBILE MENU TOGGLE ==========
+const hamburger = document.getElementById("hamburger");
+const navbar = document.getElementById("navbar");
+
+hamburger.addEventListener("click", () => {
+  navbar.classList.toggle("active");
+});
+
+const navLinks = document.querySelectorAll('.navbar ul a');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    if(navbar.classList.contains('active')) {
+      navbar.classList.remove('active');
+    }
+  });
+});
+
+// ========== INITIALIZE ==========
+loadAllProjects();
+loadCertificates();
+</script>
+</body>
+</html>
