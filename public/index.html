@@ -302,6 +302,28 @@ h1, h2, h3, h4 {
   color: var(--white);
 }
 
+/* ========== VIEW MORE BUTTON (NEW) ========== */
+.btn-view-more {
+  display: inline-block;
+  background: var(--dark);
+  color: var(--white);
+  border: 2px solid var(--dark);
+  padding: 16px 40px;
+  text-transform: uppercase;
+  font-family: Bebas Neue, sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-view-more:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
 /* ========== SECTIONS ========== */
 section {
   padding: 100px 60px;
@@ -1185,6 +1207,12 @@ footer {
     <p>Explore our completed industrial engineering projects across various sectors</p>
   </div>
   <div class="gallery" id="projectsGallery"></div>
+  
+  <!-- NEW: View More Button -->
+  <div style="text-align: center; margin-top: 50px;">
+      <a href="project.html" class="btn-view-more">View All Projects</a>
+  </div>
+  
 </section>
 
 <section class="cta">
@@ -1373,7 +1401,7 @@ async function loadStats() {
   startCounters();
 }
 
-// ========== LOAD PROJECTS (FIXED) ==========
+// ========== LOAD PROJECTS (UPDATED TO SHOW 3) ==========
 async function loadProjects() {
   const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/projects");
   const rows = await res.json();
@@ -1382,19 +1410,20 @@ async function loadProjects() {
 
   const imageKitBase = "https://ik.imagekit.io/anasaluploadimage";
 
-  rows.forEach((r, index) => {
+  // Limit to first 3 projects
+  const limitedRows = rows.slice(0, 3);
+
+  limitedRows.forEach((r, index) => {
     const card = document.createElement('div');
     card.className = 'project-card fade-in';
     card.style.transitionDelay = `${index * 0.1}s`;
     
-    let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; // Default fallback
+    let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; 
 
     if (r.image_url) {
-        // Check if URL is complete
         if (r.image_url.startsWith('http')) {
             imgUrl = r.image_url;
         } else {
-            // If relative path, add base URL
             imgUrl = `${imageKitBase}/${r.image_url}`;
         }
     }
