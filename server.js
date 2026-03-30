@@ -84,7 +84,7 @@ app.get("/api/admin/tables", (req, res) => {
     });
 });
 
-// ---------------- GET TABLE ROWS ----------------
+// ---------------- GENERIC GET TABLE ROWS ----------------
 app.get("/api/admin/table/:name", (req, res) => {
     const table = req.params.name;
     if (!/^[a-zA-Z0-9_]+$/.test(table)) return res.status(400).json({ error: "Invalid table name" });
@@ -96,7 +96,7 @@ app.get("/api/admin/table/:name", (req, res) => {
     });
 });
 
-// ---------------- CREATE ROW ----------------
+// ---------------- GENERIC CREATE ROW ----------------
 app.post("/api/admin/table/:name", (req, res) => {
     const table = req.params.name;
     const data = req.body;
@@ -113,7 +113,7 @@ app.post("/api/admin/table/:name", (req, res) => {
     });
 });
 
-// ---------------- UPDATE ROW ----------------
+// ---------------- GENERIC UPDATE ROW ----------------
 app.put("/api/admin/table/:name/:idField/:id", (req, res) => {
     const { name, idField, id } = req.params;
     const data = req.body;
@@ -131,7 +131,7 @@ app.put("/api/admin/table/:name/:idField/:id", (req, res) => {
     });
 });
 
-// ---------------- DELETE ROW ----------------
+// ---------------- GENERIC DELETE ROW ----------------
 app.delete("/api/admin/table/:name/:idField/:id", (req, res) => {
     const { name, idField, id } = req.params;
     if (!/^[a-zA-Z0-9_]+$/.test(name) || !/^[a-zA-Z0-9_]+$/.test(idField)) {
@@ -144,6 +144,85 @@ app.delete("/api/admin/table/:name/:idField/:id", (req, res) => {
         res.json({ success: true });
     });
 });
+
+// ---------------- CERTIFICATES ROUTER ----------------
+// Specific router for /api/certificates
+const certificatesRouter = express.Router();
+
+// GET all certificates
+certificatesRouter.get("/", (req, res) => {
+    const sql = "SELECT * FROM certificates ORDER BY id DESC";
+    db.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: "Failed to fetch certificates" });
+        res.json(results);
+    });
+});
+
+// GET single certificate by ID
+certificatesRouter.get("/:id", (req, res) => {
+    const sql = "SELECT * FROM certificates WHERE id = ?";
+    db.query(sql, [req.params.id], (err, results) => {
+        if (err) return res.status(500).json({ error: "Database error" });
+        if (results.length === 0) return res.status(404).json({ error: "Certificate not found" });
+        res.json(results[0]);
+    });
+});
+
+// CREATE certificate
+certificatesRouter.post("/", (req, res) => {
+    const { title, description, image_url } = req.body;
+    
+    if (!title || !image_url) {
+        return res.status(400).json({ message: "Title and Image URL are required" });
+    }
+
+    const sql = "INSERT INTO certificates (title, description, image_url) VALUES (?, ?, ?)";
+    db.query(sql, [title, description || "", image_url], (err, result) => {
+        if (err) return res.status(500).json({ message: "Failed to create certificate" });
+        res.json({ success: true, insertId: result.insertId });
+    });
+});
+
+// UPDATE certificate
+certificatesRouter.put("/:id", (req, res) => {
+    const { id } = req.params;
+    const { title, description, image_url } = req.body;
+
+    // Build dynamic SET clause
+    const updates = [];
+    const values = [];
+
+    if (title !== undefined) { updates.push("title = ?"); values.push(title); }
+    if (description !== undefined) { updates.push("description = ?"); values.push(description); }
+    if (image_url !== undefined) { updates.push("image_url = ?"); values.push(image_url); }
+
+    if (updates.length === 0) {
+        return res.status(400).json({ message: "No fields provided to update" });
+    }
+
+    const sql = `UPDATE certificates SET ${updates.join(", ")} WHERE id = ?`;
+    values.push(id);
+
+    db.query(sql, values, (err) => {
+        if (err) return res.status(500).json({ message: "Failed to update certificate" });
+        res.json({ success: true });
+    });
+});
+
+// DELETE certificate
+certificatesRouter.delete("/:id", (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM certificates WHERE id = ?";
+    
+    db.query(sql, [id], (err, result) => {
+        if (err) return res.status(500).json({ message: "Failed to delete certificate" });
+        if (result.affectedRows === 0) return res.status(404).json({ message: "Certificate not found" });
+        res.json({ success: true });
+    });
+});
+
+// Mount the Certificates Router
+app.use("/api/certificates", certificatesRouter);
 
 // ---------------- CUSTOM APIS ----------------
 app.get("/api/admin/projects", (req, res) => {

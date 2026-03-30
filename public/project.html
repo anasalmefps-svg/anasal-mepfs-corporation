@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Our Projects | Anasal MEPFS Corp</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" r rel="stylesheet"> 
 <style>
 :root{
   --red: #c4161c;
@@ -236,6 +236,7 @@ section {
   margin: 0 auto;
 }
 
+/* Shared Styles for Project and Certificate Cards */
 .project-card {
   position: relative;
   overflow: hidden;
@@ -314,65 +315,93 @@ section {
   background: var(--light);
 }
 
+/* Cert cards now use the same grid layout */
 .cert-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
+/* Apply project-card styles to cert-card */
 .cert-card {
-  background: var(--white);
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.cert-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--card-shadow);
-}
-
-.cert-image-container {
-  width: 100%;
-  height: 250px;
-  background: #f9f9f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   overflow: hidden;
-  margin-bottom: 20px;
-  border: 1px solid #eee;
+  background: var(--dark);
+  cursor: pointer;
+  height: 350px; /* Match project card height */
 }
 
-.cert-image {
+/* Reuse image background logic */
+.cert-image-bg {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Ensures full certificate is visible */
-  transition: transform 0.3s ease;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s ease;
+  filter: grayscale(30%);
 }
 
-.cert-card:hover .cert-image {
-  transform: scale(1.05);
+.cert-card:hover .cert-image-bg {
+  transform: scale(1.08);
+  filter: grayscale(0%);
 }
 
-.cert-title {
+/* Reuse overlay logic */
+.cert-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cert-card:hover .cert-overlay {
+  opacity: 1;
+}
+
+.cert-overlay h4 {
+  font-size: 22px;
+  color: var(--white);
+  margin-bottom: 8px;
+  transform: translateY(20px);
+  transition: transform 0.4s ease 0.1s;
   font-family: Bebas Neue, sans-serif;
-  font-size: 18px;
-  color: var(--dark);
-  text-align: center;
-  letter-spacing: 1px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.cert-desc {
-  font-size: 13px;
-  color: var(--gray);
-  text-align: center;
-  margin-top: 5px;
+.cert-overlay p {
+  font-size: 14px;
+  color: #aaa;
+  line-height: 1.6;
+  transform: translateY(20px);
+  transition: transform 0.4s ease 0.2s;
+}
+
+.cert-card:hover .cert-overlay h4,
+.cert-card:hover .cert-overlay p {
+  transform: translateY(0);
+}
+
+/* Tag for certificates */
+.cert-tag {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--red);
+  color: var(--white);
+  padding: 6px 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  z-index: 2;
 }
 
 /* ========== FOOTER ========== */
@@ -812,7 +841,6 @@ async function loadCertificates() {
   gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">Loading certificates...</p>';
 
   try {
-    // Assuming the endpoint is /api/admin/table/certificates
     const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/certificates");
     const rows = await res.json();
     
@@ -840,12 +868,14 @@ async function loadCertificates() {
           }
       }
 
+      // Updated HTML structure to match project cards with background image and overlay
       card.innerHTML = `
-        <div class="cert-image-container">
-          <img src="${imgUrl}" alt="${r.title || 'Certificate'}" class="cert-image">
+        <div class="cert-image-bg" style="background-image: url('${imgUrl}');" title="${r.title || 'Certificate'}"></div>
+        <span class="cert-tag">Certified</span>
+        <div class="cert-overlay">
+          <h4>${r.title || "Certificate"}</h4>
+          <p>${r.description || "Valid accreditation."}</p>
         </div>
-        <h4 class="cert-title">${r.title || "Certificate"}</h4>
-        ${r.description ? `<p class="cert-desc">${r.description}</p>` : ''}
       `;
       
       gal.appendChild(card);
