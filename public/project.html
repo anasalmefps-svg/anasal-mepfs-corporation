@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Our Projects | Anasal MEPFS Corp</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" r rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"> 
 <style>
 :root{
   --red: #c4161c;
@@ -236,7 +236,6 @@ section {
   margin: 0 auto;
 }
 
-/* Shared Styles for Project and Certificate Cards */
 .project-card {
   position: relative;
   overflow: hidden;
@@ -315,93 +314,127 @@ section {
   background: var(--light);
 }
 
-/* Cert cards now use the same grid layout */
 .cert-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Apply project-card styles to cert-card */
+/* --- NEW CERT CARD: Image is clearly visible --- */
 .cert-card {
-  position: relative;
+  background: var(--white);
+  border-radius: 4px;
   overflow: hidden;
-  background: var(--dark);
-  cursor: pointer;
-  height: 350px; /* Match project card height */
-}
-
-/* Reuse image background logic */
-.cert-image-bg {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  transition: all 0.5s ease;
-  filter: grayscale(30%);
-}
-
-.cert-card:hover .cert-image-bg {
-  transform: scale(1.08);
-  filter: grayscale(0%);
-}
-
-/* Reuse overlay logic */
-.cert-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 30px;
-  opacity: 0;
-  transition: opacity 0.4s ease;
 }
 
-.cert-card:hover .cert-overlay {
-  opacity: 1;
+.cert-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
 }
 
-.cert-overlay h4 {
-  font-size: 22px;
-  color: var(--white);
-  margin-bottom: 8px;
-  transform: translateY(20px);
-  transition: transform 0.4s ease 0.1s;
-  font-family: Bebas Neue, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+/* Image container — the certificate is fully visible here */
+.cert-card-image {
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background: #e8e8e8;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.cert-overlay p {
+.cert-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+  padding: 10px;
+  transition: transform 0.4s ease;
+}
+
+.cert-card:hover .cert-card-image img {
+  transform: scale(1.03);
+}
+
+/* Fallback icon when no image */
+.cert-card-image .no-image {
+  color: #bbb;
   font-size: 14px;
-  color: #aaa;
-  line-height: 1.6;
-  transform: translateY(20px);
-  transition: transform 0.4s ease 0.2s;
-}
-
-.cert-card:hover .cert-overlay h4,
-.cert-card:hover .cert-overlay p {
-  transform: translateY(0);
-}
-
-/* Tag for certificates */
-.cert-tag {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: var(--red);
-  color: var(--white);
-  padding: 6px 14px;
-  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: 500;
+}
+
+/* Certified badge on the image */
+.cert-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--red);
+  color: var(--white);
+  padding: 5px 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  font-family: Bebas Neue, sans-serif;
   z-index: 2;
+}
+
+/* Details section below the image */
+.cert-card-body {
+  padding: 25px 25px 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cert-card-name {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 24px;
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.cert-card-purpose {
+  font-size: 13px;
+  color: var(--red);
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.cert-card-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--steel);
+  background: #f0f0f0;
+  padding: 4px 12px;
+  border-radius: 3px;
+  margin-bottom: 14px;
+  width: fit-content;
+}
+
+.cert-card-desc {
+  font-size: 14px;
+  color: #777;
+  line-height: 1.7;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ========== FOOTER ========== */
@@ -620,7 +653,11 @@ footer {
 }
 
 @media (max-width: 600px) {
-  .gallery, .cert-gallery {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .cert-gallery {
     grid-template-columns: 1fr;
   }
   
@@ -857,24 +894,51 @@ async function loadCertificates() {
       const card = document.createElement('div');
       card.className = 'cert-card fade-in';
       card.style.transitionDelay = `${index * 0.05}s`;
-      
-      let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; 
 
-      if (r.image_url) {
-          if (r.image_url.startsWith('http')) {
-              imgUrl = r.image_url;
-          } else {
-              imgUrl = `${imageKitBase}/${r.image_url}`;
-          }
+      // Build image URL — use the correct column name "image"
+      let imgUrl = "";
+      let hasImage = false;
+
+      if (r.image) {
+        if (r.image.startsWith('http')) {
+          imgUrl = r.image;
+        } else {
+          imgUrl = `${imageKitBase}/${r.image}`;
+        }
+        hasImage = true;
       }
 
-      // Updated HTML structure to match project cards with background image and overlay
+      // Format issue_date
+      let dateDisplay = "No date";
+      if (r.issue_date) {
+        const d = new Date(r.issue_date);
+        if (!isNaN(d.getTime())) {
+          dateDisplay = d.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+        }
+      }
+
+      // Build the image section
+      let imageHTML = '';
+      if (hasImage) {
+        imageHTML = `<img src="${imgUrl}" alt="${r.cert_name || 'Certificate'}" onerror="this.parentElement.innerHTML='<span class=\\'no-image\\'>Image not available</span>'" />`;
+      } else {
+        imageHTML = '<span class="no-image">No Image Uploaded</span>';
+      }
+
       card.innerHTML = `
-        <div class="cert-image-bg" style="background-image: url('${imgUrl}');" title="${r.title || 'Certificate'}"></div>
-        <span class="cert-tag">Certified</span>
-        <div class="cert-overlay">
-          <h4>${r.title || "Certificate"}</h4>
-          <p>${r.description || "Valid accreditation."}</p>
+        <div class="cert-card-image">
+          <span class="cert-badge">Certified</span>
+          ${imageHTML}
+        </div>
+        <div class="cert-card-body">
+          <h4 class="cert-card-name">${r.cert_name || "Untitled Certificate"}</h4>
+          <p class="cert-card-purpose">${r.purpose || ""}</p>
+          <div class="cert-card-date">📅 ${dateDisplay}</div>
+          <p class="cert-card-desc">${r.description || "No description provided."}</p>
         </div>
       `;
       
