@@ -57,18 +57,60 @@ section{padding:80px 60px}
 .cert-card{background:var(--white);border-radius:4px;overflow:hidden;box-shadow:var(--card-shadow);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
 .cert-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.18)}
 .cert-card-image{width:100%;height:260px;overflow:hidden;background:#e8e8e8;position:relative;display:flex;align-items:center;justify-content:center}
-.cert-card-image img{width:100%;height:100%;object-fit:contain;background:#fff;padding:10px;transition:opacity .3s;pointer-events:none;user-select:none;-webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none}
+.cert-card-image img{width:100%;height:100%;object-fit:contain;background:#fff;padding:10px;pointer-events:none;user-select:none;-webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none}
 .cert-card-image .no-image{color:#bbb;font-size:14px;text-transform:uppercase;letter-spacing:1px}
 .cert-badge{position:absolute;top:12px;right:12px;background:var(--red);color:var(--white);padding:5px 12px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;font-family:Bebas Neue,sans-serif;z-index:2}
 
-.cert-protect-overlay{position:absolute;inset:0;z-index:5;cursor:default;background:transparent;opacity:0;pointer-events:none;transition:opacity .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
-.cert-protect-overlay.zoomed{opacity:1;pointer-events:auto;background:var(--darker)}
-.protect-lock{width:56px;height:56px;border:3px solid var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
-.protect-lock svg{width:26px;height:26px;fill:var(--red)}
-.protect-title{font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--white);letter-spacing:5px;text-transform:uppercase}
-.protect-subtitle{font-size:12px;color:#777;letter-spacing:1px;text-align:center;line-height:1.6;max-width:220px}
-.cert-protect-overlay.zoomed::before{content:'';position:absolute;inset:12px;border:2px dashed rgba(196,22,28,.35);pointer-events:none}
-.cert-protect-overlay.zoomed::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 25px,rgba(196,22,28,.04) 25px,rgba(196,22,28,.04) 27px);pointer-events:none}
+/* ── PROTECTION OVERLAY: blurred background instead of black ── */
+.cert-protect-overlay{
+  position:absolute;inset:0;z-index:5;cursor:default;
+  background:transparent;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+}
+.cert-protect-overlay.zoomed{
+  opacity:1;pointer-events:auto;
+  /* Semi-transparent dark tint so text is readable */
+  background:rgba(15,15,15,0.45);
+  /* HEAVY BLUR — blurs the certificate image behind the overlay */
+  -webkit-backdrop-filter:blur(28px) saturate(0.3);
+  backdrop-filter:blur(28px) saturate(0.3);
+}
+.protect-lock{
+  width:60px;height:60px;
+  border:3px solid var(--white);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:4px;
+  background:rgba(0,0,0,0.35);
+  -webkit-backdrop-filter:blur(4px);
+  backdrop-filter:blur(4px);
+}
+.protect-lock svg{width:28px;height:28px;fill:var(--white)}
+.protect-title{
+  font-family:Bebas Neue,sans-serif;font-size:28px;
+  color:var(--white);letter-spacing:5px;text-transform:uppercase;
+  text-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+.protect-subtitle{
+  font-size:12px;color:rgba(255,255,255,0.85);
+  letter-spacing:1px;text-align:center;line-height:1.6;max-width:220px;
+  text-shadow:0 1px 4px rgba(0,0,0,0.4);
+}
+.cert-protect-overlay.zoomed::before{
+  content:'';position:absolute;inset:12px;
+  border:2px dashed rgba(255,255,255,0.25);
+  pointer-events:none;
+}
+.cert-protect-overlay.zoomed::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    -45deg,transparent,transparent 25px,
+    rgba(196,22,28,0.06) 25px,rgba(196,22,28,0.06) 27px
+  );
+  pointer-events:none;
+}
 
 .zoom-warning-toast{position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--dark);color:var(--white);padding:14px 28px;font-size:14px;z-index:9999;border-left:4px solid var(--red);opacity:0;pointer-events:none;transition:all .4s;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.3);font-weight:500}
 .zoom-warning-toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
@@ -234,26 +276,6 @@ function loadAllProjects() {
     .catch(function() { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:red">Failed to load projects.</p>'; });
 }
 
-/* ═══ PROTECTION IMAGE (Canvas) ═══ */
-function genProtectImg() {
-  var cv = document.createElement('canvas'); cv.width = 800; cv.height = 520;
-  var x = cv.getContext('2d');
-  x.fillStyle = '#0f0f0f'; x.fillRect(0, 0, 800, 520);
-  x.strokeStyle = 'rgba(196,22,28,0.06)'; x.lineWidth = 1;
-  for (var i = -520; i < 1320; i += 28) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i + 520, 520); x.stroke(); }
-  x.strokeStyle = 'rgba(196,22,28,0.4)'; x.lineWidth = 2; x.setLineDash([10, 6]); x.strokeRect(24, 24, 752, 472); x.setLineDash([]);
-  x.strokeStyle = '#c4161c'; x.lineWidth = 7; x.lineCap = 'round'; x.beginPath(); x.arc(400, 175, 22, Math.PI, 0, false); x.stroke();
-  x.fillStyle = '#c4161c'; x.fillRect(370, 190, 60, 48); x.fillRect(374, 194, 52, 40);
-  x.fillStyle = '#0f0f0f'; x.beginPath(); x.arc(400, 210, 8, 0, Math.PI * 2); x.fill(); x.fillRect(396, 215, 8, 14);
-  x.fillStyle = '#fff'; x.font = 'bold 32px Arial,sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('PROTECTED', 400, 280);
-  x.fillStyle = '#888'; x.font = '16px Arial,sans-serif'; x.fillText('DOCUMENT', 400, 312);
-  x.strokeStyle = 'rgba(255,255,255,0.1)'; x.lineWidth = 1; x.beginPath(); x.moveTo(300, 340); x.lineTo(500, 340); x.stroke();
-  x.fillStyle = '#555'; x.font = '13px Arial,sans-serif'; x.fillText('This certificate cannot be viewed while zoomed in', 400, 370); x.fillText('to prevent unauthorized copying or screenshots.', 400, 392);
-  x.fillStyle = '#333'; x.font = '11px Arial,sans-serif'; x.fillText('ANASAL MEPFS CORP', 400, 450);
-  return cv.toDataURL('image/png');
-}
-var PROTECT_URL = genProtectImg();
-
 /* ═══ LOAD CERTIFICATES ═══ */
 function loadCertificates() {
   var g = document.getElementById("certGallery");
@@ -283,52 +305,37 @@ function loadCertificates() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   CERTIFICATE PROTECTION — LATCH SYSTEM
-   ══════════════════════════════════════════════════════════
+   CERTIFICATE PROTECTION — LATCH + BLUR SYSTEM
    
-   PROBLEM: After a touchpad pinch, visualViewport.scale resets
-   to 1.0 on desktop browsers. Old polling saw "normal" and
-   unlocked — even though the page was still visually zoomed.
+   VIEW 1 (normal):  overlay invisible → certificate fully visible
+   VIEW 2 (zoomed):  overlay visible with backdrop-filter blur
+                     → certificate behind is heavily blurred
+                     → lock icon + text shown on top
    
-   SOLUTION: Two completely separate paths:
-   
-   LOCK path (any of these can activate protection):
+   LOCK path (any activates protection):
      • visualViewport.scale increasing
-     • Pinch fingers spreading apart  
+     • Pinch fingers spreading
      • Ctrl+Scroll up
      • Ctrl+/= key
      • GestureEvent (Safari touchpad)
-     • Polling detects zoom metrics > base
+     • Polling detects zoom > base
    
-   UNLOCK path (ONLY these can deactivate protection):
-     • visualViewport.scale actively DECREASING
-       AND at least 2 seconds since last zoom-in
-       AND confirmed normal for 2 more seconds
-     • Pinch fingers closing together
-       AND at least 2 seconds since last zoom-in
-       AND confirmed normal for 2 more seconds
-     • Ctrl+Scroll down / Ctrl+- key
-       AND at least 2 seconds since last zoom-in
-       AND confirmed normal for 2 more seconds
+   UNLOCK path (ONLY these deactivate):
+     • explicit zoom-OUT gesture detected
+     • 2s grace since last lock
+     • 2s confirmed normal after that
    
-   KEY RULE: The periodic poll can ONLY lock. It can
-   NEVER unlock. This means AFK/tab-switch/screen-sleep
-   can never accidentally drop protection.
-   
-   The 2-second grace period after zoom-in prevents the
-   browser's "commit" reset (where scale drops from 1.5
-   to 1.0 after a touchpad pinch ends) from being mistaken
-   for a user zoom-out action.
+   KEY RULE: Poll can ONLY lock, NEVER unlock.
    ══════════════════════════════════════════════════════════ */
 
 function initProtection() {
   var overlays = document.querySelectorAll('.cert-protect-overlay');
   var imgs = document.querySelectorAll('.cert-card-image img[data-orig]');
   var toast = document.getElementById('zoomWarning');
-  var tto = null;        // toast timeout
-  var isZ = false;       // currently protected?
-  var lastLockTime = 0;  // timestamp of last lock() call
-  var unlockTmr = null;  // pending unlock timer
+  var tto = null;
+  var isZ = false;
+  var lastLockTime = 0;
+  var unlockTmr = null;
 
   function warn() {
     if (tto) clearTimeout(tto);
@@ -340,15 +347,10 @@ function initProtection() {
     if (isZ) return;
     isZ = true;
     lastLockTime = Date.now();
-    // Kill any pending unlock immediately
     if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-    // Show protection
+    /* Show blur overlay — the real certificate stays in DOM
+       but becomes unreadable through the heavy blur */
     for (var i = 0; i < overlays.length; i++) overlays[i].classList.add('zoomed');
-    for (var j = 0; j < imgs.length; j++) {
-      imgs[j].src = PROTECT_URL;
-      imgs[j].style.objectFit = 'cover';
-      imgs[j].style.padding = '0';
-    }
     warn();
   }
 
@@ -357,40 +359,20 @@ function initProtection() {
     isZ = false;
     lastLockTime = 0;
     if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-    // Hide protection, restore real images
+    /* Hide blur overlay — certificate becomes visible again */
     for (var i = 0; i < overlays.length; i++) overlays[i].classList.remove('zoomed');
-    for (var j = 0; j < imgs.length; j++) {
-      var s = imgs[j].getAttribute('data-orig');
-      if (s) {
-        imgs[j].src = s;
-        imgs[j].style.objectFit = 'contain';
-        imgs[j].style.padding = '10px';
-      }
-    }
   }
 
-  /* ── attemptUnlock: ONLY called by explicit zoom-OUT gestures ── */
   function attemptUnlock() {
     if (!isZ) return;
-    // GRACE PERIOD: If zoom-in happened <2s ago, this is likely
-    // the browser "committing" the zoom (scale dropping from 1.5→1.0),
-    // NOT the user zooming out. Ignore it.
     if (Date.now() - lastLockTime < 2000) return;
-    // Cancel previous attempt (user is actively zooming out,
-    // keep resetting the timer until they stop)
     if (unlockTmr) clearTimeout(unlockTmr);
-    // Wait 2 seconds of no further zoom-in to confirm
     unlockTmr = setTimeout(function() {
       unlockTmr = null;
-      // Final verification: is zoom actually back to normal?
-      if (getZoom() <= baseZoom + 0.04) {
-        unlock();
-      }
-      // else: still zoomed, do nothing (protection stays)
+      if (getZoom() <= baseZoom + 0.04) unlock();
     }, 2000);
   }
 
-  /* ── Zoom level reading (3 methods combined) ── */
   function getZoom() {
     var z = 1;
     if (window.visualViewport && typeof window.visualViewport.scale === 'number')
@@ -401,77 +383,49 @@ function initProtection() {
     return z;
   }
 
-  // Base zoom recorded ONCE at init — never changes
   var baseZoom = getZoom();
 
-  /* ════════════════════════════════════
-     LOCK PATHS — can activate protection
-     ════════════════════════════════════ */
-
-  /* 1. PERIODIC POLL — can ONLY lock, NEVER unlock */
+  /* ── 1. POLL — lock only, never unlock ── */
   function poll() {
-    if (!isZ && getZoom() > baseZoom + 0.04) {
-      lock();
-    }
-    // If isZ is true, poll does NOTHING — can't unlock from here
+    if (!isZ && getZoom() > baseZoom + 0.04) lock();
   }
   setInterval(poll, 300);
 
-  /* 2. visualViewport resize — scale INCREASING = zoom in */
+  /* ── 2. visualViewport ── */
   if (window.visualViewport) {
     var lastVS = window.visualViewport.scale || 1;
     window.visualViewport.addEventListener('resize', function() {
       var s = window.visualViewport.scale || 1;
-      if (s > lastVS + 0.03) {
-        // Scale going UP → zoom in → lock
-        lock();
-      } else if (s < lastVS - 0.03) {
-        // Scale going DOWN → zoom out → attempt unlock
-        attemptUnlock();
-      }
+      if (s > lastVS + 0.03) lock();
+      else if (s < lastVS - 0.03) attemptUnlock();
       lastVS = s;
     });
-    // Also fires during pinch scroll offset changes
     window.visualViewport.addEventListener('scroll', function() {
-      var s = window.visualViewport.scale || 1;
-      if (s > baseZoom + 0.04) lock();
+      if ((window.visualViewport.scale || 1) > baseZoom + 0.04) lock();
     });
   }
 
-  /* 3. PINCH GESTURE — two fingers spreading/closing */
+  /* ── 3. PINCH GESTURE ── */
   var pinchDist = 0;
   document.addEventListener('touchstart', function(e) {
-    if (e.touches.length === 2) {
-      pinchDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-    }
+    if (e.touches.length === 2)
+      pinchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
   }, { passive: true });
   document.addEventListener('touchmove', function(e) {
     if (e.touches.length === 2 && pinchDist > 0) {
-      var d = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      if (d > pinchDist * 1.08) {
-        // Fingers spreading → zoom in
-        lock();
-      } else if (d < pinchDist * 0.92) {
-        // Fingers closing → zoom out
-        attemptUnlock();
-      }
+      var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      if (d > pinchDist * 1.08) lock();
+      else if (d < pinchDist * 0.92) attemptUnlock();
     }
   }, { passive: true });
   document.addEventListener('touchend', function() { pinchDist = 0; });
 
-  /* 4. DOUBLE-TAP zoom (mobile) */
+  /* ── 4. DOUBLE-TAP ── */
   var lastTap = 0;
   document.querySelectorAll('.cert-card-image').forEach(function(el) {
     el.addEventListener('touchend', function() {
       var now = Date.now();
       if (now - lastTap < 350) {
-        // Double tap detected — check zoom after a moment
         setTimeout(function() { if (getZoom() > baseZoom + 0.04) lock(); }, 120);
         setTimeout(function() { if (getZoom() > baseZoom + 0.04) lock(); }, 300);
       }
@@ -479,93 +433,50 @@ function initProtection() {
     });
   });
 
-  /* 5. CTRL+SCROLL — up = zoom in, down = zoom out */
+  /* ── 5. CTRL+SCROLL ── */
   document.addEventListener('wheel', function(e) {
     if (e.ctrlKey || e.metaKey) {
-      if (e.deltaY < 0) {
-        // Scrolling UP with Ctrl → zoom in
-        lock();
-      } else {
-        // Scrolling DOWN with Ctrl → zoom out
-        attemptUnlock();
-      }
+      if (e.deltaY < 0) lock();
+      else attemptUnlock();
     }
   }, { passive: true });
 
-  /* 6. KEYBOARD Ctrl+/= (in) and Ctrl+- (out) */
+  /* ── 6. KEYBOARD ── */
   document.addEventListener('keydown', function(e) {
     if (e.ctrlKey || e.metaKey) {
-      if (e.key === '+' || e.key === '=') {
-        lock();
-      } else if (e.key === '-' || e.key === '_') {
-        attemptUnlock();
-      }
+      if (e.key === '+' || e.key === '=') lock();
+      else if (e.key === '-' || e.key === '_') attemptUnlock();
     }
   });
 
-  /* 7. GESTUREEVENT — Safari/macOS touchpad */
+  /* ── 7. GESTUREEVENT (Safari) ── */
   document.addEventListener('gesturestart', function() { lock(); }, { passive: true });
   document.addEventListener('gesturechange', function(e) {
-    // Safari fires this continuously during touchpad pinch
-    // scale >1 = zoom in, <1 = zoom out
     if (e.scale > 1.05) lock();
     else if (e.scale < 0.95) attemptUnlock();
   }, { passive: true });
 
-  /* ════════════════════════════════════════
-     ANTI-UNLOCK — prevents accidental unlock
-     ════════════════════════════════════════ */
-
-  /* KILL any pending unlock on:
-     - Tab hidden/visible (screen sleep, tab switch)
-     - Window blur/focus (alt-tab, desktop switch)
-     - Orientation change (phone rotation)
-     These events can produce glitchy zoom readings.
-     Killing the timer ensures protection stays locked. */
+  /* ── ANTI-UNLOCK: kill pending unlock on tab/blur/orientation ── */
   document.addEventListener('visibilitychange', function() {
     if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-    if (!document.hidden) {
-      // Re-verify after coming back — poll can re-lock if needed
-      setTimeout(poll, 200);
-      setTimeout(poll, 600);
-      setTimeout(poll, 1200);
-    }
+    if (!document.hidden) { setTimeout(poll, 200); setTimeout(poll, 600); setTimeout(poll, 1200); }
   });
-  window.addEventListener('blur', function() {
-    if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-  });
-  window.addEventListener('focus', function() {
-    if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-    setTimeout(poll, 200);
-    setTimeout(poll, 600);
-  });
-  if (screen.orientation) {
-    screen.orientation.addEventListener('change', function() {
-      if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-      setTimeout(poll, 400);
-      setTimeout(poll, 1000);
-    });
-  }
+  window.addEventListener('blur', function() { if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; } });
+  window.addEventListener('focus', function() { if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; } setTimeout(poll, 200); setTimeout(poll, 600); });
+  if (screen.orientation) screen.orientation.addEventListener('change', function() { if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; } setTimeout(poll, 400); setTimeout(poll, 1000); });
 
-  /* ══════════════════════════════
-     BLOCK: right-click, drag, long-press
-     ══════════════════════════════ */
+  /* ── BLOCK: right-click, drag, long-press ── */
   document.querySelectorAll('.cert-card-image').forEach(function(el) {
     el.addEventListener('contextmenu', function(e) { e.preventDefault(); warn(); });
   });
-  imgs.forEach(function(m) {
-    m.addEventListener('dragstart', function(e) { e.preventDefault(); warn(); });
-  });
+  imgs.forEach(function(m) { m.addEventListener('dragstart', function(e) { e.preventDefault(); warn(); }); });
   var lpTimer = null;
   document.querySelectorAll('.cert-card-image').forEach(function(el) {
-    el.addEventListener('touchstart', function(e) {
-      if (e.touches.length === 1) lpTimer = setTimeout(warn, 500);
-    }, { passive: true });
+    el.addEventListener('touchstart', function(e) { if (e.touches.length === 1) lpTimer = setTimeout(warn, 500); }, { passive: true });
     el.addEventListener('touchend', function() { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } });
     el.addEventListener('touchmove', function() { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } }, { passive: true });
   });
 
-  /* Initial checks */
   setTimeout(poll, 500);
   setTimeout(poll, 1200);
   window.addEventListener('resize', poll);
