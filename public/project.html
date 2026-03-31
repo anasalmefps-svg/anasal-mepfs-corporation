@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Our Projects | Anasal MEPFS Corp</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -322,7 +322,6 @@ section {
   margin: 0 auto;
 }
 
-/* --- NEW CERT CARD: Image is clearly visible --- */
 .cert-card {
   background: var(--white);
   border-radius: 4px;
@@ -338,7 +337,7 @@ section {
   box-shadow: 0 12px 40px rgba(0,0,0,0.18);
 }
 
-/* Image container — the certificate is fully visible here */
+/* --- Certificate image container with protection --- */
 .cert-card-image {
   width: 100%;
   height: 260px;
@@ -356,11 +355,17 @@ section {
   object-fit: contain;
   background: #fff;
   padding: 10px;
-  transition: transform 0.4s ease;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
 }
 
 .cert-card:hover .cert-card-image img {
-  transform: scale(1.03);
+  transform: scale(1.0);
 }
 
 /* Fallback icon when no image */
@@ -385,6 +390,100 @@ section {
   font-weight: 700;
   font-family: Bebas Neue, sans-serif;
   z-index: 2;
+}
+
+/* --- Protection overlay on certificate images --- */
+.cert-protect-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  cursor: default;
+  /* Transparent by default — becomes visible when zoom detected */
+  background: transparent;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cert-protect-overlay .protect-watermark {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 18px;
+  color: rgba(196, 22, 28, 0);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  transform: rotate(-30deg);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color 0.3s ease;
+  text-shadow: 0 0 10px rgba(196, 22, 28, 0);
+}
+
+/* When zoom is detected — overlay activates */
+.cert-protect-overlay.zoomed {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.cert-protect-overlay.zoomed .protect-watermark {
+  color: rgba(196, 22, 28, 0.6);
+  text-shadow: 0 0 20px rgba(196, 22, 28, 0.3);
+}
+
+/* Diagonal stripe pattern for extra protection when zoomed */
+.cert-protect-overlay::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 40px,
+    rgba(196, 22, 28, 0) 40px,
+    rgba(196, 22, 28, 0) 42px
+  );
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.cert-protect-overlay.zoomed::before {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 20px,
+    rgba(196, 22, 28, 0.08) 20px,
+    rgba(196, 22, 28, 0.08) 22px
+  );
+}
+
+/* Zoom warning toast */
+.zoom-warning-toast {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--dark);
+  color: var(--white);
+  padding: 14px 28px;
+  font-size: 14px;
+  z-index: 9999;
+  border-left: 4px solid var(--red);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  white-space: nowrap;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  font-weight: 500;
+}
+
+.zoom-warning-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
 }
 
 /* Details section below the image */
@@ -669,6 +768,14 @@ footer {
     flex-direction: column;
     text-align: center;
   }
+
+  .zoom-warning-toast {
+    font-size: 12px;
+    padding: 12px 20px;
+    max-width: 90vw;
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -721,7 +828,6 @@ footer {
     <p>Showing all projects executed with precision and engineering excellence.</p>
   </div>
   <div class="gallery" id="projectsGallery">
-    <!-- Projects will be injected here via JavaScript -->
   </div>
 </section>
 
@@ -732,9 +838,13 @@ footer {
     <p>Recognitions and accreditations that validate our commitment to quality and safety.</p>
   </div>
   <div class="cert-gallery" id="certGallery">
-    <!-- Certificates will be injected here via JavaScript -->
   </div>
 </section>
+
+<!-- Zoom Warning Toast -->
+<div class="zoom-warning-toast" id="zoomWarning">
+  &#9888;&ensp;Certificate images are protected and cannot be zoomed or copied.
+</div>
 
 <footer>
   <div class="footer-main">
@@ -895,7 +1005,6 @@ async function loadCertificates() {
       card.className = 'cert-card fade-in';
       card.style.transitionDelay = `${index * 0.05}s`;
 
-      // Build image URL — use the correct column name "image"
       let imgUrl = "";
       let hasImage = false;
 
@@ -908,7 +1017,6 @@ async function loadCertificates() {
         hasImage = true;
       }
 
-      // Format issue_date
       let dateDisplay = "No date";
       if (r.issue_date) {
         const d = new Date(r.issue_date);
@@ -921,10 +1029,9 @@ async function loadCertificates() {
         }
       }
 
-      // Build the image section
       let imageHTML = '';
       if (hasImage) {
-        imageHTML = `<img src="${imgUrl}" alt="${r.cert_name || 'Certificate'}" onerror="this.parentElement.innerHTML='<span class=\\'no-image\\'>Image not available</span>'" />`;
+        imageHTML = `<img src="${imgUrl}" alt="${r.cert_name || 'Certificate'}" draggable="false" oncontextmenu="return false;" onerror="this.parentElement.innerHTML='<span class=\\'no-image\\'>Image not available</span>'" />`;
       } else {
         imageHTML = '<span class="no-image">No Image Uploaded</span>';
       }
@@ -933,6 +1040,9 @@ async function loadCertificates() {
         <div class="cert-card-image">
           <span class="cert-badge">Certified</span>
           ${imageHTML}
+          <div class="cert-protect-overlay">
+            <span class="protect-watermark">Protected Document</span>
+          </div>
         </div>
         <div class="cert-card-body">
           <h4 class="cert-card-name">${r.cert_name || "Untitled Certificate"}</h4>
@@ -946,10 +1056,183 @@ async function loadCertificates() {
       revealObserver.observe(card);
     });
 
+    // Activate protection after certificates are loaded
+    initCertificateProtection();
+
   } catch (error) {
     console.error("Error loading certificates:", error);
     gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: red;">Failed to load certificates.</p>';
   }
+}
+
+// ========== CERTIFICATE IMAGE PROTECTION ==========
+function initCertificateProtection() {
+  const overlays = document.querySelectorAll('.cert-protect-overlay');
+  const certImages = document.querySelectorAll('.cert-card-image img');
+  const warningToast = document.getElementById('zoomWarning');
+
+  let toastTimeout = null;
+  let isZoomed = false;
+
+  // Show warning toast
+  function showWarning() {
+    if (toastTimeout) clearTimeout(toastTimeout);
+    warningToast.classList.add('show');
+    toastTimeout = setTimeout(() => {
+      warningToast.classList.remove('show');
+    }, 3000);
+  }
+
+  // Activate zoomed state on all overlays and blur images
+  function activateProtection() {
+    if (isZoomed) return;
+    isZoomed = true;
+
+    overlays.forEach(overlay => overlay.classList.add('zoomed'));
+    certImages.forEach(img => {
+      img.style.filter = 'blur(8px) brightness(0.7)';
+      img.style.transform = 'scale(1.1)';
+    });
+
+    showWarning();
+  }
+
+  // Deactivate protection when back to normal zoom
+  function deactivateProtection() {
+    if (!isZoomed) return;
+    isZoomed = false;
+
+    overlays.forEach(overlay => overlay.classList.remove('zoomed'));
+    certImages.forEach(img => {
+      img.style.filter = 'blur(0px) brightness(1)';
+      img.style.transform = 'scale(1)';
+    });
+  }
+
+  // --- Detect browser zoom level ---
+  function getZoomLevel() {
+    // Method 1: devicePixelRatio (most reliable across modern browsers)
+    const dpr = window.devicePixelRatio || 1;
+    // Method 2: outerWidth / innerWidth ratio (desktop fallback)
+    const ratio = window.outerWidth / window.innerWidth;
+    // Use the higher of the two to catch all zoom types
+    return Math.max(dpr, ratio);
+  }
+
+  let baseZoom = getZoomLevel();
+
+  function checkZoomLevel() {
+    const currentZoom = getZoomLevel();
+    // Allow tiny floating-point differences (±0.03)
+    const threshold = 0.03;
+
+    if (currentZoom > baseZoom + threshold) {
+      activateProtection();
+    } else {
+      deactivateProtection();
+    }
+  }
+
+  // --- Detect pinch-to-zoom on mobile ---
+  let pinchStartDistance = 0;
+  let pinchDetected = false;
+
+  document.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 2) {
+      pinchStartDistance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      pinchDetected = false;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches.length === 2 && pinchStartDistance > 0) {
+      const currentDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      // If pinching OUT (zooming in) by more than 10%
+      if (currentDist > pinchStartDistance * 1.1) {
+        if (!pinchDetected) {
+          pinchDetected = true;
+          activateProtection();
+        }
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', function() {
+    pinchStartDistance = 0;
+    // Don't immediately deactivate — let checkZoomLevel handle it
+    setTimeout(checkZoomLevel, 500);
+  });
+
+  // --- Detect Ctrl+Scroll / Ctrl+Plus zoom on desktop ---
+  document.addEventListener('wheel', function(e) {
+    if (e.ctrlKey || e.metaKey) {
+      activateProtection();
+    }
+  }, { passive: true });
+
+  // --- Detect keyboard zoom shortcuts ---
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '_')) {
+      setTimeout(activateProtection, 100);
+    }
+  });
+
+  // --- Block right-click on certificate containers ---
+  document.querySelectorAll('.cert-card-image').forEach(container => {
+    container.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      showWarning();
+    });
+  });
+
+  // --- Block drag on certificate images ---
+  certImages.forEach(img => {
+    img.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+      showWarning();
+    });
+  });
+
+  // --- Block long-press save on mobile ---
+  let longPressTimer = null;
+  document.querySelectorAll('.cert-card-image').forEach(container => {
+    container.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1) {
+        longPressTimer = setTimeout(() => {
+          showWarning();
+        }, 600);
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchend', function() {
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
+    });
+
+    container.addEventListener('touchmove', function() {
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
+    }, { passive: true });
+  });
+
+  // --- Periodic zoom check (catches all edge cases) ---
+  setInterval(checkZoomLevel, 400);
+
+  // Also check on resize (zoom often triggers resize)
+  window.addEventListener('resize', checkZoomLevel);
+
+  // Initial check in case page is already zoomed when loaded
+  setTimeout(checkZoomLevel, 500);
 }
 
 // ========== MOBILE MENU TOGGLE ==========
@@ -972,8 +1255,6 @@ navLinks.forEach(link => {
 // ========== INITIALIZE ==========
 loadAllProjects();
 loadCertificates();
-
-
 </script>
 </body>
 </html>
