@@ -446,12 +446,12 @@ function initProtection() {
   }
   function attemptUnlock() {
     if (!isZ) return;
-    if (Date.now() - lastLockTime < 2000) return;
+    if (Date.now() - lastLockTime < 1000) return;
     if (unlockTmr) clearTimeout(unlockTmr);
     unlockTmr = setTimeout(function() {
       unlockTmr = null;
       if (getZoom() <= baseZoom + 0.04) unlock();
-    }, 2000);
+    }, 1000);
   }
   function getZoom() {
     var z = 1;
