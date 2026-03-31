@@ -7,802 +7,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --red: #c4161c;
-  --red-dark: #a01218;
-  --dark: #1a1a1a;
-  --darker: #0f0f0f;
-  --light: #f5f5f5;
-  --gray: #666;
-  --steel: #8892a0;
-  --white: #ffffff;
-  --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Roboto, sans-serif;
-  background: var(--white);
-  color: #222;
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-
-h1, h2, h3, h4 {
-  font-family: Bebas Neue, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-/* ========== NAVBAR ========== */
-.navbar {
-  background: var(--darker);
-  color: var(--white);
-  padding: 0 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  height: 70px;
-  border-bottom: 3px solid var(--red);
-}
-
-.logo {
-  font-family: Bebas Neue, sans-serif;
-  font-size: 28px;
-  letter-spacing: 3px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: var(--white);
-}
-
-.logo-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--red);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
-  letter-spacing: 0;
-}
-
-.navbar ul {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.navbar a {
-  color: #aaa;
-  text-decoration: none;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  padding: 12px 18px;
-  transition: all 0.3s ease;
-  position: relative;
-  font-weight: 500;
-}
-
-.navbar a::after {
-  content: '';
-  position: absolute;
-  bottom: 8px;
-  left: 18px;
-  right: 18px;
-  height: 2px;
-  background: var(--red);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.navbar a:hover, .navbar a.active {
-  color: var(--white);
-}
-
-.navbar a:hover::after, .navbar a.active::after {
-  transform: scaleX(1);
-}
-
-/* ========== HAMBURGER MENU ========== */
-.hamburger {
-  display: none; 
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 21px;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-.hamburger span {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background-color: var(--white);
-  border-radius: 3px;
-  transition: all 0.3s ease;
-}
-
-.navbar.active .hamburger span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
-}
-
-.navbar.active .hamburger span:nth-child(2) {
-  opacity: 0;
-}
-
-.navbar.active .hamburger span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
-}
-
-/* ========== INNER PAGE HERO ========== */
-.page-hero {
-  min-height: 40vh;
-  background: 
-    linear-gradient(135deg, rgba(26,26,26,0.98) 0%, rgba(15,15,15,0.9) 100%),
-    url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80") center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  padding: 120px 60px 80px;
-}
-
-.page-hero h1 {
-  font-size: clamp(40px, 6vw, 60px);
-  color: var(--white);
-  margin-bottom: 15px;
-}
-
-.page-hero p {
-  color: #aaa;
-  font-size: 18px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.page-hero .hero-badge {
-  display: inline-block;
-  background: var(--red);
-  color: var(--white);
-  padding: 6px 18px;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-}
-
-/* ========== SECTIONS ========== */
-section {
-  padding: 80px 60px;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-header h2 {
-  font-size: 48px;
-  color: var(--dark);
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
-}
-
-.section-header h2::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
-  background: var(--red);
-}
-
-.section-header p {
-  color: var(--gray);
-  font-size: 16px;
-  max-width: 600px;
-  margin: 25px auto 0;
-}
-
-/* ========== PROJECTS GALLERY ========== */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.project-card {
-  position: relative;
-  overflow: hidden;
-  background: var(--dark);
-  cursor: pointer;
-  height: 350px;
-}
-
-.project-image-bg {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  transition: all 0.5s ease;
-  filter: grayscale(30%);
-}
-
-.project-card:hover .project-image-bg {
-  transform: scale(1.08);
-  filter: grayscale(0%);
-}
-
-.project-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 30px;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.project-card:hover .project-overlay {
-  opacity: 1;
-}
-
-.project-overlay h4 {
-  font-size: 22px;
-  color: var(--white);
-  margin-bottom: 8px;
-  transform: translateY(20px);
-  transition: transform 0.4s ease 0.1s;
-}
-
-.project-overlay p {
-  font-size: 14px;
-  color: #aaa;
-  line-height: 1.6;
-  transform: translateY(20px);
-  transition: transform 0.4s ease 0.2s;
-}
-
-.project-card:hover .project-overlay h4,
-.project-card:hover .project-overlay p {
-  transform: translateY(0);
-}
-
-.project-tag {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: var(--red);
-  color: var(--white);
-  padding: 6px 14px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 500;
-  z-index: 2;
-}
-
-/* ========== CERTIFICATES SECTION ========== */
-#certificates {
-  background: var(--light);
-}
-
-.cert-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.cert-card {
-  background: var(--white);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: var(--card-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.cert-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-}
-
-/* --- Certificate image container with protection --- */
-.cert-card-image {
-  width: 100%;
-  height: 260px;
-  overflow: hidden;
-  background: #e8e8e8;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cert-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: #fff;
-  padding: 10px;
-  transition: transform 0.4s ease, filter 0.4s ease;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-}
-
-.cert-card:hover .cert-card-image img {
-  transform: scale(1.0);
-}
-
-/* Fallback icon when no image */
-.cert-card-image .no-image {
-  color: #bbb;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Certified badge on the image */
-.cert-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: var(--red);
-  color: var(--white);
-  padding: 5px 12px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  font-family: Bebas Neue, sans-serif;
-  z-index: 2;
-}
-
-/* --- Protection overlay on certificate images --- */
-.cert-protect-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  cursor: default;
-  /* Transparent by default — becomes visible when zoom detected */
-  background: transparent;
-  transition: background 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.cert-protect-overlay .protect-watermark {
-  font-family: Bebas Neue, sans-serif;
-  font-size: 18px;
-  color: rgba(196, 22, 28, 0);
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  transform: rotate(-30deg);
-  white-space: nowrap;
-  pointer-events: none;
-  transition: color 0.3s ease;
-  text-shadow: 0 0 10px rgba(196, 22, 28, 0);
-}
-
-/* When zoom is detected — overlay activates */
-.cert-protect-overlay.zoomed {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-}
-
-.cert-protect-overlay.zoomed .protect-watermark {
-  color: rgba(196, 22, 28, 0.6);
-  text-shadow: 0 0 20px rgba(196, 22, 28, 0.3);
-}
-
-/* Diagonal stripe pattern for extra protection when zoomed */
-.cert-protect-overlay::before {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 40px,
-    rgba(196, 22, 28, 0) 40px,
-    rgba(196, 22, 28, 0) 42px
-  );
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.cert-protect-overlay.zoomed::before {
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 20px,
-    rgba(196, 22, 28, 0.08) 20px,
-    rgba(196, 22, 28, 0.08) 22px
-  );
-}
-
-/* Zoom warning toast */
-.zoom-warning-toast {
-  position: fixed;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  background: var(--dark);
-  color: var(--white);
-  padding: 14px 28px;
-  font-size: 14px;
-  z-index: 9999;
-  border-left: 4px solid var(--red);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.4s ease;
-  white-space: nowrap;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-  font-weight: 500;
-}
-
-.zoom-warning-toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
-}
-
-/* Details section below the image */
-.cert-card-body {
-  padding: 25px 25px 30px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.cert-card-name {
-  font-family: Bebas Neue, sans-serif;
-  font-size: 24px;
-  color: var(--dark);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 6px;
-  line-height: 1.2;
-}
-
-.cert-card-purpose {
-  font-size: 13px;
-  color: var(--red);
-  font-weight: 500;
-  margin-bottom: 10px;
-  line-height: 1.5;
-}
-
-.cert-card-date {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--steel);
-  background: #f0f0f0;
-  padding: 4px 12px;
-  border-radius: 3px;
-  margin-bottom: 14px;
-  width: fit-content;
-}
-
-.cert-card-desc {
-  font-size: 14px;
-  color: #777;
-  line-height: 1.7;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ========== FOOTER ========== */
-footer {
-  background: var(--darker);
-  font-size: 14px;
-}
-
-.footer-main {
-  background: var(--dark);
-  padding: 80px 60px 60px;
-  border-top: 3px solid var(--red);
-}
-
-.footer-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-  gap: 60px;
-}
-
-.footer-col .logo {
-  margin-bottom: 25px;
-  font-size: 24px;
-}
-
-.footer-desc {
-  color: #888;
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
-
-.footer-social {
-  display: flex;
-  gap: 12px;
-}
-
-.social-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--darker);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #888;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-size: 16px;
-}
-
-.social-icon:hover {
-  background: var(--red);
-  color: var(--white);
-}
-
-.footer-title {
-  font-size: 18px;
-  color: var(--white);
-  margin-bottom: 30px;
-  position: relative;
-  padding-bottom: 10px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-
-.footer-title::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 40px;
-  height: 2px;
-  background: var(--red);
-}
-
-.footer-links-list {
-  list-style: none;
-}
-
-.footer-links-list li {
-  margin-bottom: 12px;
-}
-
-.footer-links-list a {
-  color: #888;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.footer-links-list a:hover {
-  color: var(--white);
-  transform: translateX(5px);
-}
-
-.footer-contact-item {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  align-items: flex-start;
-}
-
-.footer-contact-item span {
-  color: var(--red);
-  font-size: 18px;
-  margin-top: 2px;
-}
-
-.footer-contact-item p {
-  color: #888;
-  line-height: 1.6;
-}
-
-.footer-bottom {
-  background: var(--darker);
-  padding: 25px 60px;
-  border-top: 1px solid #222;
-}
-
-.footer-bottom-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.copyright {
-  color: #555;
-}
-
-/* ========== ANIMATIONS ========== */
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 900px) {
-  .navbar {
-    padding: 0 25px;
-    height: 60px;
-  }
-  
-  .hamburger {
-    display: flex;
-  }
-
-  .navbar ul {
-    position: absolute;
-    top: 60px; 
-    left: 0;
-    right: 0;
-    background: var(--darker);
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-    gap: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
-    border-bottom: 0px solid var(--red);
-    padding: 0 20px;
-  }
-
-  .navbar.active ul {
-    max-height: 400px;
-    padding: 20px 20px;
-    border-bottom: 3px solid var(--red);
-  }
-
-  .navbar ul li {
-    width: 100%;
-    margin: 5px 0;
-  }
-  
-  .navbar a {
-    display: block;
-    padding: 12px;
-    width: 100%;
-  }
-
-  .navbar a::after {
-    display: none; 
-  }
-
-  section {
-    padding: 60px 30px;
-  }
-
-  .page-hero {
-    padding: 100px 30px 60px;
-  }
-
-  .footer-main {
-    padding: 60px 30px;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-
-  .footer-col:first-child {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 600px) {
-  .gallery {
-    grid-template-columns: 1fr;
-  }
-
-  .cert-gallery {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-bottom-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .zoom-warning-toast {
-    font-size: 12px;
-    padding: 12px 20px;
-    max-width: 90vw;
-    white-space: normal;
-    text-align: center;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  --red:#c4161c;--red-dark:#a01218;--dark:#1a1a1a;--darker:#0f0f0f;
+  --light:#f5f5f5;--gray:#666;--steel:#8892a0;--white:#fff;
+  --card-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Roboto,sans-serif;background:var(--white);color:#222;line-height:1.7;overflow-x:hidden}
+h1,h2,h3,h4{font-family:Bebas Neue,sans-serif;text-transform:uppercase;letter-spacing:2px}
+
+.navbar{background:var(--darker);color:var(--white);padding:0 50px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;height:70px;border-bottom:3px solid var(--red)}
+.logo{font-family:Bebas Neue,sans-serif;font-size:28px;letter-spacing:3px;display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--white)}
+.logo-icon{width:40px;height:40px;background:var(--red);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;letter-spacing:0}
+.navbar ul{list-style:none;display:flex;gap:10px;align-items:center}
+.navbar a{color:#aaa;text-decoration:none;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;padding:12px 18px;transition:all .3s;position:relative;font-weight:500}
+.navbar a::after{content:'';position:absolute;bottom:8px;left:18px;right:18px;height:2px;background:var(--red);transform:scaleX(0);transition:transform .3s}
+.navbar a:hover,.navbar a.active{color:var(--white)}
+.navbar a:hover::after,.navbar a.active::after{transform:scaleX(1)}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:30px;height:21px;cursor:pointer;z-index:1001}
+.hamburger span{display:block;height:3px;width:100%;background:#fff;border-radius:3px;transition:all .3s}
+.navbar.active .hamburger span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.navbar.active .hamburger span:nth-child(2){opacity:0}
+.navbar.active .hamburger span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+
+.page-hero{min-height:40vh;background:linear-gradient(135deg,rgba(26,26,26,.98),rgba(15,15,15,.9)),url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80") center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 60px 80px}
+.page-hero h1{font-size:clamp(40px,6vw,60px);color:var(--white);margin-bottom:15px}
+.page-hero p{color:#aaa;font-size:18px;max-width:600px;margin:0 auto}
+.hero-badge{display:inline-block;background:var(--red);color:var(--white);padding:6px 18px;font-size:12px;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+
+section{padding:80px 60px}
+.section-header{text-align:center;margin-bottom:60px}
+.section-header h2{font-size:48px;color:var(--dark);margin-bottom:15px;position:relative;display:inline-block}
+.section-header h2::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:60px;height:4px;background:var(--red)}
+.section-header p{color:var(--gray);font-size:16px;max-width:600px;margin:25px auto 0}
+
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;max-width:1400px;margin:0 auto}
+.project-card{position:relative;overflow:hidden;background:var(--dark);cursor:pointer;height:350px}
+.project-image-bg{width:100%;height:100%;background-size:cover;background-position:center;transition:all .5s;filter:grayscale(30%)}
+.project-card:hover .project-image-bg{transform:scale(1.08);filter:grayscale(0%)}
+.project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:30px;opacity:0;transition:opacity .4s}
+.project-card:hover .project-overlay{opacity:1}
+.project-overlay h4{font-size:22px;color:var(--white);margin-bottom:8px;transform:translateY(20px);transition:transform .4s .1s}
+.project-overlay p{font-size:14px;color:#aaa;line-height:1.6;transform:translateY(20px);transition:transform .4s .2s}
+.project-card:hover .project-overlay h4,.project-card:hover .project-overlay p{transform:translateY(0)}
+.project-tag{position:absolute;top:20px;left:20px;background:var(--red);color:var(--white);padding:6px 14px;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:500;z-index:2}
+
+#certificates{background:var(--light)}
+.cert-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:30px;max-width:1400px;margin:0 auto}
+.cert-card{background:var(--white);border-radius:4px;overflow:hidden;box-shadow:var(--card-shadow);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.cert-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.18)}
+.cert-card-image{width:100%;height:260px;overflow:hidden;background:#e8e8e8;position:relative;display:flex;align-items:center;justify-content:center}
+.cert-card-image img{width:100%;height:100%;object-fit:contain;background:#fff;padding:10px;transition:opacity .3s;pointer-events:none;user-select:none;-webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none}
+.cert-card-image .no-image{color:#bbb;font-size:14px;text-transform:uppercase;letter-spacing:1px}
+.cert-badge{position:absolute;top:12px;right:12px;background:var(--red);color:var(--white);padding:5px 12px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;font-family:Bebas Neue,sans-serif;z-index:2}
+
+.cert-protect-overlay{position:absolute;inset:0;z-index:5;cursor:default;background:transparent;opacity:0;pointer-events:none;transition:opacity .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.cert-protect-overlay.zoomed{opacity:1;pointer-events:auto;background:var(--darker)}
+.protect-lock{width:56px;height:56px;border:3px solid var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.protect-lock svg{width:26px;height:26px;fill:var(--red)}
+.protect-title{font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--white);letter-spacing:5px;text-transform:uppercase}
+.protect-subtitle{font-size:12px;color:#777;letter-spacing:1px;text-align:center;line-height:1.6;max-width:220px}
+.cert-protect-overlay.zoomed::before{content:'';position:absolute;inset:12px;border:2px dashed rgba(196,22,28,.35);pointer-events:none}
+.cert-protect-overlay.zoomed::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 25px,rgba(196,22,28,.04) 25px,rgba(196,22,28,.04) 27px);pointer-events:none}
+
+.zoom-warning-toast{position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--dark);color:var(--white);padding:14px 28px;font-size:14px;z-index:9999;border-left:4px solid var(--red);opacity:0;pointer-events:none;transition:all .4s;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.3);font-weight:500}
+.zoom-warning-toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+
+.cert-card-body{padding:25px 25px 30px;flex:1;display:flex;flex-direction:column}
+.cert-card-name{font-family:Bebas Neue,sans-serif;font-size:24px;color:var(--dark);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;line-height:1.2}
+.cert-card-purpose{font-size:13px;color:var(--red);font-weight:500;margin-bottom:10px;line-height:1.5}
+.cert-card-date{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--steel);background:#f0f0f0;padding:4px 12px;border-radius:3px;margin-bottom:14px;width:fit-content}
+.cert-card-desc{font-size:14px;color:#777;line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+footer{background:var(--darker);font-size:14px}
+.footer-main{background:var(--dark);padding:80px 60px 60px;border-top:3px solid var(--red)}
+.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:60px}
+.footer-col .logo{margin-bottom:25px;font-size:24px}
+.footer-desc{color:#888;line-height:1.8;margin-bottom:30px}
+.footer-social{display:flex;gap:12px}
+.social-icon{width:40px;height:40px;background:var(--darker);display:flex;align-items:center;justify-content:center;color:#888;text-decoration:none;transition:all .3s;font-size:16px}
+.social-icon:hover{background:var(--red);color:var(--white)}
+.footer-title{font-size:18px;color:var(--white);margin-bottom:30px;position:relative;padding-bottom:10px;font-weight:500;letter-spacing:1px}
+.footer-title::after{content:'';position:absolute;left:0;bottom:0;width:40px;height:2px;background:var(--red)}
+.footer-links-list{list-style:none}
+.footer-links-list li{margin-bottom:12px}
+.footer-links-list a{color:#888;text-decoration:none;transition:all .3s;display:inline-block}
+.footer-links-list a:hover{color:var(--white);transform:translateX(5px)}
+.footer-contact-item{display:flex;gap:15px;margin-bottom:20px;align-items:flex-start}
+.footer-contact-item span{color:var(--red);font-size:18px;margin-top:2px}
+.footer-contact-item p{color:#888;line-height:1.6}
+.footer-bottom{background:var(--darker);padding:25px 60px;border-top:1px solid #222}
+.footer-bottom-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.copyright{color:#555}
+
+.fade-in{opacity:0;transform:translateY(30px);transition:all .6s}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .navbar{padding:0 25px;height:60px}
+  .hamburger{display:flex}
+  .navbar ul{position:absolute;top:60px;left:0;right:0;background:var(--darker);flex-direction:column;width:100%;text-align:center;gap:0;max-height:0;overflow:hidden;transition:max-height .4s,padding .4s;padding:0 20px}
+  .navbar.active ul{max-height:400px;padding:20px;border-bottom:3px solid var(--red)}
+  .navbar ul li{width:100%;margin:5px 0}
+  .navbar a{display:block;padding:12px;width:100%}
+  .navbar a::after{display:none}
+  section{padding:60px 30px}
+  .page-hero{padding:100px 30px 60px}
+  .footer-main{padding:60px 30px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+  .footer-col:first-child{grid-column:1/-1}
+}
+@media(max-width:600px){
+  .gallery{grid-template-columns:1fr}
+  .cert-gallery{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom-content{flex-direction:column;text-align:center}
+  .zoom-warning-toast{font-size:12px;padding:12px 20px;max-width:90vw;white-space:normal;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
 <body>
 
 <nav class="navbar" id="navbar">
-  <a href="index.html" class="logo">
-    <div class="logo-icon">AMC</div>
-    Anasal MEPFS Corp
-  </a>
-  
-  <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
+  <a href="index.html" class="logo"><div class="logo-icon">AMC</div>Anasal MEPFS Corp</a>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="service.html">Services</a></li>
@@ -812,7 +143,6 @@ footer {
   </ul>
 </nav>
 
-<!-- Page Hero -->
 <header class="page-hero">
   <div class="fade-in">
     <span class="hero-badge">Portfolio</span>
@@ -821,47 +151,32 @@ footer {
   </div>
 </header>
 
-<!-- All Projects Section -->
 <section id="all-projects">
   <div class="section-header fade-in">
     <h2>Completed Works</h2>
     <p>Showing all projects executed with precision and engineering excellence.</p>
   </div>
-  <div class="gallery" id="projectsGallery">
-  </div>
+  <div class="gallery" id="projectsGallery"></div>
 </section>
 
-<!-- Certificates Section -->
 <section id="certificates">
   <div class="section-header fade-in">
     <h2>Certifications</h2>
     <p>Recognitions and accreditations that validate our commitment to quality and safety.</p>
   </div>
-  <div class="cert-gallery" id="certGallery">
-  </div>
+  <div class="cert-gallery" id="certGallery"></div>
 </section>
 
-<!-- Zoom Warning Toast -->
-<div class="zoom-warning-toast" id="zoomWarning">
-  &#9888;&ensp;Certificate images are protected and cannot be zoomed or copied.
-</div>
+<div class="zoom-warning-toast" id="zoomWarning">&#9888;&ensp;Certificate images are protected and cannot be viewed while zoomed in.</div>
 
 <footer>
   <div class="footer-main">
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="logo">
-          <div class="logo-icon">AM</div>
-          Anasal MEPFS Corp
-        </div>
-        <p class="footer-desc">
-          Delivering reliable mechanical, electrical, plumbing, and fire protection systems with precision and engineering excellence for industrial facilities.
-        </p>
-        <div class="footer-social">
-          <a href="https://web.facebook.com/profile.php?id=100057306585484" class="social-icon" title="Facebook">f</a>
-        </div>
+        <div class="logo"><div class="logo-icon">AM</div>Anasal MEPFS Corp</div>
+        <p class="footer-desc">Delivering reliable mechanical, electrical, plumbing, and fire protection systems with precision and engineering excellence for industrial facilities.</p>
+        <div class="footer-social"><a href="https://web.facebook.com/profile.php?id=100057306585484" class="social-icon" title="Facebook">f</a></div>
       </div>
-
       <div class="footer-col">
         <h3 class="footer-title">Quick Links</h3>
         <ul class="footer-links-list">
@@ -872,7 +187,6 @@ footer {
           <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h3 class="footer-title">Services</h3>
         <ul class="footer-links-list">
@@ -881,378 +195,390 @@ footer {
           <li><a href="hvac-services.html">HVAC/Mechanical Ventilation</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h3 class="footer-title">Contact Info</h3>
-        
-        <div class="footer-contact-item">
-          <span>📍</span>
-          <p>07 Pine tree St. Pineville Subd. Brgy. Lawa Meycauayan Bulacan</p>
-        </div>
-
-        <div class="footer-contact-item">
-          <span>📞</span>
-          <p>0908-709-9098</p>
-        </div>
-
-        <div class="footer-contact-item">
-          <span>✉️</span>
-          <p>anasalmepfs.2017@yahoo.com</p>
-        </div>
+        <div class="footer-contact-item"><span>📍</span><p>07 Pine tree St. Pineville Subd. Brgy. Lawa Meycauayan Bulacan</p></div>
+        <div class="footer-contact-item"><span>📞</span><p>0908-709-9098</p></div>
+        <div class="footer-contact-item"><span>✉️</span><p>anasalmepfs.2017@yahoo.com</p></div>
       </div>
     </div>
   </div>
-
-  <div class="footer-bottom">
-    <div class="footer-bottom-content">
-      <p class="copyright">© 2024 Anasal MEPFS Corp. All Rights Reserved.</p>
-    </div>
-  </div>
+  <div class="footer-bottom"><div class="footer-bottom-content"><p class="copyright">© 2024 Anasal MEPFS Corp. All Rights Reserved.</p></div></div>
 </footer>
 
 <script>
-// ========== SCROLL REVEAL ==========
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
+/* ═══ SCROLL REVEAL ═══ */
+var ro = new IntersectionObserver(function(e) {
+  e.forEach(function(x) { if (x.isIntersecting) { x.target.classList.add('visible'); ro.unobserve(x.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-in').forEach(function(el) { ro.observe(el); });
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, observerOptions);
-
-document.querySelectorAll('.fade-in').forEach(el => {
-  revealObserver.observe(el);
-});
-
-// ========== LOAD ALL PROJECTS ==========
-async function loadAllProjects() {
-  const gal = document.getElementById("projectsGallery");
-  gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">Loading projects...</p>';
-
-  try {
-    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/projects");
-    const rows = await res.json();
-    
-    gal.innerHTML = ""; 
-
-    const imageKitBase = "https://ik.imagekit.io/anasaluploadimage";
-
-    if (rows.length === 0) {
-        gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">No projects found.</p>';
-        return;
-    }
-
-    rows.forEach((r, index) => {
-      const card = document.createElement('div');
-      card.className = 'project-card fade-in';
-      card.style.transitionDelay = `${index * 0.05}s`;
-      
-      let imgUrl = "https://via.placeholder.com/400x300?text=No+Image"; 
-
-      if (r.image_url) {
-          if (r.image_url.startsWith('http')) {
-              imgUrl = r.image_url;
-          } else {
-              imgUrl = `${imageKitBase}/${r.image_url}`;
-          }
-      }
-
-      card.innerHTML = `
-        <div class="project-image-bg" style="background-image: url('${imgUrl}');" title="${r.title || ''}"></div>
-        <span class="project-tag">MEPFS</span>
-        <div class="project-overlay">
-          <h4>${r.title || "Untitled Project"}</h4>
-          <p>${r.description || "No description available."}</p>
-        </div>
-      `;
-      
-      gal.appendChild(card);
-      revealObserver.observe(card);
-    });
-
-  } catch (error) {
-    console.error("Error loading projects:", error);
-    gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: red;">Failed to load projects.</p>';
-  }
+/* ═══ LOAD PROJECTS ═══ */
+function loadAllProjects() {
+  var g = document.getElementById("projectsGallery");
+  g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#888">Loading projects...</p>';
+  fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/projects")
+    .then(function(r) { return r.json(); })
+    .then(function(rows) {
+      g.innerHTML = "";
+      var b = "https://ik.imagekit.io/anasaluploadimage";
+      if (!rows.length) { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#888">No projects found.</p>'; return; }
+      rows.forEach(function(p, i) {
+        var c = document.createElement('div'); c.className = 'project-card fade-in'; c.style.transitionDelay = (i * 0.05) + 's';
+        var u = "https://via.placeholder.com/400x300?text=No+Image";
+        if (p.image_url) u = p.image_url.indexOf('http') === 0 ? p.image_url : b + '/' + p.image_url;
+        c.innerHTML = '<div class="project-image-bg" style="background-image:url(\'' + u + '\')"></div><span class="project-tag">MEPFS</span><div class="project-overlay"><h4>' + (p.title || 'Untitled') + '</h4><p>' + (p.description || '') + '</p></div>';
+        g.appendChild(c); ro.observe(c);
+      });
+    })
+    .catch(function() { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:red">Failed to load projects.</p>'; });
 }
 
-// ========== LOAD CERTIFICATES ==========
-async function loadCertificates() {
-  const gal = document.getElementById("certGallery");
-  gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">Loading certificates...</p>';
+/* ═══ PROTECTION IMAGE (Canvas) ═══ */
+function genProtectImg() {
+  var cv = document.createElement('canvas'); cv.width = 800; cv.height = 520;
+  var x = cv.getContext('2d');
+  x.fillStyle = '#0f0f0f'; x.fillRect(0, 0, 800, 520);
+  x.strokeStyle = 'rgba(196,22,28,0.06)'; x.lineWidth = 1;
+  for (var i = -520; i < 1320; i += 28) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i + 520, 520); x.stroke(); }
+  x.strokeStyle = 'rgba(196,22,28,0.4)'; x.lineWidth = 2; x.setLineDash([10, 6]); x.strokeRect(24, 24, 752, 472); x.setLineDash([]);
+  x.strokeStyle = '#c4161c'; x.lineWidth = 7; x.lineCap = 'round'; x.beginPath(); x.arc(400, 175, 22, Math.PI, 0, false); x.stroke();
+  x.fillStyle = '#c4161c'; x.fillRect(370, 190, 60, 48); x.fillRect(374, 194, 52, 40);
+  x.fillStyle = '#0f0f0f'; x.beginPath(); x.arc(400, 210, 8, 0, Math.PI * 2); x.fill(); x.fillRect(396, 215, 8, 14);
+  x.fillStyle = '#fff'; x.font = 'bold 32px Arial,sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('PROTECTED', 400, 280);
+  x.fillStyle = '#888'; x.font = '16px Arial,sans-serif'; x.fillText('DOCUMENT', 400, 312);
+  x.strokeStyle = 'rgba(255,255,255,0.1)'; x.lineWidth = 1; x.beginPath(); x.moveTo(300, 340); x.lineTo(500, 340); x.stroke();
+  x.fillStyle = '#555'; x.font = '13px Arial,sans-serif'; x.fillText('This certificate cannot be viewed while zoomed in', 400, 370); x.fillText('to prevent unauthorized copying or screenshots.', 400, 392);
+  x.fillStyle = '#333'; x.font = '11px Arial,sans-serif'; x.fillText('ANASAL MEPFS CORP', 400, 450);
+  return cv.toDataURL('image/png');
+}
+var PROTECT_URL = genProtectImg();
 
-  try {
-    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/certificates");
-    const rows = await res.json();
-    
-    gal.innerHTML = ""; 
-
-    const imageKitBase = "https://ik.imagekit.io/anasaluploadimage";
-
-    if (rows.length === 0) {
-        gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: #888;">No certificates found.</p>';
-        return;
-    }
-
-    rows.forEach((r, index) => {
-      const card = document.createElement('div');
-      card.className = 'cert-card fade-in';
-      card.style.transitionDelay = `${index * 0.05}s`;
-
-      let imgUrl = "";
-      let hasImage = false;
-
-      if (r.image) {
-        if (r.image.startsWith('http')) {
-          imgUrl = r.image;
-        } else {
-          imgUrl = `${imageKitBase}/${r.image}`;
-        }
-        hasImage = true;
-      }
-
-      let dateDisplay = "No date";
-      if (r.issue_date) {
-        const d = new Date(r.issue_date);
-        if (!isNaN(d.getTime())) {
-          dateDisplay = d.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          });
-        }
-      }
-
-      let imageHTML = '';
-      if (hasImage) {
-        imageHTML = `<img src="${imgUrl}" alt="${r.cert_name || 'Certificate'}" draggable="false" oncontextmenu="return false;" onerror="this.parentElement.innerHTML='<span class=\\'no-image\\'>Image not available</span>'" />`;
-      } else {
-        imageHTML = '<span class="no-image">No Image Uploaded</span>';
-      }
-
-      card.innerHTML = `
-        <div class="cert-card-image">
-          <span class="cert-badge">Certified</span>
-          ${imageHTML}
-          <div class="cert-protect-overlay">
-            <span class="protect-watermark">Protected Document</span>
-          </div>
-        </div>
-        <div class="cert-card-body">
-          <h4 class="cert-card-name">${r.cert_name || "Untitled Certificate"}</h4>
-          <p class="cert-card-purpose">${r.purpose || ""}</p>
-          <div class="cert-card-date">📅 ${dateDisplay}</div>
-          <p class="cert-card-desc">${r.description || "No description provided."}</p>
-        </div>
-      `;
-      
-      gal.appendChild(card);
-      revealObserver.observe(card);
-    });
-
-    // Activate protection after certificates are loaded
-    initCertificateProtection();
-
-  } catch (error) {
-    console.error("Error loading certificates:", error);
-    gal.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: red;">Failed to load certificates.</p>';
-  }
+/* ═══ LOAD CERTIFICATES ═══ */
+function loadCertificates() {
+  var g = document.getElementById("certGallery");
+  g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#888">Loading certificates...</p>';
+  fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/certificates")
+    .then(function(r) { return r.json(); })
+    .then(function(rows) {
+      g.innerHTML = "";
+      var b = "https://ik.imagekit.io/anasaluploadimage";
+      if (!rows.length) { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#888">No certificates found.</p>'; return; }
+      var lock = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>';
+      rows.forEach(function(c, i) {
+        var el = document.createElement('div'); el.className = 'cert-card fade-in'; el.style.transitionDelay = (i * 0.05) + 's';
+        var u = '', has = false;
+        if (c.image) { u = c.image.indexOf('http') === 0 ? c.image : b + '/' + c.image; has = true; }
+        var dd = 'No date';
+        if (c.issue_date) { var d = new Date(c.issue_date); if (!isNaN(d.getTime())) dd = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
+        var img = has
+          ? '<img src="' + u + '" data-orig="' + u + '" alt="' + (c.cert_name || 'Certificate') + '" draggable="false" oncontextmenu="return false" onerror="this.parentElement.innerHTML=\'<span class=\\\'no-image\\\'>Image not available</span>\'"/>'
+          : '<span class="no-image">No Image Uploaded</span>';
+        el.innerHTML = '<div class="cert-card-image"><span class="cert-badge">Certified</span>' + img + '<div class="cert-protect-overlay"><div class="protect-lock">' + lock + '</div><span class="protect-title">Protected</span><span class="protect-subtitle">Zoom out to view<br>the certificate</span></div></div><div class="cert-card-body"><h4 class="cert-card-name">' + (c.cert_name || 'Untitled') + '</h4><p class="cert-card-purpose">' + (c.purpose || '') + '</p><div class="cert-card-date">📅 ' + dd + '</div><p class="cert-card-desc">' + (c.description || 'No description provided.') + '</p></div>';
+        g.appendChild(el); ro.observe(el);
+      });
+      initProtection();
+    })
+    .catch(function() { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:red">Failed to load certificates.</p>'; });
 }
 
-// ========== CERTIFICATE IMAGE PROTECTION ==========
-function initCertificateProtection() {
-  const overlays = document.querySelectorAll('.cert-protect-overlay');
-  const certImages = document.querySelectorAll('.cert-card-image img');
-  const warningToast = document.getElementById('zoomWarning');
+/* ══════════════════════════════════════════════════════════
+   CERTIFICATE PROTECTION — LATCH SYSTEM
+   ══════════════════════════════════════════════════════════
+   
+   PROBLEM: After a touchpad pinch, visualViewport.scale resets
+   to 1.0 on desktop browsers. Old polling saw "normal" and
+   unlocked — even though the page was still visually zoomed.
+   
+   SOLUTION: Two completely separate paths:
+   
+   LOCK path (any of these can activate protection):
+     • visualViewport.scale increasing
+     • Pinch fingers spreading apart  
+     • Ctrl+Scroll up
+     • Ctrl+/= key
+     • GestureEvent (Safari touchpad)
+     • Polling detects zoom metrics > base
+   
+   UNLOCK path (ONLY these can deactivate protection):
+     • visualViewport.scale actively DECREASING
+       AND at least 2 seconds since last zoom-in
+       AND confirmed normal for 2 more seconds
+     • Pinch fingers closing together
+       AND at least 2 seconds since last zoom-in
+       AND confirmed normal for 2 more seconds
+     • Ctrl+Scroll down / Ctrl+- key
+       AND at least 2 seconds since last zoom-in
+       AND confirmed normal for 2 more seconds
+   
+   KEY RULE: The periodic poll can ONLY lock. It can
+   NEVER unlock. This means AFK/tab-switch/screen-sleep
+   can never accidentally drop protection.
+   
+   The 2-second grace period after zoom-in prevents the
+   browser's "commit" reset (where scale drops from 1.5
+   to 1.0 after a touchpad pinch ends) from being mistaken
+   for a user zoom-out action.
+   ══════════════════════════════════════════════════════════ */
 
-  let toastTimeout = null;
-  let isZoomed = false;
+function initProtection() {
+  var overlays = document.querySelectorAll('.cert-protect-overlay');
+  var imgs = document.querySelectorAll('.cert-card-image img[data-orig]');
+  var toast = document.getElementById('zoomWarning');
+  var tto = null;        // toast timeout
+  var isZ = false;       // currently protected?
+  var lastLockTime = 0;  // timestamp of last lock() call
+  var unlockTmr = null;  // pending unlock timer
 
-  // Show warning toast
-  function showWarning() {
-    if (toastTimeout) clearTimeout(toastTimeout);
-    warningToast.classList.add('show');
-    toastTimeout = setTimeout(() => {
-      warningToast.classList.remove('show');
-    }, 3000);
+  function warn() {
+    if (tto) clearTimeout(tto);
+    toast.classList.add('show');
+    tto = setTimeout(function() { toast.classList.remove('show'); }, 3500);
   }
 
-  // Activate zoomed state on all overlays and blur images
-  function activateProtection() {
-    if (isZoomed) return;
-    isZoomed = true;
-
-    overlays.forEach(overlay => overlay.classList.add('zoomed'));
-    certImages.forEach(img => {
-      img.style.filter = 'blur(8px) brightness(0.7)';
-      img.style.transform = 'scale(1.1)';
-    });
-
-    showWarning();
+  function lock() {
+    if (isZ) return;
+    isZ = true;
+    lastLockTime = Date.now();
+    // Kill any pending unlock immediately
+    if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
+    // Show protection
+    for (var i = 0; i < overlays.length; i++) overlays[i].classList.add('zoomed');
+    for (var j = 0; j < imgs.length; j++) {
+      imgs[j].src = PROTECT_URL;
+      imgs[j].style.objectFit = 'cover';
+      imgs[j].style.padding = '0';
+    }
+    warn();
   }
 
-  // Deactivate protection when back to normal zoom
-  function deactivateProtection() {
-    if (!isZoomed) return;
-    isZoomed = false;
-
-    overlays.forEach(overlay => overlay.classList.remove('zoomed'));
-    certImages.forEach(img => {
-      img.style.filter = 'blur(0px) brightness(1)';
-      img.style.transform = 'scale(1)';
-    });
-  }
-
-  // --- Detect browser zoom level ---
-  function getZoomLevel() {
-    // Method 1: devicePixelRatio (most reliable across modern browsers)
-    const dpr = window.devicePixelRatio || 1;
-    // Method 2: outerWidth / innerWidth ratio (desktop fallback)
-    const ratio = window.outerWidth / window.innerWidth;
-    // Use the higher of the two to catch all zoom types
-    return Math.max(dpr, ratio);
-  }
-
-  let baseZoom = getZoomLevel();
-
-  function checkZoomLevel() {
-    const currentZoom = getZoomLevel();
-    // Allow tiny floating-point differences (±0.03)
-    const threshold = 0.03;
-
-    if (currentZoom > baseZoom + threshold) {
-      activateProtection();
-    } else {
-      deactivateProtection();
+  function unlock() {
+    if (!isZ) return;
+    isZ = false;
+    lastLockTime = 0;
+    if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
+    // Hide protection, restore real images
+    for (var i = 0; i < overlays.length; i++) overlays[i].classList.remove('zoomed');
+    for (var j = 0; j < imgs.length; j++) {
+      var s = imgs[j].getAttribute('data-orig');
+      if (s) {
+        imgs[j].src = s;
+        imgs[j].style.objectFit = 'contain';
+        imgs[j].style.padding = '10px';
+      }
     }
   }
 
-  // --- Detect pinch-to-zoom on mobile ---
-  let pinchStartDistance = 0;
-  let pinchDetected = false;
+  /* ── attemptUnlock: ONLY called by explicit zoom-OUT gestures ── */
+  function attemptUnlock() {
+    if (!isZ) return;
+    // GRACE PERIOD: If zoom-in happened <2s ago, this is likely
+    // the browser "committing" the zoom (scale dropping from 1.5→1.0),
+    // NOT the user zooming out. Ignore it.
+    if (Date.now() - lastLockTime < 2000) return;
+    // Cancel previous attempt (user is actively zooming out,
+    // keep resetting the timer until they stop)
+    if (unlockTmr) clearTimeout(unlockTmr);
+    // Wait 2 seconds of no further zoom-in to confirm
+    unlockTmr = setTimeout(function() {
+      unlockTmr = null;
+      // Final verification: is zoom actually back to normal?
+      if (getZoom() <= baseZoom + 0.04) {
+        unlock();
+      }
+      // else: still zoomed, do nothing (protection stays)
+    }, 2000);
+  }
 
+  /* ── Zoom level reading (3 methods combined) ── */
+  function getZoom() {
+    var z = 1;
+    if (window.visualViewport && typeof window.visualViewport.scale === 'number')
+      z = Math.max(z, window.visualViewport.scale);
+    z = Math.max(z, window.devicePixelRatio || 1);
+    if (window.outerWidth > 0 && window.innerWidth > 0)
+      z = Math.max(z, window.outerWidth / window.innerWidth);
+    return z;
+  }
+
+  // Base zoom recorded ONCE at init — never changes
+  var baseZoom = getZoom();
+
+  /* ════════════════════════════════════
+     LOCK PATHS — can activate protection
+     ════════════════════════════════════ */
+
+  /* 1. PERIODIC POLL — can ONLY lock, NEVER unlock */
+  function poll() {
+    if (!isZ && getZoom() > baseZoom + 0.04) {
+      lock();
+    }
+    // If isZ is true, poll does NOTHING — can't unlock from here
+  }
+  setInterval(poll, 300);
+
+  /* 2. visualViewport resize — scale INCREASING = zoom in */
+  if (window.visualViewport) {
+    var lastVS = window.visualViewport.scale || 1;
+    window.visualViewport.addEventListener('resize', function() {
+      var s = window.visualViewport.scale || 1;
+      if (s > lastVS + 0.03) {
+        // Scale going UP → zoom in → lock
+        lock();
+      } else if (s < lastVS - 0.03) {
+        // Scale going DOWN → zoom out → attempt unlock
+        attemptUnlock();
+      }
+      lastVS = s;
+    });
+    // Also fires during pinch scroll offset changes
+    window.visualViewport.addEventListener('scroll', function() {
+      var s = window.visualViewport.scale || 1;
+      if (s > baseZoom + 0.04) lock();
+    });
+  }
+
+  /* 3. PINCH GESTURE — two fingers spreading/closing */
+  var pinchDist = 0;
   document.addEventListener('touchstart', function(e) {
     if (e.touches.length === 2) {
-      pinchStartDistance = Math.hypot(
+      pinchDist = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY
       );
-      pinchDetected = false;
     }
   }, { passive: true });
-
   document.addEventListener('touchmove', function(e) {
-    if (e.touches.length === 2 && pinchStartDistance > 0) {
-      const currentDist = Math.hypot(
+    if (e.touches.length === 2 && pinchDist > 0) {
+      var d = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY
       );
-      // If pinching OUT (zooming in) by more than 10%
-      if (currentDist > pinchStartDistance * 1.1) {
-        if (!pinchDetected) {
-          pinchDetected = true;
-          activateProtection();
-        }
+      if (d > pinchDist * 1.08) {
+        // Fingers spreading → zoom in
+        lock();
+      } else if (d < pinchDist * 0.92) {
+        // Fingers closing → zoom out
+        attemptUnlock();
       }
     }
   }, { passive: true });
+  document.addEventListener('touchend', function() { pinchDist = 0; });
 
-  document.addEventListener('touchend', function() {
-    pinchStartDistance = 0;
-    // Don't immediately deactivate — let checkZoomLevel handle it
-    setTimeout(checkZoomLevel, 500);
+  /* 4. DOUBLE-TAP zoom (mobile) */
+  var lastTap = 0;
+  document.querySelectorAll('.cert-card-image').forEach(function(el) {
+    el.addEventListener('touchend', function() {
+      var now = Date.now();
+      if (now - lastTap < 350) {
+        // Double tap detected — check zoom after a moment
+        setTimeout(function() { if (getZoom() > baseZoom + 0.04) lock(); }, 120);
+        setTimeout(function() { if (getZoom() > baseZoom + 0.04) lock(); }, 300);
+      }
+      lastTap = now;
+    });
   });
 
-  // --- Detect Ctrl+Scroll / Ctrl+Plus zoom on desktop ---
+  /* 5. CTRL+SCROLL — up = zoom in, down = zoom out */
   document.addEventListener('wheel', function(e) {
     if (e.ctrlKey || e.metaKey) {
-      activateProtection();
+      if (e.deltaY < 0) {
+        // Scrolling UP with Ctrl → zoom in
+        lock();
+      } else {
+        // Scrolling DOWN with Ctrl → zoom out
+        attemptUnlock();
+      }
     }
   }, { passive: true });
 
-  // --- Detect keyboard zoom shortcuts ---
+  /* 6. KEYBOARD Ctrl+/= (in) and Ctrl+- (out) */
   document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '_')) {
-      setTimeout(activateProtection, 100);
+    if (e.ctrlKey || e.metaKey) {
+      if (e.key === '+' || e.key === '=') {
+        lock();
+      } else if (e.key === '-' || e.key === '_') {
+        attemptUnlock();
+      }
     }
   });
 
-  // --- Block right-click on certificate containers ---
-  document.querySelectorAll('.cert-card-image').forEach(container => {
-    container.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-      showWarning();
-    });
-  });
+  /* 7. GESTUREEVENT — Safari/macOS touchpad */
+  document.addEventListener('gesturestart', function() { lock(); }, { passive: true });
+  document.addEventListener('gesturechange', function(e) {
+    // Safari fires this continuously during touchpad pinch
+    // scale >1 = zoom in, <1 = zoom out
+    if (e.scale > 1.05) lock();
+    else if (e.scale < 0.95) attemptUnlock();
+  }, { passive: true });
 
-  // --- Block drag on certificate images ---
-  certImages.forEach(img => {
-    img.addEventListener('dragstart', function(e) {
-      e.preventDefault();
-      showWarning();
-    });
-  });
+  /* ════════════════════════════════════════
+     ANTI-UNLOCK — prevents accidental unlock
+     ════════════════════════════════════════ */
 
-  // --- Block long-press save on mobile ---
-  let longPressTimer = null;
-  document.querySelectorAll('.cert-card-image').forEach(container => {
-    container.addEventListener('touchstart', function(e) {
-      if (e.touches.length === 1) {
-        longPressTimer = setTimeout(() => {
-          showWarning();
-        }, 600);
-      }
+  /* KILL any pending unlock on:
+     - Tab hidden/visible (screen sleep, tab switch)
+     - Window blur/focus (alt-tab, desktop switch)
+     - Orientation change (phone rotation)
+     These events can produce glitchy zoom readings.
+     Killing the timer ensures protection stays locked. */
+  document.addEventListener('visibilitychange', function() {
+    if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
+    if (!document.hidden) {
+      // Re-verify after coming back — poll can re-lock if needed
+      setTimeout(poll, 200);
+      setTimeout(poll, 600);
+      setTimeout(poll, 1200);
+    }
+  });
+  window.addEventListener('blur', function() {
+    if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
+  });
+  window.addEventListener('focus', function() {
+    if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
+    setTimeout(poll, 200);
+    setTimeout(poll, 600);
+  });
+  if (screen.orientation) {
+    screen.orientation.addEventListener('change', function() {
+      if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
+      setTimeout(poll, 400);
+      setTimeout(poll, 1000);
+    });
+  }
+
+  /* ══════════════════════════════
+     BLOCK: right-click, drag, long-press
+     ══════════════════════════════ */
+  document.querySelectorAll('.cert-card-image').forEach(function(el) {
+    el.addEventListener('contextmenu', function(e) { e.preventDefault(); warn(); });
+  });
+  imgs.forEach(function(m) {
+    m.addEventListener('dragstart', function(e) { e.preventDefault(); warn(); });
+  });
+  var lpTimer = null;
+  document.querySelectorAll('.cert-card-image').forEach(function(el) {
+    el.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1) lpTimer = setTimeout(warn, 500);
     }, { passive: true });
-
-    container.addEventListener('touchend', function() {
-      if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
-      }
-    });
-
-    container.addEventListener('touchmove', function() {
-      if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
-      }
-    }, { passive: true });
+    el.addEventListener('touchend', function() { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } });
+    el.addEventListener('touchmove', function() { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } }, { passive: true });
   });
 
-  // --- Periodic zoom check (catches all edge cases) ---
-  setInterval(checkZoomLevel, 400);
-
-  // Also check on resize (zoom often triggers resize)
-  window.addEventListener('resize', checkZoomLevel);
-
-  // Initial check in case page is already zoomed when loaded
-  setTimeout(checkZoomLevel, 500);
+  /* Initial checks */
+  setTimeout(poll, 500);
+  setTimeout(poll, 1200);
+  window.addEventListener('resize', poll);
 }
 
-// ========== MOBILE MENU TOGGLE ==========
-const hamburger = document.getElementById("hamburger");
-const navbar = document.getElementById("navbar");
-
-hamburger.addEventListener("click", () => {
-  navbar.classList.toggle("active");
+/* ═══ MOBILE MENU ═══ */
+var hb = document.getElementById('hamburger'), nb = document.getElementById('navbar');
+hb.addEventListener('click', function() { nb.classList.toggle('active'); });
+document.querySelectorAll('.navbar ul a').forEach(function(l) {
+  l.addEventListener('click', function() { if (nb.classList.contains('active')) nb.classList.remove('active'); });
 });
 
-const navLinks = document.querySelectorAll('.navbar ul a');
-navLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    if(navbar.classList.contains('active')) {
-      navbar.classList.remove('active');
-    }
-  });
-});
-
-// ========== INITIALIZE ==========
+/* ═══ INIT ═══ */
 loadAllProjects();
 loadCertificates();
 </script>
