@@ -41,17 +41,112 @@ section{padding:80px 60px}
 .section-header h2::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:60px;height:4px;background:var(--red)}
 .section-header p{color:var(--gray);font-size:16px;max-width:600px;margin:25px auto 0}
 
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;max-width:1400px;margin:0 auto}
-.project-card{position:relative;overflow:hidden;background:var(--dark);cursor:pointer;height:350px}
-.project-image-bg{width:100%;height:100%;background-size:cover;background-position:center;transition:all .5s;filter:grayscale(30%)}
-.project-card:hover .project-image-bg{transform:scale(1.08);filter:grayscale(0%)}
-.project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:30px;opacity:0;transition:opacity .4s}
-.project-card:hover .project-overlay{opacity:1}
-.project-overlay h4{font-size:22px;color:var(--white);margin-bottom:8px;transform:translateY(20px);transition:transform .4s .1s}
-.project-overlay p{font-size:14px;color:#aaa;line-height:1.6;transform:translateY(20px);transition:transform .4s .2s}
-.project-card:hover .project-overlay h4,.project-card:hover .project-overlay p{transform:translateY(0)}
-.project-tag{position:absolute;top:20px;left:20px;background:var(--red);color:var(--white);padding:6px 14px;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:500;z-index:2}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;max-width:1400px;margin:0 auto}
 
+/* ── PROJECT CARD ── */
+.project-card{
+  position:relative;overflow:hidden;
+  background:var(--dark);cursor:pointer;height:220px;
+  border-radius:4px;
+}
+.project-image-bg{
+  width:100%;height:100%;
+  background-size:cover;background-position:center;
+  transition:all .5s;filter:grayscale(30%);
+}
+.project-card:hover .project-image-bg{
+  transform:scale(1.08);filter:grayscale(0%);
+}
+.project-tag{
+  position:absolute;top:12px;left:12px;
+  background:var(--red);color:var(--white);
+  padding:4px 10px;font-size:10px;
+  text-transform:uppercase;letter-spacing:1px;
+  font-weight:500;z-index:4;
+}
+
+/* ── UP ARROW — visible at rest, flies up on hover ── */
+.project-arrow{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:5;
+  opacity:1;
+  transition:opacity .35s cubic-bezier(.4,0,.2,1),
+             transform .45s cubic-bezier(.4,0,.2,1);
+}
+.project-card:hover .project-arrow{
+  opacity:0;
+  transform:translate(-50%,-50%) translateY(-50px);
+}
+.project-arrow-circle{
+  width:44px;height:44px;
+  border-radius:50%;
+  background:rgba(0,0,0,.55);
+  -webkit-backdrop-filter:blur(6px);
+  backdrop-filter:blur(6px);
+  border:2px solid rgba(255,255,255,.6);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s,border-color .3s,box-shadow .3s;
+}
+.project-card:hover .project-arrow-circle{
+  background:var(--red);
+  border-color:var(--red);
+  box-shadow:0 0 30px rgba(196,22,28,.5);
+}
+.project-arrow-circle svg{
+  width:22px;height:22px;
+  stroke:#fff;fill:none;
+  stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* ── INFO OVERLAY — hidden at rest, rises from bottom on hover ── */
+.project-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.5) 50%,transparent 100%);
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:20px;
+  opacity:0;
+  transition:opacity .4s .05s;
+}
+.project-card:hover .project-overlay{
+  opacity:1;
+}
+.project-overlay h4{
+  font-size:18px;color:var(--white);
+  margin-bottom:6px;
+  transform:translateY(20px);
+  transition:transform .4s .12s cubic-bezier(.4,0,.2,1),
+             opacity .4s .12s;
+  opacity:0;
+}
+.project-card:hover .project-overlay h4{
+  transform:translateY(0);opacity:1;
+}
+.project-overlay p{
+  font-size:12px;color:#aaa;line-height:1.6;
+  transform:translateY(20px);
+  transition:transform .4s .2s cubic-bezier(.4,0,.2,1),
+             opacity .4s .2s;
+  opacity:0;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.project-card:hover .project-overlay p{
+  transform:translateY(0);opacity:1;
+}
+/* Red line under title */
+.project-overlay-line{
+  width:0;height:3px;
+  background:var(--red);
+  margin-bottom:10px;border-radius:2px;
+  transition:width .4s .16s cubic-bezier(.4,0,.2,1);
+}
+.project-card:hover .project-overlay-line{
+  width:40px;
+}
+
+/* ── CERTIFICATES ── */
 #certificates{background:var(--light)}
 .cert-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:30px;max-width:1400px;margin:0 auto}
 .cert-card{background:var(--white);border-radius:4px;overflow:hidden;box-shadow:var(--card-shadow);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
@@ -61,7 +156,6 @@ section{padding:80px 60px}
 .cert-card-image .no-image{color:#bbb;font-size:14px;text-transform:uppercase;letter-spacing:1px}
 .cert-badge{position:absolute;top:12px;right:12px;background:var(--red);color:var(--white);padding:5px 12px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;font-family:Bebas Neue,sans-serif;z-index:2}
 
-/* ── PROTECTION OVERLAY: blurred background instead of black ── */
 .cert-protect-overlay{
   position:absolute;inset:0;z-index:5;cursor:default;
   background:transparent;
@@ -71,9 +165,7 @@ section{padding:80px 60px}
 }
 .cert-protect-overlay.zoomed{
   opacity:1;pointer-events:auto;
-  /* Semi-transparent dark tint so text is readable */
   background:rgba(15,15,15,0.45);
-  /* HEAVY BLUR — blurs the certificate image behind the overlay */
   -webkit-backdrop-filter:blur(28px) saturate(0.3);
   backdrop-filter:blur(28px) saturate(0.3);
 }
@@ -158,9 +250,17 @@ footer{background:var(--darker);font-size:14px}
   .footer-main{padding:60px 30px}
   .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
   .footer-col:first-child{grid-column:1/-1}
+  .gallery{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+  .project-card{height:190px}
 }
 @media(max-width:600px){
-  .gallery{grid-template-columns:1fr}
+  .gallery{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+  .project-card{height:170px}
+  .project-arrow-circle{width:38px;height:38px}
+  .project-arrow-circle svg{width:18px;height:18px}
+  .project-overlay{padding:14px}
+  .project-overlay h4{font-size:15px}
+  .project-overlay p{font-size:11px;-webkit-line-clamp:2}
   .cert-gallery{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
   .footer-bottom-content{flex-direction:column;text-align:center}
@@ -196,7 +296,7 @@ footer{background:var(--darker);font-size:14px}
 <section id="all-projects">
   <div class="section-header fade-in">
     <h2>Completed Works</h2>
-    <p>Showing all projects executed with precision and engineering excellence.</p>
+    <p>Hover over any project to view details.</p>
   </div>
   <div class="gallery" id="projectsGallery"></div>
 </section>
@@ -249,13 +349,14 @@ footer{background:var(--darker);font-size:14px}
 </footer>
 
 <script>
-/* ═══ SCROLL REVEAL ═══ */
 var ro = new IntersectionObserver(function(e) {
   e.forEach(function(x) { if (x.isIntersecting) { x.target.classList.add('visible'); ro.unobserve(x.target); } });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.fade-in').forEach(function(el) { ro.observe(el); });
 
-/* ═══ LOAD PROJECTS ═══ */
+/* Up-arrow SVG */
+var arrowUpSVG = '<svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>';
+
 function loadAllProjects() {
   var g = document.getElementById("projectsGallery");
   g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#888">Loading projects...</p>';
@@ -266,17 +367,27 @@ function loadAllProjects() {
       var b = "https://ik.imagekit.io/anasaluploadimage";
       if (!rows.length) { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#888">No projects found.</p>'; return; }
       rows.forEach(function(p, i) {
-        var c = document.createElement('div'); c.className = 'project-card fade-in'; c.style.transitionDelay = (i * 0.05) + 's';
+        var c = document.createElement('div');
+        c.className = 'project-card fade-in';
+        c.style.transitionDelay = (i * 0.04) + 's';
         var u = "https://via.placeholder.com/400x300?text=No+Image";
         if (p.image_url) u = p.image_url.indexOf('http') === 0 ? p.image_url : b + '/' + p.image_url;
-        c.innerHTML = '<div class="project-image-bg" style="background-image:url(\'' + u + '\')"></div><span class="project-tag">MEPFS</span><div class="project-overlay"><h4>' + (p.title || 'Untitled') + '</h4><p>' + (p.description || '') + '</p></div>';
-        g.appendChild(c); ro.observe(c);
+        c.innerHTML =
+          '<div class="project-image-bg" style="background-image:url(\'' + u + '\')"></div>' +
+          '<span class="project-tag">MEPFS</span>' +
+          '<div class="project-arrow"><div class="project-arrow-circle">' + arrowUpSVG + '</div></div>' +
+          '<div class="project-overlay">' +
+            '<h4>' + (p.title || 'Untitled') + '</h4>' +
+            '<div class="project-overlay-line"></div>' +
+            '<p>' + (p.description || '') + '</p>' +
+          '</div>';
+        g.appendChild(c);
+        ro.observe(c);
       });
     })
     .catch(function() { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:red">Failed to load projects.</p>'; });
 }
 
-/* ═══ LOAD CERTIFICATES ═══ */
 function loadCertificates() {
   var g = document.getElementById("certGallery");
   g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#888">Loading certificates...</p>';
@@ -304,30 +415,6 @@ function loadCertificates() {
     .catch(function() { g.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:red">Failed to load certificates.</p>'; });
 }
 
-/* ══════════════════════════════════════════════════════════
-   CERTIFICATE PROTECTION — LATCH + BLUR SYSTEM
-   
-   VIEW 1 (normal):  overlay invisible → certificate fully visible
-   VIEW 2 (zoomed):  overlay visible with backdrop-filter blur
-                     → certificate behind is heavily blurred
-                     → lock icon + text shown on top
-   
-   LOCK path (any activates protection):
-     • visualViewport.scale increasing
-     • Pinch fingers spreading
-     • Ctrl+Scroll up
-     • Ctrl+/= key
-     • GestureEvent (Safari touchpad)
-     • Polling detects zoom > base
-   
-   UNLOCK path (ONLY these deactivate):
-     • explicit zoom-OUT gesture detected
-     • 2s grace since last lock
-     • 2s confirmed normal after that
-   
-   KEY RULE: Poll can ONLY lock, NEVER unlock.
-   ══════════════════════════════════════════════════════════ */
-
 function initProtection() {
   var overlays = document.querySelectorAll('.cert-protect-overlay');
   var imgs = document.querySelectorAll('.cert-card-image img[data-orig]');
@@ -342,27 +429,21 @@ function initProtection() {
     toast.classList.add('show');
     tto = setTimeout(function() { toast.classList.remove('show'); }, 3500);
   }
-
   function lock() {
     if (isZ) return;
     isZ = true;
     lastLockTime = Date.now();
     if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-    /* Show blur overlay — the real certificate stays in DOM
-       but becomes unreadable through the heavy blur */
     for (var i = 0; i < overlays.length; i++) overlays[i].classList.add('zoomed');
     warn();
   }
-
   function unlock() {
     if (!isZ) return;
     isZ = false;
     lastLockTime = 0;
     if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
-    /* Hide blur overlay — certificate becomes visible again */
     for (var i = 0; i < overlays.length; i++) overlays[i].classList.remove('zoomed');
   }
-
   function attemptUnlock() {
     if (!isZ) return;
     if (Date.now() - lastLockTime < 2000) return;
@@ -372,7 +453,6 @@ function initProtection() {
       if (getZoom() <= baseZoom + 0.04) unlock();
     }, 2000);
   }
-
   function getZoom() {
     var z = 1;
     if (window.visualViewport && typeof window.visualViewport.scale === 'number')
@@ -382,16 +462,11 @@ function initProtection() {
       z = Math.max(z, window.outerWidth / window.innerWidth);
     return z;
   }
-
   var baseZoom = getZoom();
 
-  /* ── 1. POLL — lock only, never unlock ── */
-  function poll() {
-    if (!isZ && getZoom() > baseZoom + 0.04) lock();
-  }
+  function poll() { if (!isZ && getZoom() > baseZoom + 0.04) lock(); }
   setInterval(poll, 300);
 
-  /* ── 2. visualViewport ── */
   if (window.visualViewport) {
     var lastVS = window.visualViewport.scale || 1;
     window.visualViewport.addEventListener('resize', function() {
@@ -405,7 +480,6 @@ function initProtection() {
     });
   }
 
-  /* ── 3. PINCH GESTURE ── */
   var pinchDist = 0;
   document.addEventListener('touchstart', function(e) {
     if (e.touches.length === 2)
@@ -420,7 +494,6 @@ function initProtection() {
   }, { passive: true });
   document.addEventListener('touchend', function() { pinchDist = 0; });
 
-  /* ── 4. DOUBLE-TAP ── */
   var lastTap = 0;
   document.querySelectorAll('.cert-card-image').forEach(function(el) {
     el.addEventListener('touchend', function() {
@@ -433,30 +506,20 @@ function initProtection() {
     });
   });
 
-  /* ── 5. CTRL+SCROLL ── */
   document.addEventListener('wheel', function(e) {
-    if (e.ctrlKey || e.metaKey) {
-      if (e.deltaY < 0) lock();
-      else attemptUnlock();
-    }
+    if (e.ctrlKey || e.metaKey) { if (e.deltaY < 0) lock(); else attemptUnlock(); }
   }, { passive: true });
-
-  /* ── 6. KEYBOARD ── */
   document.addEventListener('keydown', function(e) {
     if (e.ctrlKey || e.metaKey) {
       if (e.key === '+' || e.key === '=') lock();
       else if (e.key === '-' || e.key === '_') attemptUnlock();
     }
   });
-
-  /* ── 7. GESTUREEVENT (Safari) ── */
   document.addEventListener('gesturestart', function() { lock(); }, { passive: true });
   document.addEventListener('gesturechange', function(e) {
-    if (e.scale > 1.05) lock();
-    else if (e.scale < 0.95) attemptUnlock();
+    if (e.scale > 1.05) lock(); else if (e.scale < 0.95) attemptUnlock();
   }, { passive: true });
 
-  /* ── ANTI-UNLOCK: kill pending unlock on tab/blur/orientation ── */
   document.addEventListener('visibilitychange', function() {
     if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; }
     if (!document.hidden) { setTimeout(poll, 200); setTimeout(poll, 600); setTimeout(poll, 1200); }
@@ -465,7 +528,6 @@ function initProtection() {
   window.addEventListener('focus', function() { if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; } setTimeout(poll, 200); setTimeout(poll, 600); });
   if (screen.orientation) screen.orientation.addEventListener('change', function() { if (unlockTmr) { clearTimeout(unlockTmr); unlockTmr = null; } setTimeout(poll, 400); setTimeout(poll, 1000); });
 
-  /* ── BLOCK: right-click, drag, long-press ── */
   document.querySelectorAll('.cert-card-image').forEach(function(el) {
     el.addEventListener('contextmenu', function(e) { e.preventDefault(); warn(); });
   });
@@ -482,14 +544,12 @@ function initProtection() {
   window.addEventListener('resize', poll);
 }
 
-/* ═══ MOBILE MENU ═══ */
 var hb = document.getElementById('hamburger'), nb = document.getElementById('navbar');
 hb.addEventListener('click', function() { nb.classList.toggle('active'); });
 document.querySelectorAll('.navbar ul a').forEach(function(l) {
   l.addEventListener('click', function() { if (nb.classList.contains('active')) nb.classList.remove('active'); });
 });
 
-/* ═══ INIT ═══ */
 loadAllProjects();
 loadCertificates();
 </script>
