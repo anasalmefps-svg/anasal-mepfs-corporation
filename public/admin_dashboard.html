@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anasal MEPFS Corp - Admin Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -39,11 +40,12 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    padding: 20px;
 }
 
 .login-box {
-    width: 420px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 420px;
     background: var(--white);
     position: relative;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
@@ -59,7 +61,7 @@ body {
 
 .login-header {
     background: var(--dark-lighter);
-    padding: 35px 30px;
+    padding: 30px 24px;
     text-align: center;
 }
 
@@ -71,17 +73,20 @@ body {
     text-transform: uppercase;
 }
 
-.login-body { padding: 40px 35px; }
+.login-body {
+    padding: 30px 24px 36px;
+}
 
 .login-body input {
     width: 100%;
-    padding: 16px 18px;
-    margin-bottom: 18px;
+    padding: 15px 16px;
+    margin-bottom: 16px;
     border: 2px solid #e0e0e0;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'Roboto', sans-serif;
     transition: border-color 0.3s ease;
     background: var(--white);
+    border-radius: 2px;
 }
 
 .login-body input:focus {
@@ -91,7 +96,7 @@ body {
 
 .login-body button {
     width: 100%;
-    padding: 16px;
+    padding: 15px;
     background: var(--primary);
     border: none;
     color: var(--white);
@@ -101,6 +106,7 @@ body {
     letter-spacing: 3px;
     cursor: pointer;
     transition: background 0.3s ease;
+    border-radius: 2px;
 }
 
 .login-body button:hover {
@@ -109,8 +115,8 @@ body {
 
 #errorMsg {
     text-align: center;
-    margin-top: 18px;
-    font-size: 13px;
+    margin-top: 16px;
+    font-size: 14px;
     padding: 12px;
     background: var(--light);
     color: var(--steel);
@@ -128,7 +134,7 @@ body {
 .header {
     background: var(--dark);
     color: var(--white);
-    padding: 0 30px;
+    padding: 0 24px;
     height: 60px;
     display: flex;
     align-items: center;
@@ -142,34 +148,39 @@ body {
 .header-left {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
+    min-width: 0;
 }
 
 .header-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    min-width: 0;
 }
 
 .header-logo .logo-icon {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     background: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     flex-shrink: 0;
 }
 
 .header-title {
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 17px;
+    letter-spacing: 0.04em;
+    font-size: 16px;
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header-title span {
@@ -180,71 +191,105 @@ body {
     font-weight: 400;
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
 .logout-btn {
     background: transparent;
     color: var(--white);
     border: 1px solid var(--primary);
-    padding: 8px 20px;
+    padding: 7px 16px;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .logout-btn:hover {
     background: var(--primary);
 }
 
-/* ---------- HAMBURGER ---------- */
+/* ========================================
+   HAMBURGER
+   ======================================== */
 .hamburger-btn {
     display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 26px;
-    height: 18px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     background: none;
-    border: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
     padding: 0;
     z-index: 300;
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.hamburger-btn:hover {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.05);
 }
 
 .hamburger-btn span {
     display: block;
+    width: 18px;
     height: 2px;
-    width: 100%;
     background-color: var(--white);
     border-radius: 2px;
-    transition: all 0.3s ease;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.hamburger-btn span:nth-child(1) { top: 13px; }
+.hamburger-btn span:nth-child(2) { top: 19px; }
+.hamburger-btn span:nth-child(3) { top: 25px; }
+
+.hamburger-btn.active {
+    border-color: var(--primary);
+    background: rgba(196, 22, 28, 0.15);
 }
 
 .hamburger-btn.active span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+    top: 19px;
+    transform: translateX(-50%) rotate(45deg);
+    background-color: var(--primary);
 }
 
 .hamburger-btn.active span:nth-child(2) {
     opacity: 0;
+    transform: translateX(-50%) scaleX(0);
 }
 
 .hamburger-btn.active span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+    top: 19px;
+    transform: translateX(-50%) rotate(-45deg);
+    background-color: var(--primary);
 }
 
 /* ---------- SIDEBAR OVERLAY ---------- */
 .sidebar-overlay {
-    display: none;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.6);
     z-index: 140;
+    pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-.sidebar-overlay.visible {
+.sidebar-overlay.active {
+    pointer-events: auto;
     opacity: 1;
 }
 
@@ -263,14 +308,11 @@ body {
     overflow-y: auto;
     border-right: 1px solid #333;
     flex-shrink: 0;
-    position: relative;
-    z-index: 150;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .sidebar h3 {
     font-family: 'Oswald', sans-serif;
-    padding: 20px;
+    padding: 18px 20px;
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -278,10 +320,13 @@ body {
     color: var(--steel-light);
     border-bottom: 1px solid #444;
     background: var(--dark);
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .table-item {
-    padding: 14px 20px;
+    padding: 13px 20px;
     cursor: pointer;
     border-bottom: 1px solid rgba(255,255,255,0.04);
     font-size: 14px;
@@ -323,10 +368,12 @@ body {
     background: var(--primary-dark);
 }
 
-/* ---------- MAIN CONTENT ---------- */
+/* ========================================
+   MAIN SECTION — NEW DESIGN
+   ======================================== */
 .main {
     flex: 1;
-    padding: 30px;
+    padding: 1px;
     overflow: auto;
     background: #eef0f2;
     min-width: 0;
@@ -335,195 +382,264 @@ body {
 .main h3 {
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
     letter-spacing: 0.06em;
     color: var(--dark);
-    border-left: 4px solid var(--primary);
-    padding-left: 14px;
+    border-left: none;
+    padding-left: 0;
     font-size: 20px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-/* ---------- TABLE ---------- */
+.main h3::before {
+    content: '';
+    width: 4px;
+    height: 22px;
+    background: var(--primary);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* ---------- TABLE — CLEAN STYLE ---------- */
 .table-wrapper {
     overflow-x: auto;
-    border-radius: 4px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    border-radius: 6px;
+    border: 1px solid #e2e5e9;
+    background: var(--white);
+    -webkit-overflow-scrolling: touch;
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
     background: var(--white);
-    min-width: 600px;
+    min-width: 580px;
 }
 
 th, td {
-    border: 1px solid #e0e0e0;
-    padding: 12px 14px;
+    border: none;
+    border-bottom: 1px solid #ebeef2;
+    padding: 11px 13px;
     font-size: 13px;
     vertical-align: middle;
 }
 
 th {
-    background: var(--dark);
-    color: var(--white);
+    background: #f7f8fa;
+    color: #444;
     text-align: left;
     font-family: 'Oswald', sans-serif;
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.06em;
     white-space: nowrap;
+    border-bottom: 1px solid #dde0e5;
 }
 
-tr:nth-child(even) { background-color: #fafafa; }
-tr:hover { background-color: #f4f4f4; }
+tr:nth-child(even) {
+    background-color: transparent;
+}
+
+tr:hover {
+    background-color: #f9fafb;
+}
 
 .empty {
     color: var(--steel);
-    margin-top: 50px;
+    margin-top: 20px;
     text-align: center;
     font-style: italic;
 }
 
-/* ---------- BUTTONS ---------- */
+/* ---------- BUTTONS — REFINED ---------- */
 .action-btn {
-    padding: 7px 14px;
+    padding: 7px 13px;
     font-size: 11px;
     font-family: 'Oswald', sans-serif;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     border: none;
     transition: all 0.2s ease;
     font-weight: 500;
     white-space: nowrap;
+    border-radius: 4px;
 }
 
 .action-btn.save {
     background: var(--primary);
     color: white;
-    margin-right: 6px;
+    margin-right: 5px;
 }
 
-.action-btn.save:hover { background: var(--primary-dark); }
+.action-btn.save:hover {
+    background: var(--primary-dark);
+}
 
 .action-btn.delete {
     background: transparent;
-    color: var(--primary);
-    border: 1px solid var(--primary);
+    color: var(--steel);
+    border: 1px solid #d0d3d8;
 }
 
 .action-btn.delete:hover {
-    background: var(--primary);
-    color: white;
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
-/* ---------- FORM BOX ---------- */
+/* ========================================
+   FORM BOX — NEW DESIGN
+   ======================================== */
 .form-box {
     background: var(--white);
-    padding: 24px;
+    padding: 0;
     margin-bottom: 24px;
-    border-top: 3px solid var(--primary);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-    border-radius: 0 0 4px 4px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #e2e5e9;
 }
 
-.form-box b {
+.form-box-header {
+    background: var(--white);
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ebeef2;
+}
+
+.form-box-header b {
     font-family: 'Oswald', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     text-transform: uppercase;
-    margin-bottom: 16px;
-    display: block;
+    letter-spacing: 0.06em;
     color: var(--dark);
-    letter-spacing: 0.04em;
+    font-weight: 500;
+}
+
+.form-box-header .form-header-line {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+}
+
+.form-box-body {
+    padding: 24px 22px 22px;
 }
 
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 14px;
-    margin-bottom: 18px;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
 }
 
 .form-grid .full-width {
     grid-column: 1 / -1;
 }
 
-.form-box label {
-    display: block;
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field label {
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     color: var(--steel);
-    margin-bottom: 6px;
+    margin-bottom: 7px;
     font-weight: 500;
 }
 
-.form-box input[type="text"],
-.form-box input[type="email"],
-.form-box input[type="tel"],
-.form-box input[type="number"],
-.form-box textarea,
-.form-box select {
-    margin: 0;
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="tel"],
+.form-field input[type="number"],
+.form-field textarea,
+.form-field select {
     padding: 10px 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #dde0e5;
+    border-bottom: 2px solid #c8ccd3;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s ease;
     width: 100%;
-    background: var(--white);
-    border-radius: 2px;
+    background: #fafbfc;
+    border-radius: 4px 4px 0 0;
+    color: var(--dark);
 }
 
-.form-box input:focus,
-.form-box textarea:focus,
-.form-box select:focus {
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
     border-color: var(--primary);
+    border-bottom-color: var(--primary);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(196, 22, 28, 0.1);
+    background: var(--white);
 }
 
-.form-box input[type="file"] {
-    background: white;
-    padding: 8px 4px;
-    border: 1px dashed #ccc;
+.form-field input[type="file"] {
+    padding: 9px 6px;
+    border: 1px dashed #c8ccd3;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 4px;
+    font-size: 13px;
+    background: #fafbfc;
+    transition: border-color 0.2s ease;
 }
 
-.form-box textarea {
+.form-field input[type="file"]:hover {
+    border-color: var(--primary);
+}
+
+.form-field textarea {
     resize: vertical;
     min-height: 80px;
+    border-radius: 4px;
+}
+
+.form-box-footer {
+    padding: 0 22px 22px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-box-footer .action-btn {
+    padding: 10px 32px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
 }
 
 .preview-img {
     max-width: 80px;
     max-height: 60px;
     display: block;
-    margin-bottom: 6px;
-    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    border: 1px solid #e2e5e9;
     object-fit: cover;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
-/* ---------- TABLE CELL EDITABLE ---------- */
 td[contenteditable="true"] {
     cursor: text;
     transition: background 0.15s ease;
 }
 
 td[contenteditable="true"]:focus {
-    outline: 2px solid var(--primary);
-    outline-offset: -2px;
+    outline: none;
     background: #fff;
+    box-shadow: inset 0 -2px 0 var(--primary);
 }
 
-td .cell-file-input {
+.cell-file-input {
     font-size: 11px;
-    margin-top: 4px;
+    margin-top: 3px;
+    display: block;
 }
 
 /* ---------- SCROLLBAR ---------- */
@@ -533,18 +649,78 @@ td .cell-file-input {
 ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
 /* ==================== RESPONSIVE ==================== */
-
 @media (max-width: 768px) {
-    .header {
-        padding: 0 16px;
-    }
-
     .hamburger-btn {
         display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        bottom: 0;
+        width: 260px;
+        max-width: 80vw;
+        transform: translateX(-100%);
+        visibility: hidden;
+        z-index: 150;
+        box-shadow: none;
+        transition: transform 0.3s ease, visibility 0s linear 0.3s, box-shadow 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        visibility: visible;
+        box-shadow: 8px 0 40px rgba(0,0,0,0.6);
+        transition: transform 0.3s ease, visibility 0s linear 0s, box-shadow 0.3s ease;
+    }
+
+    .main {
+        padding: 0px 1px;
+    }
+
+    .main h3 {
+        font-size: 17px;
+        margin-bottom: 16px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .form-box-body {
+        padding: 18px 16px 16px;
+    }
+
+    .form-box-header {
+        padding: 12px 16px;
+    }
+
+    .form-box-footer {
+        padding: 0 16px 16px;
+    }
+
+    .form-box-footer .action-btn {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .action-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    .header {
+        padding: 0 14px;
     }
 
     .header-title {
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .header-title span {
@@ -552,88 +728,111 @@ td .cell-file-input {
     }
 
     .logout-btn {
-        padding: 6px 14px;
+        padding: 6px 12px;
         font-size: 11px;
         letter-spacing: 0.5px;
-    }
-
-    /* Sidebar becomes a slide-out panel */
-    .sidebar {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        bottom: 0;
-        width: var(--sidebar-w);
-        transform: translateX(-100%);
-        z-index: 150;
-        box-shadow: none;
-        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-        box-shadow: 10px 0 40px rgba(0,0,0,0.5);
-    }
-
-    .sidebar-overlay.active {
-        display: block;
-    }
-
-    .main {
-        padding: 20px 16px;
-    }
-
-    .main h3 {
-        font-size: 18px;
-        margin-bottom: 18px;
-    }
-
-    .form-box {
-        padding: 18px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .action-btn {
-        padding: 6px 10px;
-        font-size: 10px;
     }
 }
 
 @media (max-width: 480px) {
     .header-logo .logo-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-    }
-
-    .header-title {
+        width: 30px;
+        height: 30px;
         font-size: 13px;
     }
 
+    .header-title {
+        font-size: 12px;
+        letter-spacing: 0.02em;
+    }
+
     .logout-btn {
-        padding: 5px 10px;
+        padding: 5px 8px;
         font-size: 10px;
+        letter-spacing: 0;
+    }
+
+    .hamburger-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 5px;
+    }
+
+    .hamburger-btn span {
+        width: 16px;
+    }
+
+    .hamburger-btn span:nth-child(1) { top: 11px; }
+    .hamburger-btn span:nth-child(2) { top: 17px; }
+    .hamburger-btn span:nth-child(3) { top: 23px; }
+
+    .hamburger-btn.active span:nth-child(1),
+    .hamburger-btn.active span:nth-child(3) {
+        top: 17px;
     }
 
     .main {
-        padding: 16px 12px;
+        padding: 14px 10px;
     }
 
-    .form-box {
+    .form-box-body {
+        padding: 14px 12px 12px;
+    }
+
+    .form-box-header {
+        padding: 10px 12px;
+    }
+
+    .form-box-header b {
+        font-size: 13px;
+    }
+
+    .form-box-footer {
+        padding: 0 12px 12px;
+    }
+
+    .login-header {
+        padding: 24px 18px;
+    }
+
+    .login-header h2 {
+        font-size: 18px;
+        letter-spacing: 3px;
+    }
+
+    .login-body {
+        padding: 24px 18px 30px;
+    }
+
+    .login-body input {
+        padding: 14px 14px;
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+
+    .login-body button {
         padding: 14px;
+        font-size: 15px;
     }
 
-    .form-box b {
-        font-size: 14px;
+    #errorMsg {
+        font-size: 13px;
+        margin-top: 14px;
     }
 
     th, td {
-        padding: 10px 10px;
-        font-size: 12px;
+        padding: 9px 8px;
+        font-size: 11px;
+    }
+
+    .preview-img {
+        max-width: 60px;
+        max-height: 45px;
+    }
+
+    .table-item {
+        padding: 12px 18px;
+        font-size: 13px;
     }
 }
 </style>
@@ -648,8 +847,8 @@ td .cell-file-input {
         </div>
         <div class="login-body">
             <form id="adminForm">
-                <input type="text" id="username" placeholder="Username" required>
-                <input type="password" id="password" placeholder="Password" required>
+                <input type="text" id="username" placeholder="Username" required autocomplete="username">
+                <input type="password" id="password" placeholder="Password" required autocomplete="current-password">
                 <button type="submit">Login</button>
             </form>
             <div id="errorMsg"></div>
@@ -660,10 +859,9 @@ td .cell-file-input {
 <!-- APP CONTAINER -->
 <div id="appContainer">
 
-    <!-- HEADER -->
     <div class="header">
         <div class="header-left">
-            <button class="hamburger-btn" id="hamburgerBtn">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -676,32 +874,30 @@ td .cell-file-input {
                 </div>
             </div>
         </div>
-        <button class="logout-btn" onclick="logout()">Log Out</button>
+        <div class="header-right">
+            <button class="logout-btn" onclick="logout()">Log Out</button>
+        </div>
     </div>
 
-    <!-- SIDEBAR OVERLAY -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- BODY -->
     <div class="container">
-
         <div class="sidebar" id="sidebar">
             <h3>Database Tables</h3>
             <div id="tables"></div>
         </div>
-
         <div class="main">
             <div id="content" class="empty">
                 Select a table from the sidebar to manage data.
             </div>
         </div>
-
     </div>
+
 </div>
 
 <script>
 const tablesDiv = document.getElementById("tables");
-const content   = document.getElementById("content");
+const content = document.getElementById("content");
 const loginContainer = document.getElementById("loginContainer");
 const appContainer = document.getElementById("appContainer");
 const sidebar = document.getElementById("sidebar");
@@ -712,62 +908,57 @@ let currentTable = "";
 let idField = "";
 let currentCols = [];
 let currentRows = [];
+let sidebarOpen = false;
 
-// ========== SESSION CHECK ==========
 if (sessionStorage.getItem('adminLoggedIn') === 'true') {
     showDashboard();
 }
 
-// ========== SIDEBAR TOGGLE ==========
-hamburgerBtn.addEventListener("click", () => {
-    const isOpen = sidebar.classList.contains("open");
-    if (isOpen) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
+/* ========== SIDEBAR TOGGLE ========== */
+hamburgerBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    if (sidebarOpen) { closeSidebar(); } else { openSidebar(); }
 });
 
-sidebarOverlay.addEventListener("click", () => {
-    closeSidebar();
-});
+sidebarOverlay.addEventListener("click", function() { closeSidebar(); });
+sidebar.addEventListener("click", function(e) { e.stopPropagation(); });
 
 function openSidebar() {
+    sidebarOpen = true;
     sidebar.classList.add("open");
     sidebarOverlay.classList.add("active");
-    // Force reflow before adding visible for transition
-    void sidebarOverlay.offsetWidth;
-    sidebarOverlay.classList.add("visible");
     hamburgerBtn.classList.add("active");
+    document.body.style.overflow = 'hidden';
 }
 
 function closeSidebar() {
+    sidebarOpen = false;
     sidebar.classList.remove("open");
-    sidebarOverlay.classList.remove("visible");
+    sidebarOverlay.classList.remove("active");
     hamburgerBtn.classList.remove("active");
-    setTimeout(() => {
-        sidebarOverlay.classList.remove("active");
-    }, 300);
+    document.body.style.overflow = '';
 }
 
-// ========== LOGIN ==========
+function isMobile() { return window.innerWidth <= 768; }
+
+/* ========== LOGIN ========== */
 document.getElementById("adminForm").addEventListener("submit", async function(e) {
     e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const errorMsg = document.getElementById("errorMsg");
+    var username = document.getElementById("username").value.trim();
+    var password = document.getElementById("password").value.trim();
+    var errorMsg = document.getElementById("errorMsg");
 
     errorMsg.style.display = "block";
     errorMsg.style.color = "#666";
     errorMsg.textContent = "Authenticating...";
 
     try {
-        const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/login", {
+        var res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username: username, password: password })
         });
-        const data = await res.json();
+        var data = await res.json();
 
         if (res.ok && data.success) {
             sessionStorage.setItem('adminLoggedIn', 'true');
@@ -776,7 +967,7 @@ document.getElementById("adminForm").addEventListener("submit", async function(e
             errorMsg.style.color = "red";
             errorMsg.textContent = data.message || "Login failed";
         }
-    } catch {
+    } catch(err) {
         errorMsg.style.color = "red";
         errorMsg.textContent = "Server error. Please try again.";
     }
@@ -795,24 +986,20 @@ function logout() {
 
 /* ==================== TABLES LIST ==================== */
 async function loadTables() {
-    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/tables");
-    const tables = await res.json();
-
+    var res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/tables");
+    var tables = await res.json();
     tablesDiv.innerHTML = "";
 
-    tables.forEach(t => {
-        const div = document.createElement("div");
+    tables.forEach(function(t) {
+        var div = document.createElement("div");
         div.className = "table-item";
         div.textContent = t.replace(/_/g, ' ');
         div.setAttribute("data-table", t);
-        div.onclick = () => {
-            document.querySelectorAll('.table-item').forEach(i => i.classList.remove('active'));
+        div.onclick = function() {
+            document.querySelectorAll('.table-item').forEach(function(i) { i.classList.remove('active'); });
             div.classList.add('active');
             loadTableData(t);
-            // Auto-close sidebar on mobile after selection
-            if (window.innerWidth <= 768) {
-                closeSidebar();
-            }
+            if (isMobile()) { closeSidebar(); }
         };
         tablesDiv.appendChild(div);
     });
@@ -820,15 +1007,14 @@ async function loadTables() {
 
 /* ==================== LOAD TABLE ==================== */
 async function loadTableData(table) {
-
     currentTable = table;
     content.innerHTML = '<div class="empty">Loading data...</div>';
 
-    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + table);
-    const rows = await res.json();
+    var res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + table);
+    var rows = await res.json();
 
     if (!Array.isArray(rows) || rows.length === 0) {
-        content.innerHTML = `<h3>${table.replace(/_/g, ' ')}</h3><div class='empty'>No data available in this table.</div>`;
+        content.innerHTML = '<h3>' + table.replace(/_/g, ' ') + '</h3><div class="empty">No data available in this table.</div>';
         return;
     }
 
@@ -836,153 +1022,151 @@ async function loadTableData(table) {
     currentCols = Object.keys(rows[0]);
     idField = currentCols[0];
 
-    let html = `<h3>${table.replace(/_/g, ' ')}</h3>`;
+    var html = '<h3>' + table.replace(/_/g, ' ') + '</h3>';
 
     /* ---------- ADD FORM ---------- */
-    html += `<div class="form-box"><b>Add New Entry</b><div class="form-grid">`;
+    html += '<div class="form-box">';
+    html += '<div class="form-box-header">';
+    html += '<b>Add New Entry</b>';
+    html += '<div class="form-header-line"></div>';
+    html += '</div>';
+    html += '<div class="form-box-body"><div class="form-grid">';
 
-    currentCols.forEach(c => {
+    currentCols.forEach(function(c) {
         if (c === idField) return;
 
-        const isImage = c === "image_url" || c === "photo_url" || c.includes("image") || c.includes("photo");
-        const isLong = c.includes("description") || c.includes("message") || c.includes("content");
-        const isFullWidth = isLong || isImage;
+        var isImage = c === "image_url" || c === "photo_url" || c.indexOf("image") !== -1 || c.indexOf("photo") !== -1;
+        var isLong = c.indexOf("description") !== -1 || c.indexOf("message") !== -1 || c.indexOf("content") !== -1;
+        var isFullWidth = isLong || isImage;
 
-        html += `<div class="${isFullWidth ? 'full-width' : ''}">`;
-        html += `<label>${c.replace(/_/g, ' ')}</label>`;
+        html += '<div class="form-field' + (isFullWidth ? ' full-width' : '') + '">';
+        html += '<label>' + c.replace(/_/g, ' ') + '</label>';
 
         if (isImage) {
-            html += `<input type="file" id="new_${c}">`;
+            html += '<input type="file" id="new_' + c + '">';
         } else if (isLong) {
-            html += `<textarea id="new_${c}" placeholder="${c.replace(/_/g, ' ')}" rows="3"></textarea>`;
+            html += '<textarea id="new_' + c + '" placeholder="' + c.replace(/_/g, ' ') + '" rows="3"></textarea>';
         } else {
-            html += `<input type="text" id="new_${c}" placeholder="${c.replace(/_/g, ' ')}">`;
+            html += '<input type="text" id="new_' + c + '" placeholder="' + c.replace(/_/g, ' ') + '">';
         }
 
-        html += `</div>`;
+        html += '</div>';
     });
 
-    html += `</div>`;
-    html += `<button class="action-btn save" onclick="addRow()">Add Entry</button></div>`;
+    html += '</div></div>';
+    html += '<div class="form-box-footer">';
+    html += '<button class="action-btn save" onclick="addRow()">Add Entry</button>';
+    html += '</div>';
+    html += '</div>';
 
     /* ---------- DATA TABLE ---------- */
-    html += `<div class="table-wrapper"><table><thead><tr>`;
+    html += '<div class="table-wrapper"><table><thead><tr>';
 
-    currentCols.forEach(c => {
-        html += `<th>${c.replace(/_/g, ' ')}</th>`;
+    currentCols.forEach(function(c) {
+        html += '<th>' + c.replace(/_/g, ' ') + '</th>';
     });
 
-    html += `<th style="width:140px; text-align:center;">Actions</th></tr></thead><tbody>`;
+    html += '<th style="width:130px;text-align:center;">Actions</th></tr></thead><tbody>';
 
-    rows.forEach((r, rowIndex) => {
-        html += `<tr data-row-index="${rowIndex}">`;
+    rows.forEach(function(r, rowIndex) {
+        html += '<tr data-row-index="' + rowIndex + '">';
 
-        currentCols.forEach(c => {
+        currentCols.forEach(function(c) {
             if (c === idField) {
-                html += `<td><strong>${r[c] ?? ""}</strong></td>`;
-            } else if (c === "image_url" || c === "photo_url" || c.includes("image") || c.includes("photo")) {
-                html += `
-                    <td data-col="${c}">
-                        ${r[c] ? `<img src="${r[c]}" class="preview-img" alt="preview">` : ""}
-                        <input type="file" class="cell-file-input">
-                    </td>`;
+                html += '<td><strong>' + (r[c] ?? "") + '</strong></td>';
+            } else if (c === "image_url" || c === "photo_url" || c.indexOf("image") !== -1 || c.indexOf("photo") !== -1) {
+                html += '<td data-col="' + c + '">';
+                if (r[c]) html += '<img src="' + r[c] + '" class="preview-img" alt="preview">';
+                html += '<input type="file" class="cell-file-input">';
+                html += '</td>';
             } else {
-                let displayText = r[c] ?? "";
+                var displayText = r[c] ?? "";
                 if (displayText.length > 80) displayText = displayText.substring(0, 80) + "...";
-                html += `<td contenteditable="true" data-col="${c}">${displayText}</td>`;
+                html += '<td contenteditable="true" data-col="' + c + '">' + displayText + '</td>';
             }
         });
 
-        html += `
-            <td style="text-align:center; white-space:nowrap;">
-                <button class="action-btn save" onclick="updateRow(${rowIndex})">Save</button>
-                <button class="action-btn delete" onclick="deleteRow('${r[idField]}')">Delete</button>
-            </td>`;
-
-        html += `</tr>`;
+        html += '<td style="text-align:center;white-space:nowrap;">';
+        html += '<button class="action-btn save" onclick="updateRow(' + rowIndex + ')">Save</button>';
+        html += '<button class="action-btn delete" onclick="deleteRow(\'' + r[idField] + '\')">Delete</button>';
+        html += '</td></tr>';
     });
 
-    html += `</tbody></table></div>`;
+    html += '</tbody></table></div>';
 
     content.innerHTML = html;
 }
 
 /* ==================== UPLOAD ==================== */
 async function uploadImage(file) {
-    const formData = new FormData();
+    var formData = new FormData();
     formData.append("image", file);
 
-    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/upload", {
+    var res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/upload", {
         method: "POST",
         body: formData
     });
 
-    const result = await res.json();
-
+    var result = await res.json();
     if (!result.success) {
         alert("Image upload failed");
         throw new Error("Upload failed");
     }
-
     return result.url;
 }
 
 /* ==================== ADD ROW ==================== */
 async function addRow() {
-    const data = {};
+    var data = {};
 
-    for (const c of currentCols) {
+    for (var i = 0; i < currentCols.length; i++) {
+        var c = currentCols[i];
         if (c === idField) continue;
 
-        if (c === "image_url" || c === "photo_url" || c.includes("image") || c.includes("photo")) {
-            const file = document.getElementById("new_" + c).files[0];
+        if (c === "image_url" || c === "photo_url" || c.indexOf("image") !== -1 || c.indexOf("photo") !== -1) {
+            var fileInput = document.getElementById("new_" + c);
+            var file = fileInput ? fileInput.files[0] : null;
             data[c] = file ? await uploadImage(file) : "";
         } else {
-            data[c] = document.getElementById("new_" + c).value;
+            var el = document.getElementById("new_" + c);
+            data[c] = el ? el.value : "";
         }
     }
 
-    const res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + currentTable, {
+    var res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + currentTable, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
 
-    if (!res.ok) {
-        alert("Insert failed.");
-        return;
-    }
-
+    if (!res.ok) { alert("Insert failed."); return; }
     loadTableData(currentTable);
 }
 
 /* ==================== UPDATE ROW ==================== */
 async function updateRow(rowIndex) {
-    const row = currentRows[rowIndex];
-    const id = row[idField];
-    const tr = content.querySelector(`tr[data-row-index="${rowIndex}"]`);
-    const data = {};
+    var row = currentRows[rowIndex];
+    var id = row[idField];
+    var tr = content.querySelector('tr[data-row-index="' + rowIndex + '"]');
+    var data = {};
+    var cells = tr.querySelectorAll("td[data-col]");
 
-    const cells = tr.querySelectorAll("td[data-col]");
+    for (var i = 0; i < cells.length; i++) {
+        var td = cells[i];
+        var col = td.dataset.col;
 
-    for (const td of cells) {
-        const col = td.dataset.col;
-
-        if (col === "image_url" || col === "photo_url" || col.includes("image") || col.includes("photo")) {
-            const fileInput = td.querySelector("input[type=file]");
-            const file = fileInput ? fileInput.files[0] : null;
+        if (col === "image_url" || col === "photo_url" || col.indexOf("image") !== -1 || col.indexOf("photo") !== -1) {
+            var fileInput = td.querySelector("input[type=file]");
+            var file = fileInput ? fileInput.files[0] : null;
 
             if (file) {
-                const formData = new FormData();
+                var formData = new FormData();
                 formData.append("image", file);
-
-                const uploadRes = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/upload", {
+                var uploadRes = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/upload", {
                     method: "POST",
                     body: formData
                 });
-
-                const uploadData = await uploadRes.json();
-
+                var uploadData = await uploadRes.json();
                 if (uploadData.success) {
                     data[col] = uploadData.url;
                 } else {
@@ -990,7 +1174,7 @@ async function updateRow(rowIndex) {
                     return;
                 }
             } else {
-                const img = td.querySelector("img");
+                var img = td.querySelector("img");
                 data[col] = img ? img.getAttribute("src") : "";
             }
         } else {
@@ -998,17 +1182,13 @@ async function updateRow(rowIndex) {
         }
     }
 
-    const res = await fetch(`https://anasal-mepfs-corporation.onrender.com/api/admin/table/${currentTable}/${idField}/${id}`, {
+    var res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + currentTable + "/" + idField + "/" + id, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
 
-    if (!res.ok) {
-        alert("Update failed.");
-        return;
-    }
-
+    if (!res.ok) { alert("Update failed."); return; }
     loadTableData(currentTable);
 }
 
@@ -1016,26 +1196,21 @@ async function updateRow(rowIndex) {
 async function deleteRow(id) {
     if (!confirm("Are you sure you want to delete this record?")) return;
 
-    const res = await fetch(`https://anasal-mepfs-corporation.onrender.com/api/admin/table/${currentTable}/${idField}/${id}`, {
+    var res = await fetch("https://anasal-mepfs-corporation.onrender.com/api/admin/table/" + currentTable + "/" + idField + "/" + id, {
         method: "DELETE"
     });
 
-    if (!res.ok) {
-        alert("Delete failed.");
-        return;
-    }
-
+    if (!res.ok) { alert("Delete failed."); return; }
     loadTableData(currentTable);
 }
 
-// ========== HANDLE WINDOW RESIZE ==========
-window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) {
-        // Desktop: always show sidebar, clean up mobile state
-        sidebar.classList.remove("open");
-        sidebarOverlay.classList.remove("active", "visible");
-        hamburgerBtn.classList.remove("active");
-    }
+/* ========== RESIZE CLEANUP ========== */
+window.addEventListener("resize", function() {
+    if (!isMobile() && sidebarOpen) { closeSidebar(); }
+});
+
+window.addEventListener("popstate", function() {
+    if (sidebarOpen) { closeSidebar(); }
 });
 </script>
 </body>
