@@ -32,7 +32,6 @@ body {
   color: #222;
   line-height: 1.7;
   padding-top: 70px;
-  /* CSS Protection */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -136,7 +135,6 @@ h1, h2, h3, h4 {
   transition: all 0.3s ease;
 }
 
-/* Hamburger Animation */
 .navbar.active .hamburger span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
 .navbar.active .hamburger span:nth-child(2) { opacity: 0; }
 .navbar.active .hamburger span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
@@ -179,7 +177,7 @@ section {
 /* ========== SERVICES ========== */
 #services {
   background: var(--light);
-  min-height: calc(100vh - 70px - 100px); /* Full height minus navbar/footer */
+  min-height: calc(100vh - 70px - 100px);
 }
 
 .services-grid {
@@ -190,15 +188,14 @@ section {
   margin: 0 auto;
 }
 
-/* Fixing the Card Design (since it's an <a> tag) */
 .service-card {
   background: var(--white);
   padding: 40px 30px;
   position: relative;
   transition: all 0.4s ease;
   border-left: 4px solid transparent;
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Inherit text color */
+  text-decoration: none;
+  color: inherit;
   display: block;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
@@ -251,6 +248,32 @@ section {
   color: var(--gray);
   font-size: 15px;
   line-height: 1.6;
+}
+
+.service-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+}
+
+.service-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  color: var(--gray);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.service-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  background: var(--red);
+  border-radius: 50%;
 }
 
 /* ========== FOOTER ========== */
@@ -418,12 +441,10 @@ footer {
     height: 60px;
   }
 
-  /* Show Hamburger */
   .hamburger {
     display: flex;
   }
 
-  /* Mobile Menu Styling */
   .navbar ul {
     position: absolute;
     top: 60px;
@@ -439,7 +460,6 @@ footer {
     padding: 0 20px;
   }
 
-  /* Active state for menu */
   .navbar.active ul {
     max-height: 400px;
     padding: 20px 20px;
@@ -473,7 +493,6 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  /* Footer Responsive */
   .footer-main {
     padding: 60px 30px;
   }
@@ -509,7 +528,6 @@ footer {
     Anasal MEPFS Corp
   </a>
 
-  <!-- Hamburger Menu Icon -->
   <div class="hamburger" id="hamburger">
     <span></span>
     <span></span>
@@ -535,20 +553,30 @@ footer {
   <div class="services-grid">
     <a href="fire-protection.html" class="service-card fade-in">
       <div class="service-icon">🔥</div>
-      <h3>Fire Protection & Life Safety</h3>
-      <p>Kitchen Fire Suppression, Fire Sprinkler System, Fire Alarm System installation and maintenance.</p>
+      <h3>Fire Protection & Safety Systems</h3>
+      <ul class="service-list">
+        <li>Fire alarm system</li>
+        <li>Fire protection system</li>
+        <li>FM200 suppression system</li>
+        <li>Kitchen fire suppression system</li>
+      </ul>
     </a>
 
     <a href="mechanical-piping.html" class="service-card fade-in">
-      <div class="service-icon">⚙️</div>
-      <h3>Mechanical & Utility Piping</h3>
-      <p>Expert LPG Piping Installation and Medical Oxygen Piping systems for healthcare and industrial use.</p>
+      <div class="service-icon">⛽</div>
+      <h3>Gas & Specialized Piping Systems</h3>
+      <ul class="service-list">
+        <li>Gasline system</li>
+        <li>Medical gasline system</li>
+      </ul>
     </a>
 
     <a href="hvac-services.html" class="service-card fade-in">
-      <div class="service-icon">🛠️</div>
-      <h3>HVAC / Mechanical Ventilation</h3>
-      <p>Ducting Installation.</p>
+      <div class="service-icon">🌬️</div>
+      <h3>Mechanical Systems</h3>
+      <ul class="service-list">
+        <li>Mechanical & ventilation system</li>
+      </ul>
     </a>
   </div>
 </section>
@@ -584,9 +612,9 @@ footer {
       <div class="footer-col">
         <h3 class="footer-title">Services</h3>
         <ul class="footer-links-list">
-          <li><a href="mechanical-piping.html">Mechanical & Utility Piping</a></li>
-          <li><a href="fire-protection.html">Fire Protection & Life Safety</a></li>
-          <li><a href="hvac-services.html">HVAC/Mechanical Ventilation</a></li>
+          <li><a href="fire-protection.html">Fire Protection & Safety Systems</a></li>
+          <li><a href="mechanical-piping.html">Gas & Specialized Piping Systems</a></li>
+          <li><a href="hvac-services.html">Mechanical Systems</a></li>
         </ul>
       </div>
 
@@ -623,18 +651,13 @@ footer {
 </footer>
 
 <script>
-// ========== CONTENT PROTECTION SCRIPTS ========== 
-// 1. Disable Right-Click
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
-// 2. Disable Keyboard Shortcuts
 document.addEventListener('keydown', function(e) {
   if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'S' || e.key === 'U')) e.preventDefault();
   if (e.key === 'F12') e.preventDefault();
 }, false);
-// 3. Disable Dragging
 document.addEventListener('dragstart', function(e) { e.preventDefault(); }, false);
 
-// ========== SCROLL REVEAL ==========
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -646,7 +669,6 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 document.querySelectorAll('.fade-in').forEach(el => { observer.observe(el); });
 
-// ========== MOBILE MENU TOGGLE ==========
 const hamburger = document.getElementById("hamburger");
 const navbar = document.getElementById("navbar");
 
@@ -654,7 +676,6 @@ hamburger.addEventListener("click", () => {
   navbar.classList.toggle("active");
 });
 
-// Close menu when a link is clicked
 const navLinks = document.querySelectorAll('.navbar ul a');
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
