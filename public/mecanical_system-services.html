@@ -16,7 +16,8 @@
   --light: #f5f5f5;
   --gray: #666;
   --white: #ffffff;
-  --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --slider-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
 * {
@@ -192,18 +193,20 @@ h1, h2, h3, h4 {
 
 .breadcrumb a { color: var(--white); text-decoration: none; }
 
-/* ========== CONTENT ========== */
+/* ========== CONTENT SECTION STYLES ========== */
 .content-section {
   padding: 80px 60px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
+/* The Grid for Text + Title Image */
 .main-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
+  margin-bottom: 60px;
 }
 
 /* Alternating Layout Logic */
@@ -215,22 +218,22 @@ h1, h2, h3, h4 {
   direction: ltr;
 }
 
-.main-image {
-  min-height: 450px;
+/* --- 1. TITLE / CONCEPT IMAGE (Static) --- */
+.main-image-title {
+  min-height: 400px;
   background-size: cover;
   background-position: center;
   border-left: 5px solid var(--red);
   box-shadow: var(--card-shadow);
-  position: relative;
-  overflow: hidden;
-  pointer-events: none;
+  border-radius: 4px;
 }
 
-.content-section:nth-child(even) .main-image {
+.content-section:nth-child(even) .main-image-title {
   border-left: none;
   border-right: 5px solid var(--red);
 }
 
+/* --- 2. TEXT CONTENT --- */
 .text-content h2 {
   font-size: 36px;
   color: var(--dark);
@@ -267,6 +270,152 @@ h1, h2, h3, h4 {
   left: 0;
   color: var(--red);
   font-weight: bold;
+}
+
+/* --- 3. PROFESSIONAL EQUIPMENT SLIDER SECTION --- */
+.equipment-gallery-section {
+  margin-top: 30px;
+  position: relative;
+}
+
+.equipment-gallery-title {
+  font-size: 14px;
+  color: var(--gray);
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* The Pro Card Container */
+.equipment-slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px; /* Slightly taller for better viewing */
+  background: #000;
+  box-shadow: var(--slider-shadow);
+  border-radius: 12px; /* Modern rounded corners */
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.equipment-slides-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.equipment-slide {
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: relative;
+}
+
+.equipment-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease; /* Smooth zoom effect */
+}
+
+.equipment-slide.active {
+  display: block;
+}
+
+/* Subtle Zoom on Active Slide */
+.equipment-slide.active img {
+  transform: scale(1.0); 
+}
+.equipment-slider-wrapper:hover .equipment-slide.active img {
+  transform: scale(1.03); /* Zoom in slightly on hover */
+}
+
+/* Overlay Gradient for Text Readability */
+.slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6), transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  color: white;
+  pointer-events: none; /* Let clicks pass through to image if needed */
+}
+
+.slide-caption-title {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+
+.slide-caption-sub {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  color: #ddd;
+  font-weight: 300;
+}
+
+/* Pro Slider Arrows */
+.equip-prev-btn, .equip-next-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px); /* Glass effect */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equip-prev-btn:hover, .equip-next-btn:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.equip-prev-btn { left: 20px; }
+.equip-next-btn { right: 20px; }
+
+/* Slider Dots Indicators */
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background-color: var(--red);
+  transform: scale(1.3);
 }
 
 /* ========== INFO STRIP ========== */
@@ -500,27 +649,22 @@ footer {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 900px) {
   .navbar { padding: 0 25px; height: 60px; }
-  
   .hamburger { display: flex; }
   
   .navbar ul {
     position: absolute;
-    top: 60px;
-    left: 0; right: 0;
+    top: 60px; left: 0; right: 0;
     background: var(--darker);
     flex-direction: column;
-    width: 100%;
-    text-align: center;
-    gap: 0;
-    max-height: 0;
+    width: 100%; text-align: center;
+    gap: 0; max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease, padding 0.4s ease;
     padding: 0 20px;
   }
 
   .navbar.active ul {
-    max-height: 400px;
-    padding: 20px 20px;
+    max-height: 400px; padding: 20px;
     border-bottom: 3px solid var(--red);
   }
 
@@ -529,55 +673,38 @@ footer {
   .navbar a.nav-link::after { display: none; }
 
   .content-section { padding: 50px 25px; }
-  .main-card { grid-template-columns: 1fr; gap: 30px; }
+  .main-card { grid-template-columns: 1fr; gap: 30px; margin-bottom: 20px; }
   
-  /* Reset alternating layout on mobile */
   .content-section:nth-child(even) .main-card { direction: ltr; }
   
-  .main-image {
-    min-height: 300px;
-    border-left: none;
-    border-top: 5px solid var(--red);
+  .main-image-title {
+    min-height: 250px;
+    border-left: none; border-top: 5px solid var(--red);
   }
-  
-  .content-section:nth-child(even) .main-image {
-    border-right: none;
-    border-top: 5px solid var(--red);
+  .content-section:nth-child(even) .main-image-title {
+    border-right: none; border-top: 5px solid var(--red);
   }
 
   .feature-list { grid-template-columns: 1fr; }
   
   .hero-text { padding: 20px; }
   .hero-text h1 { font-size: 36px; }
-  
   .breadcrumb { left: 25px; top: 80px; }
-  
   .info-strip, .cta-strip { padding: 50px 25px; }
 
-  /* Footer Responsive */
-  .footer-main {
-    padding: 60px 30px;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-
-  .footer-col:first-child {
-    grid-column: 1 / -1;
-  }
+  .footer-main { padding: 60px 30px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer-col:first-child { grid-column: 1 / -1; }
+  
+  .equipment-slider-wrapper { height: 300px; }
+  .slide-overlay { height: 80px; padding: 15px; }
+  .slide-caption-title { font-size: 20px; }
+  .slide-caption-sub { font-size: 12px; }
 }
 
 @media (max-width: 600px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-bottom-content {
-    flex-direction: column;
-    text-align: center;
-  }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom-content { flex-direction: column; text-align: center; }
 }
 </style>
 </head>
@@ -614,20 +741,23 @@ footer {
   </div>
 </div>
 
-<!-- ================= WHAT IS MECHANICAL SYSTEMS ================= -->
+<!-- ================= SECTION 1: WHAT IS MECHANICAL SYSTEMS ================= -->
 <section class="content-section">
+  <!-- Part 1: Concept Image + Text -->
   <div class="main-card">
-    <div class="main-image fade-in" style="background-image:url('image/ms.png')"></div>
+    <!-- TITLE / CONCEPT IMAGE (Static) -->
+    <div class="main-image-title fade-in" style="background-image:url('image/ms.png')"></div>
+    
     <div class="text-content fade-in">
       <h2>What is Mechanical Systems?</h2>
       <p>
         <strong>Mechanical Systems</strong> is a fundamental engineering discipline focused on the design, installation, and maintenance of systems that control the indoor environment within buildings—managing air movement, temperature, humidity, and air quality to create safe and comfortable spaces.
       </p>
       <p>
-        It involves the strategic integration of <strong>ventilation systems</strong>—including supply, exhaust, and fresh air mechanisms—and <strong>mechanical components</strong>—such as ductworks, fans, dampers, louvers, and air handling units. The primary goal is to ensure proper air circulation, remove contaminants and excess heat, and maintain optimal indoor conditions for occupant comfort, health, and operational efficiency.
+        It involves the strategic integration of <strong>ventilation systems</strong>—including supply, exhaust, and fresh air mechanisms—and <strong>mechanical components</strong>—such as ductworks, fans, dampers, louvers, and air handling units.
       </p>
 
-      <h2>Core Objectives</h2>
+      <h2>Core Objectives</h2> 
       <ul class="feature-list">
         <li>Indoor Air Quality Control</li>
         <li>Thermal Comfort Management</li>
@@ -640,17 +770,20 @@ footer {
   </div>
 </section>
 
-<!-- ================= MECHANICAL & VENTILATION SYSTEM ================= -->
+<!-- ================= SECTION 2: MECHANICAL & VENTILATION SYSTEM ================= -->
 <section class="content-section">
+  <!-- Part 1: Concept Image + Text -->
   <div class="main-card">
-    <div class="main-image fade-in" style="background-image:url('image/mechanical\ &\ ventilation.jpg')"></div>
+    <!-- TITLE / CONCEPT IMAGE (Static) -->
+    <div class="main-image-title fade-in" style="background-image:url('image/mechanical & ventilation.jpg')"></div>
+    
     <div class="text-content fade-in">
       <h2>Mechanical & Ventilation System</h2>
       <p>
-        A <strong>Mechanical & Ventilation System</strong> is an engineered network of ducts, fans, air handling units, diffusers, grilles, dampers, and controls that work together to circulate, condition, and exchange air within a building, replacing stale indoor air with fresh outdoor air.
+        A <strong>Mechanical & Ventilation System</strong> is an engineered network of ducts, fans, air handling units, diffusers, grilles, dampers, and controls that work together to circulate, condition, and exchange air within a building.
       </p>
       <p>
-        Unlike natural ventilation that relies on wind and thermal buoyancy, mechanical ventilation uses powered equipment to actively move air through designated pathways. The system is designed based on airflow calculations, space requirements, and occupancy loads to deliver the correct volume of fresh air, extract polluted air, and maintain proper pressure relationships between zones—preventing cross-contamination, controlling humidity, and ensuring a healthy indoor environment in commercial, industrial, and institutional facilities.
+        Unlike natural ventilation that relies on wind and thermal buoyancy, mechanical ventilation uses powered equipment to actively move air through designated pathways to prevent cross-contamination, control humidity, and ensure a healthy indoor environment.
       </p>
 
       <h2>Core Objectives</h2>
@@ -662,6 +795,113 @@ footer {
         <li>Temperature and humidity regulation</li>
         <li>Energy-optimized air distribution</li>
       </ul>
+    </div>
+  </div>
+
+  <!-- Part 2: PROFESSIONAL EQUIPMENT SLIDER -->
+  <div class="equipment-gallery-section fade-in">
+    <div class="equipment-gallery-title">System Components Gallery</div>
+    <div class="equipment-slider-wrapper" id="equip-slider-2">
+      <div class="equipment-slides-container">
+        <!-- Equipment Slide 1 -->
+        <!-- Equipment Slide 2 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/1.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 2 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/2.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 3 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/3.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 4 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/4.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 5 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/5.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 6 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/6.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 7 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/7.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 8 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/8.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 9 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/9.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+        <!-- Equipment Slide 10 -->
+        <div class="equipment-slide">
+          <!-- UPDATE: Local image path -->
+          <img src="image/equipment/Mechanical & Ventilation/10.png" alt="Industrial Fan">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Mechanical & Ventilation System</div>
+          </div>
+        </div>
+
+      <!-- Controls -->
+      <button class="equip-prev-btn">&#10094;</button>
+      <button class="equip-next-btn">&#10095;</button>
+
+      <!-- Dots -->
+      <div class="slider-dots" id="dots-2">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+        <span class="dot" data-index="3"></span>
+        <span class="dot" data-index="4"></span>
+        <span class="dot" data-index="5"></span>
+        <span class="dot" data-index="6"></span>
+        <span class="dot" data-index="7"></span>
+        <span class="dot" data-index="8"></span>
+        <span class="dot" data-index="9"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -770,14 +1010,11 @@ footer {
 
 <script>
 // ========== CONTENT PROTECTION SCRIPTS ========== 
-// 1. Disable Right-Click
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
-// 2. Disable Keyboard Shortcuts
 document.addEventListener('keydown', function(e) {
   if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'S' || e.key === 'U')) e.preventDefault();
   if (e.key === 'F12') e.preventDefault();
 }, false);
-// 3. Disable Dragging
 document.addEventListener('dragstart', function(e) { e.preventDefault(); }, false);
 
 // ========== SCROLL REVEAL ==========
@@ -806,6 +1043,61 @@ navLinks.forEach(link => {
     if(navbar.classList.contains('active')) {
       navbar.classList.remove('active');
     }
+  });
+});
+
+// ========== PROFESSIONAL SLIDER LOGIC (With Dots) ==========
+document.addEventListener('DOMContentLoaded', function() {
+  const sliders = document.querySelectorAll('.equipment-slider-wrapper');
+
+  sliders.forEach(slider => {
+    const slides = slider.querySelectorAll('.equipment-slide');
+    const nextBtn = slider.querySelector('.equip-next-btn');
+    const prevBtn = slider.querySelector('.equip-prev-btn');
+    const dotsContainer = slider.querySelector('.slider-dots');
+    const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+    
+    let slideIndex = 0;
+    const totalSlides = slides.length;
+
+    if (totalSlides === 0) return;
+
+    function showSlide(n) {
+      if (n >= totalSlides) slideIndex = 0;
+      else if (n < 0) slideIndex = totalSlides - 1;
+      else slideIndex = n;
+
+      // Update Slides
+      slides.forEach(slide => {
+        slide.classList.remove('active');
+      });
+      slides[slideIndex].classList.add('active');
+
+      // Update Dots
+      if (dots.length > 0) {
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+      }
+    }
+
+    // Button Events
+    nextBtn.addEventListener('click', () => {
+      showSlide(slideIndex + 1);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      showSlide(slideIndex - 1);
+    });
+
+    // Dot Click Events
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        showSlide(index);
+      });
+    });
+
+    // Initialize
+    showSlide(slideIndex);
   });
 });
 </script>

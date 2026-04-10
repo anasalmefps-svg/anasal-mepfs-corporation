@@ -16,6 +16,7 @@
   --gray: #666;
   --white: #ffffff;
   --card-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  --slider-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
 * {
@@ -192,7 +193,7 @@ h1, h2, h3, h4 {
 
 .breadcrumb a { color: var(--white); text-decoration: none; }
 
-/* ========== CONTENT ========== */
+/* ========== CONTENT SECTION STYLES ========== */
 .content-section {
   padding: 80px 60px;
   max-width: 1400px;
@@ -204,6 +205,7 @@ h1, h2, h3, h4 {
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
+  margin-bottom: 60px;
 }
 
 /* Alternating Layout Logic */
@@ -268,6 +270,145 @@ h1, h2, h3, h4 {
   left: 0;
   color: var(--red);
   font-weight: bold;
+}
+
+/* ========== NEW: EQUIPMENT GALLERY SLIDER STYLES ========== */
+.equipment-gallery-section {
+  margin-top: 30px;
+  position: relative;
+}
+
+.equipment-gallery-title {
+  font-size: 14px;
+  color: var(--gray);
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.equipment-slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: #000;
+  box-shadow: var(--slider-shadow);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.equipment-slides-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.equipment-slide {
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: relative;
+}
+
+.equipment-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.equipment-slide.active {
+  display: block;
+}
+
+.equipment-slide.active img { transform: scale(1.0); }
+.equipment-slider-wrapper:hover .equipment-slide.active img {
+  transform: scale(1.03);
+}
+
+.slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6), transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  color: white;
+  pointer-events: none;
+}
+
+.slide-caption-title {
+  font-family: Bebas Neue, sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+
+.slide-caption-sub {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  color: #ddd;
+  font-weight: 300;
+}
+
+.equip-prev-btn, .equip-next-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equip-prev-btn:hover, .equip-next-btn:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.equip-prev-btn { left: 20px; }
+.equip-next-btn { right: 20px; }
+
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background-color: var(--red);
+  transform: scale(1.3);
 }
 
 /* ========== INFO STRIP ========== */
@@ -530,7 +671,7 @@ footer {
   .navbar a.nav-link::after { display: none; }
 
   .content-section { padding: 50px 25px; }
-  .main-card { grid-template-columns: 1fr; gap: 30px; }
+  .main-card { grid-template-columns: 1fr; gap: 30px; margin-bottom: 20px;}
   
   /* Reset alternating layout on mobile */
   .content-section:nth-child(even) .main-card { direction: ltr; }
@@ -554,6 +695,12 @@ footer {
   .breadcrumb { left: 25px; top: 80px; }
   
   .info-strip, .cta-strip { padding: 50px 25px; }
+
+  /* Slider Responsive */
+  .equipment-slider-wrapper { height: 300px; }
+  .slide-overlay { height: 80px; padding: 15px; }
+  .slide-caption-title { font-size: 20px; }
+  .slide-caption-sub { font-size: 12px; }
 
   /* Footer Responsive */
   .footer-main {
@@ -648,7 +795,7 @@ footer {
   </div>
 </section>
 
-<!-- ================= GASLINE SYSTEM ================= -->
+<!-- ================= GASLINE SYSTEM (WITH GALLERY) ================= -->
 <section class="content-section">
   <div class="main-card">
     <div class="main-image fade-in" style="background-image:url('image/20140331_094813 .jpg');"></div>
@@ -670,6 +817,86 @@ footer {
         <li>Compliance with gas codes</li>
         <li>Efficient appliance supply</li>
       </ul>
+    </div>
+  </div>
+
+  <!-- NEW ADDITION: PROFESSIONAL EQUIPMENT SLIDER -->
+  <div class="equipment-gallery-section fade-in">
+    <div class="equipment-gallery-title">Gasline Equipment Gallery</div>
+    <div class="equipment-slider-wrapper" id="equip-slider-gas">
+      <div class="equipment-slides-container">
+        <!-- Slide 1 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/1.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+       <!-- Slide 2 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/2.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/3.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/4.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 5 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/5.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 6 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/6.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 7 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/7.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 8 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Gasline/8.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Gasline System</div>
+          </div>
+        </div>
+
+      <!-- Controls -->
+      <button class="equip-prev-btn">&#10094;</button>
+      <button class="equip-next-btn">&#10095;</button>
+
+      <!-- Dots -->
+      <div class="slider-dots" id="dots-gas">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+        <span class="dot" data-index="3"></span>
+        <span class="dot" data-index="4"></span>
+        <span class="dot" data-index="5"></span>
+        <span class="dot" data-index="6"></span>
+        <span class="dot" data-index="7"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -696,6 +923,132 @@ footer {
         <li>Compliance with medical standards</li>
         <li>Uninterrupted patient care support</li>
       </ul>
+    </div>
+  </div>
+   <!-- NEW ADDITION: PROFESSIONAL EQUIPMENT SLIDER -->
+  <div class="equipment-gallery-section fade-in">
+    <div class="equipment-gallery-title">Gasline Equipment Gallery</div>
+    <div class="equipment-slider-wrapper" id="equip-slider-gas">
+      <div class="equipment-slides-container">
+        <!-- Slide 1 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/1.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/2.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/3.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/4.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 5 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/5.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 6 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/6.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 7 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/7.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 8 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/8.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 9 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/9.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div><!-- Slide 10 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/10.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 11 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/11.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 12 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/12.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 13 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/13.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+        <!-- Slide 14 -->
+        <div class="equipment-slide">
+          <img src="image/equipment/Medical Gasline System/14.png" alt="LPG Manifold System">
+          <div class="slide-overlay">
+            <div class="slide-caption-title">Medical Gasline System</div>
+          </div>
+        </div>
+
+      <!-- Controls -->
+      <button class="equip-prev-btn">&#10094;</button>
+      <button class="equip-next-btn">&#10095;</button>
+
+      <!-- Dots -->
+      <div class="slider-dots" id="dots-gas">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+        <span class="dot" data-index="3"></span>
+        <span class="dot" data-index="4"></span>
+        <span class="dot" data-index="5"></span>
+        <span class="dot" data-index="6"></span>
+        <span class="dot" data-index="7"></span>
+        <span class="dot" data-index="8"></span>
+        <span class="dot" data-index="9"></span>
+        <span class="dot" data-index="10"></span>
+        <span class="dot" data-index="11"></span>
+        <span class="dot" data-index="12"></span>
+        <span class="dot" data-index="13"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -840,6 +1193,61 @@ navLinks.forEach(link => {
     if(navbar.classList.contains('active')) {
       navbar.classList.remove('active');
     }
+  });
+});
+
+// ========== PROFESSIONAL SLIDER LOGIC (With Dots) ==========
+document.addEventListener('DOMContentLoaded', function() {
+  const sliders = document.querySelectorAll('.equipment-slider-wrapper');
+
+  sliders.forEach(slider => {
+    const slides = slider.querySelectorAll('.equipment-slide');
+    const nextBtn = slider.querySelector('.equip-next-btn');
+    const prevBtn = slider.querySelector('.equip-prev-btn');
+    const dotsContainer = slider.querySelector('.slider-dots');
+    const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+    
+    let slideIndex = 0;
+    const totalSlides = slides.length;
+
+    if (totalSlides === 0) return;
+
+    function showSlide(n) {
+      if (n >= totalSlides) slideIndex = 0;
+      else if (n < 0) slideIndex = totalSlides - 1;
+      else slideIndex = n;
+
+      // Update Slides
+      slides.forEach(slide => {
+        slide.classList.remove('active');
+      });
+      slides[slideIndex].classList.add('active');
+
+      // Update Dots
+      if (dots.length > 0) {
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+      }
+    }
+
+    // Button Events
+    nextBtn.addEventListener('click', () => {
+      showSlide(slideIndex + 1);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      showSlide(slideIndex - 1);
+    });
+
+    // Dot Click Events
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        showSlide(index);
+      });
+    });
+
+    // Initialize
+    showSlide(slideIndex);
   });
 });
 </script>
